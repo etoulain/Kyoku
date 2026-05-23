@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kyokushin">
+<meta name="theme-color" content="#0a0a0c">
+<meta name="description" content="Belt-by-belt Kyokushin Karate study guide">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Kyokushin — Path of the Belt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0c;
+    --red: #c0392b;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --mist: #4a4a55;
+    --white: #faf8f4;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--white);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.35;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: calc(var(--safe-top) + 40px) 20px 28px;
+    text-align: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    background: radial-gradient(ellipse at 50% -10%, rgba(192,57,43,0.18) 0%, transparent 60%);
+    position: relative; overflow: hidden;
+  }
+  header::after {
+    content: '極真';
+    position: absolute; font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(100px, 35vw, 180px);
+    color: rgba(201,168,76,0.035);
+    top: 50%; left: 50%; transform: translate(-50%, -38%);
+    pointer-events: none; letter-spacing: -6px; white-space: nowrap;
+  }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 2px; padding: 5px 12px;
+    font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(22px, 7vw, 44px); font-weight: 900;
+    letter-spacing: 1px; line-height: 1.1;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, #a07830 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 3px; color: var(--mist); text-transform: uppercase;
+  }
+
+  /* ── INSTALL BANNER ── */
+  #installBanner {
+    display: none; align-items: center; justify-content: space-between;
+    background: rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 10px 16px; gap: 12px;
+  }
+  #installBanner p { font-size: 13px; color: rgba(255,255,255,0.8); flex: 1; }
+  #installBanner p strong { color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 11px; }
+  .install-btn {
+    background: var(--gold); color: var(--ink); border: none; border-radius: 3px;
+    padding: 8px 14px; font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 1px; cursor: pointer; white-space: nowrap; font-weight: 600;
+  }
+  .dismiss-btn {
+    background: transparent; border: none; color: var(--mist);
+    font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1;
+  }
+
+  /* ── PROGRESS PATH ── */
+  .progress-path {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; padding: 16px 12px 8px; overflow-x: auto; scrollbar-width: none;
+  }
+  .progress-path::-webkit-scrollbar { display: none; }
+  .progress-node {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 5px; cursor: pointer; flex-shrink: 0; padding: 0 2px;
+  }
+  .progress-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.12); transition: all 0.3s;
+  }
+  .progress-node.current .progress-dot { box-shadow: 0 0 0 3px rgba(255,255,255,0.08); transform: scale(1.35); }
+  .progress-node.future .progress-dot { opacity: 0.3; }
+  .progress-label {
+    font-family: 'Cinzel', serif; font-size: 7px;
+    letter-spacing: 1px; color: var(--mist); text-transform: uppercase;
+  }
+  .progress-line { width: 24px; height: 1px; background: rgba(255,255,255,0.08); flex-shrink: 0; margin-bottom: 20px; }
+
+  /* ── BELT NAV (sticky) ── */
+  .belt-nav {
+    display: flex; overflow-x: auto; scrollbar-width: none;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,12,0.97); backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .belt-nav::-webkit-scrollbar { display: none; }
+  .belt-tab {
+    flex: none; display: flex; align-items: center; gap: 7px;
+    padding: 14px 16px; cursor: pointer; border: none;
+    background: transparent; color: var(--mist);
+    font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; transition: color 0.25s; position: relative;
+    white-space: nowrap; border-right: 1px solid rgba(255,255,255,0.04);
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+  .belt-tab::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    transform: scaleX(0); transition: transform 0.3s;
+  }
+  .belt-tab.active { color: var(--white); }
+  .belt-tab.active::after { transform: scaleX(1); }
+  .belt-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; border: 1.5px solid rgba(255,255,255,0.15); }
+
+  .belt-tab[data-belt="white"] .belt-dot { background: #e8e4dc; }
+  .belt-tab[data-belt="orange"] .belt-dot { background: #e07020; }
+  .belt-tab[data-belt="blue"] .belt-dot { background: #1a5fa8; }
+  .belt-tab[data-belt="yellow"] .belt-dot { background: #c4960c; }
+  .belt-tab[data-belt="green"] .belt-dot { background: #2a7a3a; }
+  .belt-tab[data-belt="brown"] .belt-dot { background: #6b3a1f; }
+  .belt-tab[data-belt="black"] .belt-dot { background: #1a1a1a; border-color: var(--gold); }
+
+  .belt-tab[data-belt="white"].active::after { background: #e8e4dc; }
+  .belt-tab[data-belt="orange"].active::after { background: #e07020; }
+  .belt-tab[data-belt="blue"].active::after { background: #1a5fa8; }
+  .belt-tab[data-belt="yellow"].active::after { background: #c4960c; }
+  .belt-tab[data-belt="green"].active::after { background: #2a7a3a; }
+  .belt-tab[data-belt="brown"].active::after { background: #6b3a1f; }
+  .belt-tab[data-belt="black"].active::after { background: var(--gold); }
+
+  .you-badge {
+    font-size: 7px; background: var(--red); color: white;
+    padding: 1px 4px; border-radius: 2px; letter-spacing: 1px;
+  }
+
+  /* ── MAIN ── */
+  main { max-width: 680px; margin: 0 auto; padding: 24px 16px calc(var(--safe-bottom) + 40px); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── BELT HERO ── */
+  .belt-hero {
+    display: flex; align-items: center; gap: 18px;
+    margin-bottom: 28px; padding: 20px;
+    border: 1px solid rgba(255,255,255,0.07); border-radius: 6px;
+    background: rgba(255,255,255,0.02); position: relative; overflow: hidden;
+    animation: fadeUp 0.35s ease;
+  }
+  .belt-visual { width: 56px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+  .belt-hero-text .kyu {
+    font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px;
+    color: var(--mist); text-transform: uppercase; margin-bottom: 4px;
+  }
+  .belt-hero-text h2 { font-family: 'Cinzel Decorative', serif; font-size: 18px; margin-bottom: 6px; }
+  .belt-hero-text p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; font-style: italic; }
+
+  /* ── SECTION HEADERS ── */
+  .section-header { display: flex; align-items: center; gap: 12px; margin: 32px 0 16px; }
+  .section-header h3 {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 4px; text-transform: uppercase; color: var(--gold); white-space: nowrap;
+  }
+  .section-header::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,76,0.25), transparent); }
+
+  /* ── EXAM BOX ── */
+  .exam-box {
+    background: rgba(201,168,76,0.04); border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 6px; padding: 20px; margin-bottom: 8px;
+  }
+  .exam-box h4 {
+    font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+  }
+  .exam-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .exam-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 15px; color: rgba(255,255,255,0.72); line-height: 1.5;
+  }
+  .exam-list li::before { content: '◆'; color: var(--gold); font-size: 7px; margin-top: 6px; flex-shrink: 0; }
+
+  /* ── TECHNIQUE CARDS ── */
+  .techniques-grid { display: flex; flex-direction: column; gap: 12px; }
+  .technique-card {
+    background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px; overflow: hidden; transition: border-color 0.25s;
+    animation: fadeUp 0.35s ease;
+  }
+  .technique-card:active { background: rgba(255,255,255,0.04); }
+  .technique-card-body { padding: 16px; }
+  .technique-japanese {
+    font-family: 'Cinzel', serif; font-size: 20px; font-weight: 600;
+    color: var(--gold-light); margin-bottom: 1px;
+  }
+  .technique-romaji {
+    font-size: 11px; letter-spacing: 2px; color: var(--mist);
+    margin-bottom: 6px; font-family: 'Cinzel', serif; font-style: italic;
+  }
+  .technique-english { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+  .technique-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.65; }
+  .technique-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; flex-wrap: wrap; gap: 8px; }
+  .technique-tag {
+    font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 2px;
+  }
+  .tag-kihon { background: rgba(192,57,43,0.18); color: #e07060; border: 1px solid rgba(192,57,43,0.28); }
+  .tag-kata { background: rgba(26,95,168,0.18); color: #6090e0; border: 1px solid rgba(26,95,168,0.28); }
+  .tag-kumite { background: rgba(42,122,58,0.18); color: #60c070; border: 1px solid rgba(42,122,58,0.28); }
+  .tag-kihon-waza { background: rgba(150,80,20,0.18); color: #d09050; border: 1px solid rgba(150,80,20,0.28); }
+
+  .video-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; background: rgba(192,57,43,0.12);
+    border: 1px solid rgba(192,57,43,0.25); border-radius: 3px;
+    color: #e07060; text-decoration: none;
+    font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+  .video-link:active { background: rgba(192,57,43,0.25); }
+
+  /* ── KATA CARDS ── */
+  .kata-card {
+    display: flex; gap: 16px; background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;
+    padding: 16px; margin-bottom: 10px; transition: border-color 0.25s;
+  }
+  .kata-card:active { border-color: rgba(26,95,168,0.35); }
+  .kata-number {
+    font-family: 'Cinzel Decorative', serif; font-size: 22px;
+    color: rgba(255,255,255,0.08); flex-shrink: 0; width: 32px; line-height: 1;
+  }
+  .kata-info h4 { font-family: 'Cinzel', serif; font-size: 15px; color: var(--gold-light); margin-bottom: 2px; }
+  .kata-meaning { font-size: 11px; color: var(--mist); font-style: italic; margin-bottom: 6px; font-family: 'Cinzel', serif; }
+  .kata-desc { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* ── OFFLINE TOAST ── */
+  #offlineToast {
+    position: fixed; bottom: calc(var(--safe-bottom) + 16px); left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1a1a1a; border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light); padding: 10px 20px; border-radius: 4px;
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;
+    transition: transform 0.4s; z-index: 10000; white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  #offlineToast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div id="installBanner">
+  <p><strong>Install App</strong> — Add to home screen for offline use</p>
+  <button class="install-btn" id="installBtn">Install</button>
+  <button class="dismiss-btn" id="dismissBtn">×</button>
+</div>
+
+<header>
+  <div class="header-badge"><span>⛩</span><span>Kyokushinkai Karate</span></div>
+  <h1>Path of the Belt</h1>
+  <p class="subtitle">極真会館 · Study Guide</p>
+</header>
+
+<div class="progress-path" id="progressPath"></div>
+<nav class="belt-nav" id="beltNav"></nav>
+<main id="mainContent"></main>
+<div id="offlineToast">✓ Available offline</div>
+
+<script>
+// ── DATA ──
+const belts = [
+  {
+    id: 'white', name: 'White Belt', nameJP: '白帯', kyu: '10th Kyu',
+    color: '#e8e4dc', borderTop: '#e8e4dc',
+    desc: 'The beginning of the journey. White symbolizes purity and the empty mind — ready to receive knowledge. The student learns to stand, breathe, and move with intention.',
+    examRequirements: [
+      'Natural stance (Heiko dachi)',
+      'Fighting stance (Zenkutsu dachi)',
+      'Front kick (Mae geri) — stationary',
+      'Straight punch (Oi tsuki)',
+      'Low block (Gedan barai)',
+      'Middle block (Uchi uke)',
+      'Horse stance (Kiba dachi)',
+      'Taikyoku Sono Ichi — first kata',
+      'Basic etiquette (Rei)',
+      'Dojo kun recitation',
+    ],
+    techniques: [
+      { japanese:'礼', romaji:'Rei', english:'Bow / Salutation', tag:'kihon',
+        desc:'The bow is the foundation of respect in the dojo. Performed at entrance, before and after training, and toward partners.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+rei+bow+etiquette' },
+      { japanese:'正拳突き', romaji:'Seiken Tsuki', english:'Straight Punch', tag:'kihon',
+        desc:'The foundational punch. Delivered from the hip, rotating to impact. The first two knuckles make contact. Core is engaged throughout.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+seiken+tsuki+technique' },
+      { japanese:'前蹴り', romaji:'Mae Geri', english:'Front Kick', tag:'kihon',
+        desc:'A linear kick driven from the hip. The knee rises first, then the foot snaps forward using the ball of the foot. Retract fully after impact.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+mae+geri+front+kick' },
+      { japanese:'下段払い', romaji:'Gedan Barai', english:'Low Block', tag:'kihon',
+        desc:'Sweeps down to deflect low attacks. Start from opposite ear, sweep diagonally down-and-out. Opposite hand retracts sharply to the hip.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+gedan+barai+low+block' },
+      { japanese:'太極その一', romaji:'Taikyoku Sono Ichi', english:'First Cause — Form 1', tag:'kata',
+        desc:'The first kata of Kyokushin. Twenty movements in an H-pattern: low blocks and straight punches in forward stance. Teaches structure, rhythm, and directional awareness.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+taikyoku+sono+ichi+kata' },
+    ],
+    kata: [
+      { name:'Taikyoku Sono Ichi', meaning:'First Cause — Number One',
+        desc:'The most fundamental kata. 20 movements alternating between forward stance with low blocks and straight punches. The H-shaped embusen teaches spatial orientation.' }
+    ]
+  },
+  {
+    id: 'orange', name: 'Orange Belt', nameJP: '橙帯', kyu: '9th–8th Kyu',
+    color: '#e07020', borderTop: '#e07020',
+    desc: 'The warmth of discipline. Orange marks a student who has survived first contact with the art. Basics are refined; the body begins to respond instinctively.',
+    examRequirements: [
+      'All white belt requirements',
+      'Round kick (Mawashi geri) to body',
+      'Side kick (Yoko geri)',
+      'Back kick (Ushiro geri)',
+      'Knife hand block (Shuto uke)',
+      'Upper block (Jodan age uke)',
+      'Elbow strike (Empi uchi)',
+      'Taikyoku Sono Ni',
+      'Taikyoku Sono San',
+      'Basic one-step sparring (Ippon kumite)',
+      '50 push-ups on knuckles',
+      '100 kicks (each leg)',
+    ],
+    techniques: [
+      { japanese:'回し蹴り', romaji:'Mawashi Geri', english:'Roundhouse Kick', tag:'kihon',
+        desc:"Kyokushin's signature weapon. The leg sweeps in a wide arc from the outside, striking with the ball of the foot or instep. Targets the body in full-contact rules.",
+        video:'https://www.youtube.com/results?search_query=kyokushin+mawashi+geri+roundhouse+kick' },
+      { japanese:'横蹴り', romaji:'Yoko Geri', english:'Side Kick', tag:'kihon',
+        desc:'A linear kick delivered sideways. Hip turns over, knee drives up toward target, then extends with heel or blade of foot. Excellent for stopping attackers.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+yoko+geri+side+kick' },
+      { japanese:'後ろ蹴り', romaji:'Ushiro Geri', english:'Back Kick', tag:'kihon',
+        desc:'One of the most powerful kicks. Look over shoulder, drive heel directly backward into the target. Devastating when timed against an incoming attacker.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+ushiro+geri+back+kick' },
+      { japanese:'手刀受け', romaji:'Shuto Uke', english:'Knife Hand Block', tag:'kihon',
+        desc:'Uses the outer edge of the open hand. Performed in back stance. The blocking hand sweeps across while the other draws to the solar plexus.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+shuto+uke+knife+hand+block' },
+      { japanese:'肘打ち', romaji:'Empi Uchi', english:'Elbow Strike', tag:'kihon',
+        desc:"Short-range and devastating. The elbow is the body's hardest weapon. Can be forward, side, or upward. Essential for close-range combat.",
+        video:'https://www.youtube.com/results?search_query=kyokushin+empi+uchi+elbow+strike' },
+      { japanese:'一本組手', romaji:'Ippon Kumite', english:'One-Step Sparring', tag:'kumite',
+        desc:'Attacker announces and delivers one technique; defender blocks and counter-attacks. Builds distance awareness, timing, and controlled power in a structured format.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+ippon+kumite+one+step+sparring' },
+      { japanese:'太極その二', romaji:'Taikyoku Sono Ni', english:'First Cause — Form 2', tag:'kata',
+        desc:'Same H-pattern as Sono Ichi but uses upper blocks instead of low blocks. Reinforces how to adjust defense to different attack levels.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+taikyoku+sono+ni+kata' },
+    ],
+    kata: [
+      { name:'Taikyoku Sono Ni', meaning:'First Cause — Number Two',
+        desc:'Same pattern as Sono Ichi, replacing low blocks with rising blocks (jodan age uke). Trains adaptation of defense to high attacks while maintaining forward stance.' },
+      { name:'Taikyoku Sono San', meaning:'First Cause — Number Three',
+        desc:'Introduces the middle inside block (uchi uke). Completes the Taikyoku trilogy. The student can now reference low, high, and middle defenses in the same framework.' }
+    ]
+  },
+  {
+    id: 'blue', name: 'Blue Belt', nameJP: '青帯', kyu: '7th–6th Kyu',
+    color: '#1a5fa8', borderTop: '#3a7fd8',
+    desc: 'The depth of water — deceptively calm, powerfully moving. Combinations begin to feel natural and the body moves without conscious thought.',
+    examRequirements: [
+      'All previous requirements',
+      'Spinning back kick (Ushiro mawashi geri)',
+      'Axe kick (Kakato geri)',
+      'Knee strike (Hiza geri)',
+      'Sweeps (Ashi barai)',
+      'Inner thigh kick (Uchi mawashi geri)',
+      'Pinan Sono Ichi kata',
+      'Pinan Sono Ni kata',
+      '3-step combination sparring',
+      '2 minutes of free sparring (jiyu kumite)',
+      '10 board breaks (hand or foot)',
+    ],
+    techniques: [
+      { japanese:'後ろ回し蹴り', romaji:'Ushiro Mawashi Geri', english:'Spinning Back Roundhouse', tag:'kihon',
+        desc:'A spinning kick combining body rotation with a roundhouse trajectory. The spin generates tremendous momentum. Timing and hip turnover are everything.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+ushiro+mawashi+geri+spinning' },
+      { japanese:'踵落とし', romaji:'Kakato Geri', english:'Heel Drop / Axe Kick', tag:'kihon',
+        desc:'The leg rises high before the heel drops vertically onto the target — usually the collarbone or head. Requires significant flexibility.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+kakato+geri+axe+kick' },
+      { japanese:'膝蹴り', romaji:'Hiza Geri', english:'Knee Strike', tag:'kihon',
+        desc:"Pull the opponent's head or body down while driving the knee upward into the midsection. One of the most effective close-range weapons in Kyokushin.",
+        video:'https://www.youtube.com/results?search_query=kyokushin+hiza+geri+knee+strike' },
+      { japanese:'足払い', romaji:'Ashi Barai', english:'Foot Sweep', tag:'kumite',
+        desc:'A low sweep targeting the ankle or lower leg to unbalance the opponent. Can set up follow-up strikes. Sweep as weight shifts forward.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+ashi+barai+foot+sweep' },
+      { japanese:'平安その一', romaji:'Pinan Sono Ichi', english:'Peaceful Mind — Form 1', tag:'kata',
+        desc:'More complex than Taikyoku. Introduces new stances, timing changes, and multi-directional movement. Builds the foundation of kata knowledge.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+pinan+sono+ichi+kata' },
+    ],
+    kata: [
+      { name:'Pinan Sono Ichi', meaning:'Peaceful Mind — Number One',
+        desc:'Introduces side stance (kiba dachi) and the elbow strike. More directional changes than Taikyoku. The embusen forms an elongated pattern requiring mental mapping.' },
+      { name:'Pinan Sono Ni', meaning:'Peaceful Mind — Number Two',
+        desc:'Introduces the knife hand block (shuto uke) in back stance. Longer and more complex sequence. Teaches transition between open and closed hand techniques.' }
+    ]
+  },
+  {
+    id: 'yellow', name: 'Yellow Belt', nameJP: '黄帯', kyu: '5th Kyu',
+    color: '#c4960c', borderTop: '#e8b820',
+    desc: 'The energy of sunlight. Combinations flow, kata have meaning, and the student begins to understand the deeper principles beneath each technique.',
+    examRequirements: [
+      'All previous requirements',
+      'Jumping front kick (Tobi mae geri)',
+      'Jumping roundhouse (Tobi mawashi geri)',
+      'Pinan Sono San–Go kata',
+      'Gekisai Dai kata',
+      'Full contact sparring — 2 rounds',
+      'Breaking: 3 boards with hand, 3 with foot',
+      'Tameshiwari demonstration',
+      'Teaching a basic technique to junior belts',
+    ],
+    techniques: [
+      { japanese:'飛び前蹴り', romaji:'Tobi Mae Geri', english:'Jumping Front Kick', tag:'kihon',
+        desc:'An airborne front kick. The lead leg launches upward for height while the rear leg extends at the apex of the jump. Requires strong core and precise timing.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+tobi+mae+geri+jumping+front+kick' },
+      { japanese:'撃砕大', romaji:'Gekisai Dai', english:'Attack & Smash — Large', tag:'kata',
+        desc:'A Kyokushin kata of Okinawan origin. Features powerful low sweeping blocks, hammer fist strikes, and dynamic footwork. More combative than the Pinan series.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+gekisai+dai+kata' },
+      { japanese:'試し割り', romaji:'Tameshiwari', english:'Breaking Test', tag:'kihon-waza',
+        desc:"Breaking of boards, tiles, or bricks to demonstrate the power and focus of technique. Proves that body mechanics, focus (kime), and breath are correct.",
+        video:'https://www.youtube.com/results?search_query=kyokushin+tameshiwari+board+breaking' },
+    ],
+    kata: [
+      { name:'Pinan Sono San', meaning:'Peaceful Mind — Number Three',
+        desc:'Introduces open-hand techniques, a jump, and more complex combinations. Marks a significant increase in kata complexity.' },
+      { name:'Pinan Sono Yon', meaning:'Peaceful Mind — Number Four',
+        desc:'Features spinning techniques and a double block combination. The longest of the Pinan series. Tests memory and body coordination.' },
+      { name:'Pinan Sono Go', meaning:'Peaceful Mind — Number Five',
+        desc:'The most advanced Pinan. Features a jump, multiple spinning techniques, and nage (throw) application concepts. Completes the Pinan series.' },
+      { name:'Gekisai Dai', meaning:'Attack and Smash — Large',
+        desc:'Okinawan kata adapted by Kyokushin. Strong, grounded movements with hammer fists and sweeping blocks. Bridges the Pinan and advanced kata series.' }
+    ]
+  },
+  {
+    id: 'green', name: 'Green Belt', nameJP: '緑帯', kyu: '4th Kyu',
+    color: '#2a7a3a', borderTop: '#3a9a4a',
+    desc: 'Growth made visible. Kata have depth; kumite has strategy. This is where the martial art truly begins to reveal itself.',
+    examRequirements: [
+      'All previous requirements',
+      'Yantsu kata',
+      'Tsuki no kata',
+      'Kanku kata',
+      'Advanced combination sparring (5+ techniques)',
+      'Free sparring — 3 rounds minimum',
+      'Demonstrate all previous kata',
+      '100 push-ups on knuckles',
+      'Sanchin kata with pressure testing',
+    ],
+    techniques: [
+      { japanese:'安三', romaji:'Yantsu', english:'Yantsu Kata', tag:'kata',
+        desc:'A Chinese-derived kata meaning "to keep pure." Features low stances, powerful sweeping techniques, and characteristic Kyokushin circular movements.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+yantsu+kata' },
+      { japanese:'月の型', romaji:'Tsuki no Kata', english:'Moon Kata', tag:'kata',
+        desc:'Focused entirely on punching. Develops consistent punching power, hip rotation, and kime. Shorter but intensely focused.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+tsuki+no+kata' },
+      { japanese:'観空', romaji:'Kanku', english:'Viewing the Sky', tag:'kata',
+        desc:'One of the longest and most important kata in Kyokushin. 65 movements including a dramatic opening, jumps, sweeps, and grappling applications.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+kanku+kata' },
+      { japanese:'三戦', romaji:'Sanchin', english:'Three Battles', tag:'kata',
+        desc:'The kata of internal power. Three battles: body, mind, and technique. Performed slowly with maximal tension and breathing. Instructor tests body tension by striking.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+sanchin+kata' },
+    ],
+    kata: [
+      { name:'Yantsu', meaning:'To Keep Pure (Chinese origin)',
+        desc:'Chinese kata with low sweeping movements and circular blocking. One of the defining katas of Kyokushin. Tests the ability to generate power from deep stances.' },
+      { name:'Tsuki no Kata', meaning:'Moon Form / Punching Form',
+        desc:'Focused entirely on punching. Develops consistency, hip rotation, kime, and the understanding that one technique done perfectly beats many done poorly.' },
+      { name:'Kanku', meaning:'Viewing the Sky',
+        desc:'The grandest intermediate kata. 65 movements. Opens with hands forming a diamond to frame the sky. Contains jumping, spinning, and grappling concepts.' }
+    ]
+  },
+  {
+    id: 'brown', name: 'Brown Belt', nameJP: '茶帯', kyu: '3rd–1st Kyu',
+    color: '#6b3a1f', borderTop: '#8b5a3f',
+    desc: 'The earth beneath the forest — solid, tested, essential. Brown belt is the final stage before black. Technique is refined to its essence.',
+    examRequirements: [
+      'All previous requirements',
+      'Seienchin kata',
+      'Garyu kata',
+      'Seipai kata',
+      'Bassai kata',
+      'Sustained free sparring — multiple opponents',
+      'Extended kumite: 10-man sparring (Ju hon kumite)',
+      'Full demonstration of entire curriculum',
+      'Written knowledge of Kyokushin history',
+      'Dojo kun — full recitation with meaning',
+    ],
+    techniques: [
+      { japanese:'征遠鎮', romaji:'Seienchin', english:'Storm in the Calm', tag:'kata',
+        desc:"One of the most important advanced kata. Slow and fast sections teach explosive power from stillness. Grappling and breaking concepts throughout.",
+        video:'https://www.youtube.com/results?search_query=kyokushin+seienchin+kata' },
+      { japanese:'我流', romaji:'Garyu', english:'Reclining Dragon', tag:'kata',
+        desc:"Created by Sosai Mas Oyama himself. Unique to Kyokushin. Features powerful, direct techniques reflecting Oyama's fighting philosophy.",
+        video:'https://www.youtube.com/results?search_query=kyokushin+garyu+kata+mas+oyama' },
+      { japanese:'十本組手', romaji:'Ju Hon Kumite', english:'Ten-Man Kumite', tag:'kumite',
+        desc:'Face ten fresh opponents in succession. Each bout is 2 minutes. Mental fortitude, technique under exhaustion, and fighting spirit are all evaluated.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+10+man+kumite+brown+belt' },
+    ],
+    kata: [
+      { name:'Seienchin', meaning:'Storm in the Calm / Conquer & Suppress',
+        desc:'Goju-ryu derived. Alternates between slow tense movements and explosive fast ones. Deep stances and powerful strikes represent controlling aggression.' },
+      { name:'Garyu', meaning:'Reclining Dragon',
+        desc:"The only kata created by Mas Oyama. Uniquely Kyokushin. Named after Oyama's pen name. Contains his characteristic direct and powerful approach to combat." },
+      { name:'Seipai', meaning:'18 (Chinese numerology)',
+        desc:'Goju-ryu kata with complex circular movements, multiple direction changes, and hidden grappling techniques. Requires precise body mechanics.' },
+      { name:'Bassai', meaning:'Penetrating the Fortress',
+        desc:'A major kata shared across many karate styles, adapted for Kyokushin. Powerful linear attacks and strong blocking sequences. Breaking through defenses.' }
+    ]
+  },
+  {
+    id: 'black', name: 'Black Belt', nameJP: '黒帯', kyu: '1st Dan (Shodan)',
+    color: '#2a2a2a', borderTop: '#c9a84c',
+    desc: 'Not the end — the true beginning. Black absorbs all colors, just as the Shodan must now contain all lessons. The belt fades, becomes white again — the circle is complete.',
+    examRequirements: [
+      'All previous requirements — demonstrated flawlessly',
+      'Complete kata curriculum — all Kyokushin kata',
+      'Hyakunin Kumite — 100-man kumite (senior levels)',
+      'Naihanchi kata',
+      'Sochin kata',
+      'Ura kata series (all)',
+      'Demonstrated teaching ability',
+      'Minimum 3–5 years training from white belt',
+      'Committee review of character and spirit',
+      'Approval by senior black belt council',
+    ],
+    techniques: [
+      { japanese:'百人組手', romaji:'Hyakunin Kumite', english:'100-Man Kumite', tag:'kumite',
+        desc:'The ultimate test in all of martial arts. 100 consecutive bouts against 100 fresh opponents, each 2 minutes. Only a handful in history have completed it. Mas Oyama did it three times.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+100+man+kumite+hyakunin' },
+      { japanese:'内歩進', romaji:'Naihanchi', english:'Horse Riding Kata', tag:'kata',
+        desc:'Performed entirely sideways in horse stance. Tests the ability to generate power in a lateral plane. Ancient kata with deep grappling applications.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+naihanchi+kata' },
+      { japanese:'壮鎮', romaji:'Sochin', english:'Preserve the Peace', tag:'kata',
+        desc:'Performed mainly in sochin stance. Slow, deliberate, powerful. The name and movements convey immovable strength — the power of stillness.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+sochin+kata' },
+      { japanese:'道場訓', romaji:'Dojo Kun', english:'Training Hall Oath', tag:'kihon',
+        desc:'The five precepts recited at every class. Hitotsu — seek perfection of character; be faithful; endeavor; respect others; refrain from violent behaviour.',
+        video:'https://www.youtube.com/results?search_query=kyokushin+dojo+kun+recitation' },
+    ],
+    kata: [
+      { name:'Naihanchi', meaning:'Horse Riding / Internal Divided Conflict',
+        desc:'One of the oldest kata. Performed laterally in horse stance. Hidden grappling, throws, and joint locks. Required mastery before all other kata in ancient Okinawan systems.' },
+      { name:'Sochin', meaning:'Preserve Peace / Grand Tranquility',
+        desc:'In the oblique Sochin stance. Slow and powerful with precise timing changes. Represents immovable strength — rooted, calm, and devastating.' },
+      { name:'Ura Kata Series', meaning:'Reversed / Spinning Versions',
+        desc:'Mirror versions of standard kata performed with spinning kicks. Tests whether the practitioner truly understands the kata or has only memorized a sequence.' }
+    ]
+  }
+];
+
+const beltOrder = ['white','orange','blue','yellow','green','brown','black'];
+const userBelt = 'orange';
+
+// ── PROGRESS PATH ──
+function buildProgressPath() {
+  const c = document.getElementById('progressPath');
+  const userIdx = beltOrder.indexOf(userBelt);
+  beltOrder.forEach((id, i) => {
+    const belt = belts.find(b => b.id === id);
+    const status = i < userIdx ? 'achieved' : i === userIdx ? 'current' : 'future';
+    const node = document.createElement('div');
+    node.className = `progress-node ${status}`;
+    node.innerHTML = `<div class="progress-dot" style="background:${belt.color};border-color:${belt.color}"></div>
+      <span class="progress-label">${id.slice(0,3)}</span>`;
+    node.onclick = () => switchBelt(id);
+    c.appendChild(node);
+    if (i < beltOrder.length - 1) {
+      const line = document.createElement('div');
+      line.className = 'progress-line';
+      c.appendChild(line);
+    }
+  });
+}
+
+// ── BELT NAV ──
+function buildBeltNav() {
+  const nav = document.getElementById('beltNav');
+  beltOrder.forEach(id => {
+    const belt = belts.find(b => b.id === id);
+    const isUser = id === userBelt;
+    const btn = document.createElement('button');
+    btn.className = `belt-tab${isUser ? ' active' : ''}`;
+    btn.dataset.belt = id;
+    btn.innerHTML = `<span class="belt-dot"></span>${belt.name.split(' ')[0]}${isUser ? ' <span class="you-badge">YOU</span>' : ''}`;
+    btn.onclick = () => switchBelt(id);
+    nav.appendChild(btn);
+  });
+}
+
+// ── PANEL ──
+function buildPanel(belt) {
+  return `
+    <div class="belt-hero" style="border-top:2px solid ${belt.borderTop}">
+      <div class="belt-visual" style="background:${belt.color};box-shadow:0 4px 20px ${belt.color}44"></div>
+      <div class="belt-hero-text">
+        <div class="kyu">${belt.kyu} · ${belt.nameJP}</div>
+        <h2>${belt.name}</h2>
+        <p>${belt.desc}</p>
+      </div>
+    </div>
+
+    <div class="section-header"><h3>Exam Requirements</h3></div>
+    <div class="exam-box">
+      <h4>To pass the ${belt.name} examination:</h4>
+      <ul class="exam-list">${belt.examRequirements.map(r=>`<li>${r}</li>`).join('')}</ul>
+    </div>
+
+    <div class="section-header"><h3>Techniques — Waza</h3></div>
+    <div class="techniques-grid">${belt.techniques.map(buildTechCard).join('')}</div>
+
+    ${belt.kata.length ? `
+    <div class="section-header"><h3>Kata — 型</h3></div>
+    ${belt.kata.map((k,i)=>`
+      <div class="kata-card">
+        <div class="kata-number">${String(i+1).padStart(2,'0')}</div>
+        <div class="kata-info">
+          <h4>${k.name}</h4>
+          <div class="kata-meaning">${k.meaning}</div>
+          <p class="kata-desc">${k.desc}</p>
+          <a href="https://www.youtube.com/results?search_query=kyokushin+${encodeURIComponent(k.name.toLowerCase())}+kata" target="_blank" class="video-link">▶ Watch on YouTube</a>
+        </div>
+      </div>`).join('')}` : ''}
+  `;
+}
+
+function buildTechCard(t) {
+  return `<div class="technique-card">
+    <div class="technique-card-body">
+      <div class="technique-japanese">${t.japanese}</div>
+      <div class="technique-romaji">${t.romaji}</div>
+      <div class="technique-english">${t.english}</div>
+      <p class="technique-desc">${t.desc}</p>
+      <div class="technique-footer">
+        <span class="technique-tag tag-${t.tag}">${t.tag.replace('-',' ')}</span>
+        <a href="${t.video}" target="_blank" class="video-link">▶ YouTube</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+function switchBelt(id) {
+  document.querySelectorAll('.belt-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`.belt-tab[data-belt="${id}"]`).classList.add('active');
+  document.getElementById('mainContent').innerHTML = buildPanel(belts.find(b=>b.id===id));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── PWA: SERVICE WORKER ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      console.log('SW registered');
+      // Show offline toast after first install
+      reg.addEventListener('updatefound', () => {
+        const toast = document.getElementById('offlineToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      });
+    });
+  });
+}
+
+// ── PWA: INSTALL PROMPT ──
+let deferredPrompt;
+const banner = document.getElementById('installBanner');
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  banner.style.display = 'flex';
+});
+document.getElementById('installBtn').onclick = async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  banner.style.display = 'none';
+};
+document.getElementById('dismissBtn').onclick = () => { banner.style.display = 'none'; };
+window.addEventListener('appinstalled', () => { banner.style.display = 'none'; });
+
+// ── INIT ──
+buildProgressPath();
+buildBeltNav();
+switchBelt('orange');
+</script>
+</body>
+</html>
