@@ -170,31 +170,52 @@
     padding: 1px 4px; border-radius: 2px; letter-spacing: 1px;
   }
 
+  /* ══════════════════════════════════════════
+     LAYOUT — desktop uses sidebar + content
+  ══════════════════════════════════════════ */
+
+  /* App shell wraps everything below the sticky nav */
+  .app-shell {
+    display: flex;
+    min-height: calc(100vh - 120px);
+  }
+
+  /* ── SIDEBAR (desktop only) ── */
+  .sidebar {
+    display: none; /* hidden on mobile */
+  }
+
   /* ── MAIN ── */
-  main { max-width: 680px; margin: 0 auto; padding: 24px 16px calc(var(--safe-bottom) + 40px); }
+  main {
+    flex: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 28px 20px calc(var(--safe-bottom) + 48px);
+    width: 100%;
+  }
 
   @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 
   /* ── BELT HERO ── */
   .belt-hero {
-    display: flex; align-items: center; gap: 18px;
-    margin-bottom: 28px; padding: 20px;
-    border: 1px solid rgba(255,255,255,0.07); border-radius: 6px;
+    display: flex; align-items: center; gap: 20px;
+    margin-bottom: 32px; padding: 24px;
+    border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;
     background: rgba(255,255,255,0.02); position: relative; overflow: hidden;
     animation: fadeUp 0.35s ease;
   }
-  .belt-visual { width: 56px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+  .belt-visual { width: 64px; height: 16px; border-radius: 3px; flex-shrink: 0; }
   .belt-hero-text .kyu {
-    font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px;
+    font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px;
     color: var(--mist); text-transform: uppercase; margin-bottom: 4px;
   }
-  .belt-hero-text h2 { font-family: 'Cinzel Decorative', serif; font-size: 18px; margin-bottom: 6px; }
-  .belt-hero-text p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; font-style: italic; }
+  .belt-hero-text h2 { font-family: 'Cinzel Decorative', serif; font-size: clamp(18px, 3vw, 28px); margin-bottom: 8px; }
+  .belt-hero-text p { font-size: clamp(14px, 1.4vw, 17px); color: rgba(255,255,255,0.55); line-height: 1.65; font-style: italic; }
 
   /* ── SECTION HEADERS ── */
-  .section-header { display: flex; align-items: center; gap: 12px; margin: 32px 0 16px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin: 36px 0 18px; }
   .section-header h3 {
-    font-family: 'Cinzel', serif; font-size: 10px;
+    font-family: 'Cinzel', serif; font-size: clamp(9px, 1vw, 11px);
     letter-spacing: 4px; text-transform: uppercase; color: var(--gold); white-space: nowrap;
   }
   .section-header::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,76,0.25), transparent); }
@@ -202,42 +223,47 @@
   /* ── EXAM BOX ── */
   .exam-box {
     background: rgba(201,168,76,0.04); border: 1px solid rgba(201,168,76,0.18);
-    border-radius: 6px; padding: 20px; margin-bottom: 8px;
+    border-radius: 8px; padding: 24px; margin-bottom: 8px;
   }
   .exam-box h4 {
-    font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+    font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
   }
-  .exam-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .exam-list { list-style: none; display: grid; grid-template-columns: 1fr; gap: 9px; }
   .exam-list li {
     display: flex; align-items: flex-start; gap: 10px;
-    font-size: 15px; color: rgba(255,255,255,0.72); line-height: 1.5;
+    font-size: clamp(14px, 1.3vw, 16px); color: rgba(255,255,255,0.72); line-height: 1.5;
   }
   .exam-list li::before { content: '◆'; color: var(--gold); font-size: 7px; margin-top: 6px; flex-shrink: 0; }
 
   /* ── TECHNIQUE CARDS ── */
-  .techniques-grid { display: flex; flex-direction: column; gap: 12px; }
+  .techniques-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
   .technique-card {
     background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 6px; overflow: hidden; transition: border-color 0.25s;
+    border-radius: 8px; overflow: hidden; transition: border-color 0.25s, transform 0.2s, box-shadow 0.2s;
     animation: fadeUp 0.35s ease;
   }
+  .technique-card:hover {
+    border-color: rgba(201,168,76,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
   .technique-card:active { background: rgba(255,255,255,0.04); }
-  .technique-card-body { padding: 16px; }
+  .technique-card-body { padding: 20px; }
   .technique-japanese {
-    font-family: 'Cinzel', serif; font-size: 20px; font-weight: 600;
-    color: var(--gold-light); margin-bottom: 1px;
+    font-family: 'Cinzel', serif; font-size: clamp(20px, 2.5vw, 26px); font-weight: 600;
+    color: var(--gold-light); margin-bottom: 2px;
   }
   .technique-romaji {
-    font-size: 11px; letter-spacing: 2px; color: var(--mist);
+    font-size: clamp(10px, 1vw, 12px); letter-spacing: 2px; color: var(--mist);
     margin-bottom: 6px; font-family: 'Cinzel', serif; font-style: italic;
   }
-  .technique-english { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
-  .technique-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.65; }
-  .technique-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; flex-wrap: wrap; gap: 8px; }
+  .technique-english { font-size: clamp(15px, 1.5vw, 18px); font-weight: 600; color: var(--white); margin-bottom: 10px; }
+  .technique-desc { font-size: clamp(13px, 1.2vw, 15px); color: rgba(255,255,255,0.5); line-height: 1.7; }
+  .technique-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; flex-wrap: wrap; gap: 8px; }
   .technique-tag {
     font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px;
-    text-transform: uppercase; padding: 3px 8px; border-radius: 2px;
+    text-transform: uppercase; padding: 3px 9px; border-radius: 2px;
   }
   .tag-kihon { background: rgba(192,57,43,0.18); color: #e07060; border: 1px solid rgba(192,57,43,0.28); }
   .tag-kata { background: rgba(26,95,168,0.18); color: #6090e0; border: 1px solid rgba(26,95,168,0.28); }
@@ -246,29 +272,32 @@
 
   .video-link {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 12px; background: rgba(192,57,43,0.12);
+    padding: 7px 14px; background: rgba(192,57,43,0.12);
     border: 1px solid rgba(192,57,43,0.25); border-radius: 3px;
     color: #e07060; text-decoration: none;
     font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px;
-    text-transform: uppercase; transition: background 0.2s;
+    text-transform: uppercase; transition: background 0.2s, color 0.2s;
     -webkit-tap-highlight-color: transparent; touch-action: manipulation;
   }
-  .video-link:active { background: rgba(192,57,43,0.25); }
+  .video-link:hover { background: rgba(192,57,43,0.25); color: #ff9080; }
+  .video-link:active { background: rgba(192,57,43,0.3); }
 
   /* ── KATA CARDS ── */
   .kata-card {
-    display: flex; gap: 16px; background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;
-    padding: 16px; margin-bottom: 10px; transition: border-color 0.25s;
+    display: flex; gap: 20px; background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+    padding: 20px; margin-bottom: 12px;
+    transition: border-color 0.25s, background 0.25s;
   }
+  .kata-card:hover { border-color: rgba(26,95,168,0.35); background: rgba(26,95,168,0.04); }
   .kata-card:active { border-color: rgba(26,95,168,0.35); }
   .kata-number {
-    font-family: 'Cinzel Decorative', serif; font-size: 22px;
-    color: rgba(255,255,255,0.08); flex-shrink: 0; width: 32px; line-height: 1;
+    font-family: 'Cinzel Decorative', serif; font-size: clamp(20px, 2.5vw, 32px);
+    color: rgba(255,255,255,0.07); flex-shrink: 0; width: 40px; line-height: 1;
   }
-  .kata-info h4 { font-family: 'Cinzel', serif; font-size: 15px; color: var(--gold-light); margin-bottom: 2px; }
-  .kata-meaning { font-size: 11px; color: var(--mist); font-style: italic; margin-bottom: 6px; font-family: 'Cinzel', serif; }
-  .kata-desc { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+  .kata-info h4 { font-family: 'Cinzel', serif; font-size: clamp(14px, 1.5vw, 17px); color: var(--gold-light); margin-bottom: 3px; }
+  .kata-meaning { font-size: clamp(11px, 1vw, 13px); color: var(--mist); font-style: italic; margin-bottom: 8px; font-family: 'Cinzel', serif; }
+  .kata-desc { font-size: clamp(13px, 1.2vw, 15px); color: rgba(255,255,255,0.55); line-height: 1.65; }
 
   /* ── OFFLINE TOAST ── */
   #offlineToast {
@@ -281,6 +310,123 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   }
   #offlineToast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ══════════════════════════════════════════
+     TABLET  ≥ 700px
+  ══════════════════════════════════════════ */
+  @media (min-width: 700px) {
+    .belt-nav { justify-content: center; }
+    .belt-tab { padding: 16px 22px; font-size: 11px; }
+    .belt-dot { width: 12px; height: 12px; }
+
+    .exam-list { grid-template-columns: 1fr 1fr; }
+    .techniques-grid { grid-template-columns: 1fr 1fr; }
+
+    main { padding: 36px 32px calc(var(--safe-bottom) + 48px); }
+
+    .belt-hero { padding: 28px 32px; }
+    .belt-visual { width: 80px; height: 20px; }
+
+    .progress-line { width: 40px; }
+    .progress-dot { width: 18px; height: 18px; }
+    .progress-label { font-size: 8px; }
+  }
+
+  /* ══════════════════════════════════════════
+     DESKTOP  ≥ 1024px  — sidebar layout
+  ══════════════════════════════════════════ */
+  @media (min-width: 1024px) {
+    /* Header gets taller with larger type */
+    header { padding: calc(var(--safe-top) + 56px) 40px 40px; }
+    h1 { font-size: clamp(36px, 4vw, 56px); }
+    .subtitle { font-size: 12px; letter-spacing: 5px; }
+    .header-badge { font-size: 10px; }
+
+    /* Progress path larger */
+    .progress-dot { width: 20px; height: 20px; }
+    .progress-line { width: 56px; }
+    .progress-label { font-size: 9px; }
+
+    /* Belt nav centred, bigger tabs */
+    .belt-nav { justify-content: center; }
+    .belt-tab { padding: 18px 28px; font-size: 11px; letter-spacing: 3px; }
+
+    /* Sidebar + content shell */
+    .app-shell { max-width: 1280px; margin: 0 auto; }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 260px;
+      flex-shrink: 0;
+      padding: 36px 0 36px 36px;
+      position: sticky;
+      top: 52px; /* height of sticky nav */
+      height: calc(100vh - 52px);
+      overflow-y: auto;
+      scrollbar-width: none;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .sidebar::-webkit-scrollbar { display: none; }
+
+    .sidebar-label {
+      font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--mist); margin-bottom: 20px;
+    }
+
+    .sidebar-belt {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; border-radius: 6px; cursor: pointer;
+      border: 1px solid transparent; transition: all 0.25s;
+      margin-bottom: 4px; text-align: left; background: transparent;
+      color: rgba(255,255,255,0.45); font-family: 'Cinzel', serif;
+      font-size: 12px; letter-spacing: 1px;
+    }
+    .sidebar-belt:hover { background: rgba(255,255,255,0.04); color: var(--white); }
+    .sidebar-belt.active {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.08);
+      color: var(--white);
+    }
+    .sidebar-belt-swatch {
+      width: 28px; height: 8px; border-radius: 2px; flex-shrink: 0;
+    }
+    .sidebar-belt-info { flex: 1; }
+    .sidebar-belt-name { font-size: 12px; margin-bottom: 1px; }
+    .sidebar-belt-kyu { font-size: 9px; color: var(--mist); letter-spacing: 1px; }
+    .sidebar-you { font-size: 7px; background: var(--red); color: white; padding: 1px 5px; border-radius: 2px; }
+
+    .sidebar-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 16px 0; }
+
+    main {
+      flex: 1;
+      max-width: none;
+      padding: 36px 48px calc(var(--safe-bottom) + 60px);
+    }
+
+    /* Three columns for techniques on wide screens */
+    .techniques-grid { grid-template-columns: repeat(3, 1fr); }
+
+    /* Two columns for exam list */
+    .exam-list { grid-template-columns: 1fr 1fr; }
+
+    /* Wider kata cards */
+    .kata-card { padding: 24px 28px; gap: 24px; }
+    .kata-number { font-size: 36px; width: 48px; }
+
+    .belt-hero { padding: 32px 36px; gap: 28px; }
+    .belt-visual { width: 100px; height: 24px; }
+  }
+
+  /* ══════════════════════════════════════════
+     WIDE DESKTOP  ≥ 1400px
+  ══════════════════════════════════════════ */
+  @media (min-width: 1400px) {
+    .sidebar { width: 300px; padding-left: 48px; }
+    main { padding: 48px 64px calc(var(--safe-bottom) + 60px); }
+    .techniques-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .exam-list { grid-template-columns: 1fr 1fr 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -299,7 +445,20 @@
 
 <div class="progress-path" id="progressPath"></div>
 <nav class="belt-nav" id="beltNav"></nav>
-<main id="mainContent"></main>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">Belt Progression</div>
+    <div id="sidebarBelts"></div>
+    <div class="sidebar-divider"></div>
+    <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--mist);line-height:1.8;">
+      極真会館<br>Kyokushinkai<br>
+      <span style="font-size:8px;opacity:0.5">Mas Oyama · 1964</span>
+    </div>
+  </aside>
+  <main id="mainContent"></main>
+</div>
+
 <div id="offlineToast">✓ Available offline</div>
 
 <script>
@@ -625,6 +784,32 @@ function buildBeltNav() {
   });
 }
 
+// ── SIDEBAR ──
+function buildSidebar() {
+  const container = document.getElementById('sidebarBelts');
+  if (!container) return;
+  const userIdx = beltOrder.indexOf(userBelt);
+  beltOrder.forEach((id, i) => {
+    const belt = belts.find(b => b.id === id);
+    const isUser = id === userBelt;
+    const achieved = i <= userIdx;
+    const btn = document.createElement('button');
+    btn.className = `sidebar-belt${isUser ? ' active' : ''}`;
+    btn.dataset.belt = id;
+    btn.style.opacity = achieved ? '1' : '0.4';
+    btn.innerHTML = `
+      <div class="sidebar-belt-swatch" style="background:${belt.color};box-shadow:0 2px 6px ${belt.color}55"></div>
+      <div class="sidebar-belt-info">
+        <div class="sidebar-belt-name">${belt.name}</div>
+        <div class="sidebar-belt-kyu">${belt.kyu}</div>
+      </div>
+      ${isUser ? '<span class="sidebar-you">YOU</span>' : ''}
+    `;
+    btn.onclick = () => switchBelt(id);
+    container.appendChild(btn);
+  });
+}
+
 // ── PANEL ──
 function buildPanel(belt) {
   return `
@@ -679,6 +864,9 @@ function buildTechCard(t) {
 function switchBelt(id) {
   document.querySelectorAll('.belt-tab').forEach(t=>t.classList.remove('active'));
   document.querySelector(`.belt-tab[data-belt="${id}"]`).classList.add('active');
+  document.querySelectorAll('.sidebar-belt').forEach(t=>t.classList.remove('active'));
+  const sb = document.querySelector(`.sidebar-belt[data-belt="${id}"]`);
+  if (sb) sb.classList.add('active');
   document.getElementById('mainContent').innerHTML = buildPanel(belts.find(b=>b.id===id));
   window.scrollTo({top:0, behavior:'smooth'});
 }
@@ -719,6 +907,7 @@ window.addEventListener('appinstalled', () => { banner.style.display = 'none'; }
 // ── INIT ──
 buildProgressPath();
 buildBeltNav();
+buildSidebar();
 switchBelt('orange');
 </script>
 </body>
