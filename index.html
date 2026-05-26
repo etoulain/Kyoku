@@ -10,6 +10,7 @@
 <meta name="theme-color" content="#0a0a0c">
 <meta name="description" content="Belt-by-belt Kyokushin Karate study guide">
 <link rel="manifest" href="manifest.json">
+<script src="figures.js"></script>
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>Kyokushin — Path of the Belt</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -184,6 +185,15 @@
   .exam-list li { display:flex; align-items:flex-start; gap:10px; font-size:clamp(14px,1.3vw,16px); color:rgba(255,255,255,0.72); line-height:1.5; }
   .exam-list li::before { content:'◆'; color:var(--gold); font-size:7px; margin-top:6px; flex-shrink:0; }
 
+
+  /* ── TECHNIQUE FIGURE ── */
+  .tech-fig {
+    width: 100%;
+    height: 140px;
+    display: block;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .technique-card-body { padding: 16px; }
   /* ── TECHNIQUE CARDS ── */
   .techniques-grid { display:grid; grid-template-columns:1fr; gap:14px; }
   .technique-card {
@@ -1185,7 +1195,9 @@ function buildPanel(belt) {
 }
 
 function buildTechCard(t, ui) {
+  const figSvg = (typeof getFig !== 'undefined') ? getFig(t.romaji) : null;
   return `<div class="technique-card">
+    ${figSvg ? figSvg : ''}
     <div class="technique-card-body">
       <div class="technique-japanese">${t.japanese}</div>
       <div class="technique-romaji">${t.romaji}</div>
