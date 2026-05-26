@@ -139,14 +139,14 @@
   .belt-tab[data-belt="white"] .belt-dot { background:#e8e4dc; }
   .belt-tab[data-belt="orange"] .belt-dot { background:#e07020; }
   .belt-tab[data-belt="blue"] .belt-dot { background:#1a5fa8; }
-  .belt-tab[data-belt="yellow"] .belt-dot { background:#c4960c; }
+  .belt-tab[data-belt="yellow"] .belt-dot { background:#1a5fa8; }
   .belt-tab[data-belt="green"] .belt-dot { background:#2a7a3a; }
   .belt-tab[data-belt="brown"] .belt-dot { background:#6b3a1f; }
   .belt-tab[data-belt="black"] .belt-dot { background:#1a1a1a; border-color:var(--gold); }
   .belt-tab[data-belt="white"].active::after { background:#e8e4dc; }
   .belt-tab[data-belt="orange"].active::after { background:#e07020; }
   .belt-tab[data-belt="blue"].active::after { background:#1a5fa8; }
-  .belt-tab[data-belt="yellow"].active::after { background:#c4960c; }
+  .belt-tab[data-belt="yellow"].active::after { background:#1a5fa8; }
   .belt-tab[data-belt="green"].active::after { background:#2a7a3a; }
   .belt-tab[data-belt="brown"].active::after { background:#6b3a1f; }
   .belt-tab[data-belt="black"].active::after { background:var(--gold); }
@@ -473,209 +473,234 @@ const belts = [
   {
     id:'orange',
     name:{ en:'Orange Belt', fr:'Ceinture Orange' },
-    nameJP:'橙帯', kyu:'9th–8th Kyu',
+    nameJP:'橙帯', kyu:'10th Kyu',
     color:'#e07020', borderTop:'#e07020',
     desc:{
-      en:'The warmth of discipline. Orange marks a student who has survived first contact with the art. Basics are refined; the body begins to respond instinctively.',
-      fr:'La chaleur de la discipline. L\'orange marque un élève qui a survécu au premier contact avec l\'art. Les bases se raffinent ; le corps commence à répondre instinctivement.'
+      en:'Martial arts practice begins with HUMILITY and MODESTY. At 10th Kyu, the student learns the meaning of karate terminology, fundamental stances, basic kihon in Heiko Dachi, ido keiko in Zenkutsu Dachi, and the first two Taikyoku kata.',
+      fr:'La pratique des Arts Martiaux commence par l\'HUMILITÉ et la MODESTIE. Au 10e Kyu, l\'élève apprend la signification des termes, les postures fondamentales, le kihon de base en Heiko Dachi, l\'ido keiko en Zenkutsu Dachi et les deux premiers kata Taikyoku.'
     },
     examRequirements:{
       en:[
-        'All white belt requirements',
-        'Round kick (Mawashi geri) to body',
-        'Side kick (Yoko geri)',
-        'Back kick (Ushiro geri)',
-        'Knife hand block (Shuto uke)',
-        'Upper block (Jodan age uke)',
-        'Elbow strike (Empi uchi)',
-        'Taikyoku Sono Ni',
-        'Taikyoku Sono San',
-        'Basic one-step sparring (Ippon kumite)',
-        '50 push-ups on knuckles',
-        '100 kicks (each leg)',
+        'Know the meaning of: KARATE-DO, KYOKUSHIN-KAI, DOJO',
+        'Level vocabulary: Gedan (low), Chudan (middle), Jodan (high)',
+        'Direction vocabulary: Mae (front), Ushiro (back), Yoko (side), Sayu (left/right)',
+        'TACHIKATA: Heiko Dachi, Shizen Tai = Pudo Dachi (parallel stance), Zenkutsu Dachi (70-30%)',
+        'KIHON in Heiko Dachi static: Seiken Jodan/Chudan/Gedan Tsuki, Seiken Chudan Soto Uke, Seiken Chudan Uchi Uke, Seiken Jodan Uke, Seiken Gedan Barai',
+        'KIHON kicks static: Kin Geri, Kinteki Geri (Haisoku), Mae Geri (Chusoku), Mawashi Geri (Haisoku) gedan/chudan/jodan, Kansetsou Geri (Sokuto), Yoko Geri (Sokuto), Mae/Yoko Keage (Sokuto/Chusoku)',
+        'IDO KEIKO in Zenkutsu Dachi: advance, retreat, turn — Seiken Oi Tsuki or Gyaku Tsuki + Geri + Uke',
+        'KATA: Taikyoku Sono Ichi, Taikyoku Sono Ni',
+        'SOKUGI Taikyoku Sono Ichi, Ni',
+        'KUMITE: Yakusoku Ippon Kumite (Tori–Uke) — block an arm or leg attack, counter with arm or leg',
+        'KUMITE (18–40 yrs): 2 × 1 minute; RANDORI (+40 yrs and female under 18)',
+        'Evaluation criteria: attitude, guard, stability',
       ],
       fr:[
-        'Toutes les exigences de ceinture blanche',
-        'Coup de pied circulaire (Mawashi geri) au corps',
-        'Coup de pied latéral (Yoko geri)',
-        'Coup de pied arrière (Ushiro geri)',
-        'Blocage tranchant (Shuto uke)',
-        'Blocage haut (Jodan age uke)',
-        'Frappe du coude (Empi uchi)',
-        'Taikyoku Sono Ni',
-        'Taikyoku Sono San',
-        'Sparring en un pas de base (Ippon kumite)',
-        '50 pompes sur les phalanges',
-        '100 coups de pied (chaque jambe)',
+        'Connaître la signification de : KARATE-DO, KYOKUSHIN-KAI, DOJO',
+        'Vocabulaire des niveaux : Gedan (bas), Chudan (milieu), Jodan (haut)',
+        'Vocabulaire des directions : Mae (devant), Ushiro (derrière), Yoko (côté), Sayu (gauche/droite)',
+        'TACHIKATA : Heiko Dachi, Shizen Tai = Pudo Dachi (pieds parallèles), Zenkutsu Dachi (70-30%)',
+        'KIHON en Heiko Dachi statique : Seiken Jodan/Chudan/Gedan Tsuki, Seiken Chudan Soto Uke, Seiken Chudan Uchi Uke, Seiken Jodan Uke, Seiken Gedan Barai',
+        'KIHON coups de pied statiques : Kin Geri, Kinteki Geri (Haisoku), Mae Geri (Chusoku), Mawashi Geri (Haisoku) gedan/chudan/jodan, Kansetsou Geri (Sokuto), Yoko Geri (Sokuto), Mae/Yoko Keage (Sokuto/Chusoku)',
+        'IDO KEIKO en Zenkutsu Dachi : avancer, reculer, tourner — Seiken Oi Tsuki ou Gyaku Tsuki + Geri + Uke',
+        'KATA : Taikyoku Sono Ichi, Taikyoku Sono Ni',
+        'SOKUGI Taikyoku Sono Ichi, Ni',
+        'KUMITE : Yakusoku Ippon Kumite (Tori–Uke) — bloquer attaque de bras/jambe, contre-attaque bras/jambe',
+        'KUMITE (18–40 ans) : 2 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines – 18 ans)',
+        'Critères d\'évaluation : l\'attitude, la garde, la stabilité',
       ]
     },
     techniques:[
+      { japanese:'平行立ち', romaji:'Heiko Dachi', tag:'kihon',
+        english:'Parallel Stance', french:'Posture parallèle',
+        desc:{
+          en:'Feet shoulder-width apart, parallel. The neutral training stance used for static kihon practice. Allows equal weight distribution and full focus on arm techniques.',
+          fr:'Pieds écartés à la largeur des épaules, parallèles. La posture neutre utilisée pour le kihon statique. Permet une répartition égale du poids et une pleine concentration sur les techniques de bras.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+heiko+dachi+stance' },
+      { japanese:'前屈立ち', romaji:'Zenkutsu Dachi', tag:'kihon',
+        english:'Forward Stance (70–30%)', french:'Posture avancée (70–30%)',
+        desc:{
+          en:'70% weight on front leg, 30% on rear. The primary moving stance for ido keiko (moving basics). Long stance providing strong forward drive and stability.',
+          fr:'70% du poids sur la jambe avant, 30% sur l\'arrière. La posture de déplacement principale pour l\'ido keiko. Posture longue offrant une forte poussée frontale et une bonne stabilité.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+zenkutsu+dachi+stance' },
+      { japanese:'正拳上段突き', romaji:'Seiken Jodan Tsuki', tag:'kihon',
+        english:'Upper-Level Straight Punch', french:'Coup de poing direct niveau haut',
+        desc:{
+          en:'Straight punch targeting the face/head level (Jodan). Delivered from the hip with full body rotation. First two knuckles make contact.',
+          fr:'Coup de poing direct ciblant le visage/la tête (Jodan). Propulsé depuis la hanche avec rotation complète du corps. Les deux premières articulations font contact.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+seiken+jodan+tsuki' },
+      { japanese:'正拳中段突き', romaji:'Seiken Chudan Tsuki', tag:'kihon',
+        english:'Middle-Level Straight Punch', french:'Coup de poing direct niveau milieu',
+        desc:{
+          en:'Straight punch targeting the solar plexus / chest level (Chudan). The most commonly used punch in Kyokushin kumite. Delivered with a sharp hip rotation.',
+          fr:'Coup de poing direct ciblant le plexus solaire / la poitrine (Chudan). Le coup de poing le plus utilisé en kumite Kyokushin. Délivré avec une rotation nette de la hanche.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+seiken+chudan+tsuki' },
+      { japanese:'前蹴り', romaji:'Mae Geri', tag:'kihon',
+        english:'Front Kick (Chusoku)', french:'Coup de pied frontal (Chusoku)',
+        desc:{
+          en:'Linear front kick using the ball of the foot (Chusoku). Knee rises first, then snaps forward. Retract fully after impact. Practiced both stationary and in ido keiko.',
+          fr:'Coup de pied frontal linéaire avec la plante du pied (Chusoku). Le genou monte d\'abord, puis fuse en avant. Rétractez complètement après l\'impact. Pratiqué statique et en ido keiko.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+mae+geri+front+kick' },
       { japanese:'回し蹴り', romaji:'Mawashi Geri', tag:'kihon',
-        english:'Roundhouse Kick', french:'Coup de pied circulaire',
+        english:'Roundhouse Kick (Haisoku) — Gedan/Chudan/Jodan', french:'Coup de pied circulaire (Haisoku) — Gedan/Chudan/Jodan',
         desc:{
-          en:"Kyokushin's signature weapon. The leg sweeps in a wide arc from the outside, striking with the ball of the foot or instep. Targets the body in full-contact rules.",
-          fr:"L'arme emblématique du Kyokushin. La jambe balaye en large arc de l'extérieur, frappant avec la plante ou le cou-de-pied. Cible le corps dans les règles de contact complet."
+          en:'Circular kick striking with the instep (Haisoku). Practiced at all three levels: Gedan (low), Chudan (body), Jodan (head). The signature Kyokushin kick.',
+          fr:'Coup de pied circulaire frappant avec le cou-de-pied (Haisoku). Pratiqué aux trois niveaux : Gedan (bas), Chudan (corps), Jodan (tête). Le coup de pied emblématique du Kyokushin.'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+mawashi+geri+roundhouse+kick' },
+        video:'https://www.youtube.com/results?search_query=kyokushin+mawashi+geri+haisoku' },
       { japanese:'横蹴り', romaji:'Yoko Geri', tag:'kihon',
-        english:'Side Kick', french:'Coup de pied latéral',
+        english:'Side Kick (Sokuto)', french:'Coup de pied latéral (Sokuto)',
         desc:{
-          en:'A linear kick delivered sideways. Hip turns over, knee drives up toward target, then extends with heel or blade of foot. Excellent for stopping attackers.',
-          fr:'Un coup de pied linéaire délivré latéralement. La hanche pivote, le genou monte vers la cible, puis s\'étend avec le talon ou le tranchant du pied. Excellent pour stopper les assaillants.'
+          en:'Side kick using the blade of the foot (Sokuto). Hip turns over, knee drives up, leg extends directly sideways. Also practiced as Yoko Keage (side snap kick).',
+          fr:'Coup de pied latéral avec le tranchant du pied (Sokuto). La hanche pivote, le genou monte, la jambe s\'étend directement sur le côté. Également pratiqué en Yoko Keage.'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+yoko+geri+side+kick' },
-      { japanese:'後ろ蹴り', romaji:'Ushiro Geri', tag:'kihon',
-        english:'Back Kick', french:'Coup de pied arrière',
+        video:'https://www.youtube.com/results?search_query=kyokushin+yoko+geri+sokuto' },
+      { japanese:'太極その一', romaji:'Taikyoku Sono Ichi', tag:'kata',
+        english:'First Cause — Form 1', french:'Première Cause — Forme 1',
         desc:{
-          en:'One of the most powerful kicks. Look over shoulder, drive heel directly backward into the target. Devastating when timed against an incoming attacker.',
-          fr:"L'un des coups de pied les plus puissants. Regardez par-dessus l'épaule, propulsez le talon directement vers l'arrière dans la cible. Dévastateur bien synchronisé contre un attaquant."
+          en:'First kata of Kyokushin. 20 movements in H-pattern with low blocks and straight punches in Zenkutsu Dachi. Also practiced as Sokugi (kicking version).',
+          fr:'Premier kata du Kyokushin. 20 mouvements en schéma H avec blocages bas et coups de poing en Zenkutsu Dachi. Également pratiqué en version Sokugi (coups de pied).'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+ushiro+geri+back+kick' },
-      { japanese:'手刀受け', romaji:'Shuto Uke', tag:'kihon',
-        english:'Knife Hand Block', french:'Blocage tranchant de la main',
+        video:'https://www.youtube.com/results?search_query=kyokushin+taikyoku+sono+ichi+kata' },
+      { japanese:'約束一本組手', romaji:'Yakusoku Ippon Kumite', tag:'kumite',
+        english:'Yakusoku Ippon Kumite (Tori–Uke)', french:'Yakusoku Ippon Kumite (Tori–Uke)',
         desc:{
-          en:'Uses the outer edge of the open hand. Performed in back stance. The blocking hand sweeps across while the other draws to the solar plexus.',
-          fr:"Utilise le tranchant externe de la main ouverte. S'effectue en posture arrière. La main de blocage balaie pendant que l'autre se rétracte au plexus solaire."
+          en:'Formal one-step sparring: Tori attacks with arm or leg; Uke blocks and counter-attacks with arm or leg. Builds distance, timing, and block-counter reflexes in a controlled format.',
+          fr:'Sparring formel en un pas : Tori attaque avec bras ou jambe ; Uke bloque et contre-attaque avec bras ou jambe. Développe la distance, le timing et les réflexes blocage-contre dans un cadre contrôlé.'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+shuto+uke+knife+hand+block' },
-      { japanese:'肘打ち', romaji:'Empi Uchi', tag:'kihon',
-        english:'Elbow Strike', french:'Frappe du coude',
-        desc:{
-          en:"Short-range and devastating. The elbow is the body's hardest weapon. Can be forward, side, or upward. Essential for close-range combat.",
-          fr:"Courte portée et dévastateur. Le coude est l'arme la plus dure du corps. Peut être frontal, latéral ou ascendant. Essentiel pour le combat rapproché."
-        },
-        video:'https://www.youtube.com/results?search_query=kyokushin+empi+uchi+elbow+strike' },
-      { japanese:'一本組手', romaji:'Ippon Kumite', tag:'kumite',
-        english:'One-Step Sparring', french:'Sparring en un pas',
-        desc:{
-          en:'Attacker announces and delivers one technique; defender blocks and counter-attacks. Builds distance awareness, timing, and controlled power in a structured format.',
-          fr:"L'attaquant annonce et délivre une technique ; le défenseur bloque et contre-attaque. Développe la conscience de la distance, le timing et la puissance contrôlée dans un cadre structuré."
-        },
-        video:'https://www.youtube.com/results?search_query=kyokushin+ippon+kumite+one+step+sparring' },
-      { japanese:'太極その二', romaji:'Taikyoku Sono Ni', tag:'kata',
-        english:'First Cause — Form 2', french:'Première Cause — Forme 2',
-        desc:{
-          en:'Same H-pattern as Sono Ichi but uses upper blocks instead of low blocks. Reinforces how to adjust defense to different attack levels.',
-          fr:'Même schéma en H que Sono Ichi mais avec des blocages hauts au lieu des blocages bas. Renforce l\'adaptation de la défense à différents niveaux d\'attaque.'
-        },
-        video:'https://www.youtube.com/results?search_query=kyokushin+taikyoku+sono+ni+kata' },
+        video:'https://www.youtube.com/results?search_query=kyokushin+yakusoku+ippon+kumite' },
     ],
     kata:[
+      { name:'Taikyoku Sono Ichi',
+        meaning:{ en:'First Cause — Number One', fr:'Première Cause — Numéro Un' },
+        desc:{
+          en:'20 movements in an H-pattern. Alternates Gedan Barai (low block) and Seiken Oi Tsuki (straight punch) in Zenkutsu Dachi. The embusen teaches spatial orientation. Also learned as Sokugi (kick version).',
+          fr:'20 mouvements en schéma H. Alterne Gedan Barai (blocage bas) et Seiken Oi Tsuki (coup de poing direct) en Zenkutsu Dachi. L\'embusen enseigne l\'orientation spatiale. Appris aussi en version Sokugi.'
+        }
+      },
       { name:'Taikyoku Sono Ni',
         meaning:{ en:'First Cause — Number Two', fr:'Première Cause — Numéro Deux' },
         desc:{
-          en:'Same pattern as Sono Ichi, replacing low blocks with rising blocks (jodan age uke). Trains adaptation of defense to high attacks while maintaining forward stance.',
-          fr:'Même schéma que Sono Ichi, remplaçant les blocages bas par des blocages montants (jodan age uke). Entraîne l\'adaptation de la défense aux attaques hautes.'
-        }
-      },
-      { name:'Taikyoku Sono San',
-        meaning:{ en:'First Cause — Number Three', fr:'Première Cause — Numéro Trois' },
-        desc:{
-          en:'Introduces the middle inside block (uchi uke). Completes the Taikyoku trilogy. The student can now reference low, high, and middle defenses in the same framework.',
-          fr:'Introduit le blocage médian intérieur (uchi uke). Complète la trilogie Taikyoku. L\'élève peut désormais référencer les défenses basses, hautes et médianes dans le même cadre.'
+          en:'Same H-pattern as Sono Ichi, replacing low blocks with Jodan Age Uke (rising blocks). Trains the student to adapt defense to high attacks. Also practiced as Sokugi Taikyoku Sono Ni.',
+          fr:'Même schéma H que Sono Ichi, remplaçant les blocages bas par Jodan Age Uke (blocages montants). Entraîne l\'adaptation de la défense aux attaques hautes. Pratiqué aussi en Sokugi.'
         }
       }
     ]
   },
   {
     id:'blue',
-    name:{ en:'Blue Belt', fr:'Ceinture Bleue' },
-    nameJP:'青帯', kyu:'7th–6th Kyu',
-    color:'#1a5fa8', borderTop:'#3a7fd8',
+    name:{ en:'Orange Stripe Belt', fr:'Ceinture Orange Barrette' },
+    nameJP:'橙帯', kyu:'9th Kyu',
+    color:'#e07020', borderTop:'#1a5fa8',
     desc:{
-      en:'The depth of water — deceptively calm, powerfully moving. Combinations begin to feel natural and the body moves without conscious thought.',
-      fr:'La profondeur de l\'eau — trompeusement calme, puissamment mouvante. Les combinaisons commencent à sembler naturelles et le corps se meut sans pensée consciente.'
+      en:'Founder of KYOKUSHIN style: Sosai Masutatsu OYAMA (1923–1994). Testamentary heir: Kancho Shokei MATSUI (born 1963). At 9th Kyu the student deepens vocabulary, adds Uraken techniques, learns Kokutsu Dachi and Yoi Dachi, and chains two-technique combinations.',
+      fr:'Fondateur du style KYOKUSHIN : Sosai Masutatsu OYAMA (1923–1994). Héritier testamentaire : Kancho Shokei MATSUI (né en 1963). Au 9e Kyu, l\'élève approfondit le vocabulaire, ajoute les techniques Uraken, apprend Kokutsu Dachi et Yoi Dachi, et enchaîne des combinaisons de 2 techniques.'
     },
     examRequirements:{
       en:[
-        'All previous requirements',
-        'Spinning back kick (Ushiro mawashi geri)',
-        'Axe kick (Kakato geri)',
-        'Knee strike (Hiza geri)',
-        'Sweeps (Ashi barai)',
-        'Inner thigh kick (Uchi mawashi geri)',
-        'Pinan Sono Ichi kata',
-        'Pinan Sono Ni kata',
-        '3-step combination sparring',
-        '2 minutes of free sparring (jiyu kumite)',
-        '10 board breaks (hand or foot)',
+        'Know: Sosai = Founder, Kancho = Director; Anza = seated cross-legged, Seiza = seated on heels',
+        'Know: Uchi = attack, Uke = block, Oi Tsuki = lunge punch, Gyaku Tsuki = reverse punch',
+        'Know: Maeni = forward, Sagari = backward, Mawatte = turn, Migi = right, Hidari = left, Uraken = back of fist',
+        'Count to 10 in Japanese',
+        'TACHIKATA: Kokutsu Dachi (30–70%), Yoi Dachi (50–50%)',
+        'KIHON in Heiko Dachi static — Uraken techniques: Uraken Jodan Yoko Uchi, Uraken Ganmen Uchi, Uraken Sayu Uchi, Uraken Hizo Uchi, Uraken Oroshi Uchi, Uraken Mawashi Uchi',
+        'IDO KEIKO in Zenkutsu Dachi (maeni, sagari, mawatte): Uchimawashi Geri (Japon) = Mawashi Uchi Keage (Haisoku), Sotomawashi Geri (Japon) = Mawashi Soto Keage (Teisoku), Ushiro Geri (Chusoku/Kakato) jodan/chudan/gedan',
+        'IDO KEIKO in Kokutsu Dachi (maeni, sagari, mawatte): Seiken Oi Tsuki or Gyaku Tsuki + Uke + Geri',
+        'IDO KEIKO in Zenkutsu Dachi — 2-technique chains (maeni, sagari, mawatte): e.g. Jodan Oi Tsuki suivi de Chudan Gyaku Tsuki sur 1 déplacement, Chudan Mae Geri suivi de Jodan Mawashi Geri (même pied, reposant entre les 2 coups), Jodan Uke suivi de Gedan Barai même bras',
+        'KATA: Taikyoku Sono Ichi, Ni, San; Sokugi Taikyoku Sono Ichi, Ni, San',
+        'KUMITE: Yakusoku Ippon Kumite (Tori–Uke) — block arm or leg attack, counter with arm or leg',
+        'KUMITE (18–40 yrs): 3 × 1 minute; RANDORI (+40 yrs and female under 18)',
+        'Evaluation criteria: attitude, guard, stability',
       ],
       fr:[
-        'Toutes les exigences précédentes',
-        'Coup de pied arrière circulaire (Ushiro mawashi geri)',
-        'Coup de pied hache (Kakato geri)',
-        'Coup de genou (Hiza geri)',
-        'Balayages (Ashi barai)',
-        'Coup de pied intérieur (Uchi mawashi geri)',
-        'Kata Pinan Sono Ichi',
-        'Kata Pinan Sono Ni',
-        'Sparring en combinaisons de 3 temps',
-        '2 minutes de kumite libre (jiyu kumite)',
-        '10 cassages de planches (main ou pied)',
+        'Connaître : Sosai = Fondateur, Kancho = Directeur ; Anza = assis en tailleur, Seiza = assis sur les talons',
+        'Connaître : Uchi = attaque, Uke = blocage, Oi Tsuki = coup en avançant, Gyaku Tsuki = coup de poing opposé',
+        'Connaître : Maeni = en avançant, Sagari = en reculant, Mawatte = tournez, Migi = droit, Hidari = gauche, Uraken = dessus du poing',
+        'Savoir compter jusqu\'à 10 en Japonais',
+        'TACHIKATA : Kokutsu Dachi (30–70%), Yoi Dachi (50–50%)',
+        'KIHON en Heiko Dachi statique — techniques Uraken : Uraken Jodan Yoko Uchi, Uraken Ganmen Uchi, Uraken Sayu Uchi, Uraken Hizo Uchi, Uraken Oroshi Uchi, Uraken Mawashi Uchi',
+        'IDO KEIKO en Zenkutsu Dachi (maeni, sagari, mawatte) : Uchimawashi Geri (Japon) = Mawashi Uchi Keage (Haisoku), Sotomawashi Geri (Japon) = Mawashi Soto Keage (Teisoku), Ushiro Geri (Chusoku/Kakato) jodan/chudan/gedan',
+        'IDO KEIKO en Kokutsu Dachi (maeni, sagari, mawatte) : Seiken Oi Tsuki ou Gyaku Tsuki + Uke + Geri',
+        'IDO KEIKO en Zenkutsu Dachi — enchaînement de 2 techniques (maeni, sagari, mawatte) : ex. Jodan Oi Tsuki suivi de Chudan Gyaku Tsuki sur 1 déplacement, Chudan Mae Geri suivi de Jodan Mawashi Geri même pied, Jodan Uke suivi de Gedan Barai même bras',
+        'KATA : Taikyoku Sono Ichi, Ni, San ; Sokugi Taikyoku Sono Ichi, Ni, San',
+        'KUMITE : Yakusoku Ippon Kumite (Tori–Uke) — bloquer attaque de bras ou de jambe, contre-attaque bras ou jambe',
+        'KUMITE (18–40 ans) : 3 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines – 18 ans)',
+        'Critères d\'évaluation : l\'attitude, la garde, la stabilité',
       ]
     },
     techniques:[
-      { japanese:'後ろ回し蹴り', romaji:'Ushiro Mawashi Geri', tag:'kihon',
-        english:'Spinning Back Roundhouse', french:'Circulaire arrière tournant',
+      { japanese:'後屈立ち', romaji:'Kokutsu Dachi', tag:'kihon',
+        english:'Back Stance (30–70%)', french:'Posture arrière (30–70%)',
         desc:{
-          en:'A spinning kick combining body rotation with a roundhouse trajectory. The spin generates tremendous momentum. Timing and hip turnover are everything.',
-          fr:'Un coup de pied tournant combinant rotation du corps et trajectoire circulaire. La rotation génère une énergie cinétique considérable. Le timing et la rotation de la hanche sont essentiels.'
+          en:'30% weight on front leg, 70% on rear. Used for defensive techniques and knife-hand blocks. Allows rapid withdrawal and counter-attack.',
+          fr:'30% du poids sur la jambe avant, 70% sur l\'arrière. Utilisée pour les techniques défensives et les blocages tranchants. Permet un retrait rapide et une contre-attaque.'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+ushiro+mawashi+geri+spinning' },
-      { japanese:'踵落とし', romaji:'Kakato Geri', tag:'kihon',
-        english:'Heel Drop / Axe Kick', french:'Coup de pied hache',
+        video:'https://www.youtube.com/results?search_query=kyokushin+kokutsu+dachi+back+stance' },
+      { japanese:'用意立ち', romaji:'Yoi Dachi', tag:'kihon',
+        english:'Ready Stance (50–50%)', french:'Posture prête (50–50%)',
         desc:{
-          en:'The leg rises high before the heel drops vertically onto the target — usually the collarbone or head. Requires significant flexibility.',
-          fr:'La jambe monte haut avant que le talon s\'abatte verticalement sur la cible — généralement la clavicule ou la tête. Nécessite une grande souplesse.'
+          en:'Equal weight on both legs (50–50%). A neutral fighting stance between Zenkutsu and Kokutsu. Provides balance between offense and defense.',
+          fr:'Poids égal sur les deux jambes (50–50%). Une posture de combat neutre entre Zenkutsu et Kokutsu. Offre un équilibre entre attaque et défense.'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+kakato+geri+axe+kick' },
-      { japanese:'膝蹴り', romaji:'Hiza Geri', tag:'kihon',
-        english:'Knee Strike', french:'Frappe du genou',
+        video:'https://www.youtube.com/results?search_query=kyokushin+yoi+dachi+stance' },
+      { japanese:'裏拳上段横打ち', romaji:'Uraken Jodan Yoko Uchi', tag:'kihon',
+        english:'Back-Fist Upper-Level Side Strike', french:'Frappe latérale Uraken niveau haut',
         desc:{
-          en:"Pull the opponent's head or body down while driving the knee upward into the midsection. One of the most effective close-range weapons in Kyokushin.",
-          fr:"Tirer la tête ou le corps de l'adversaire vers le bas tout en propulsant le genou vers le haut dans le torse. L'une des armes rapprochées les plus efficaces du Kyokushin."
+          en:'Strike using the back of the fist (Uraken) horizontally to the head level. Delivered from a chamber position with a snapping elbow action. Fast and deceptive.',
+          fr:'Frappe avec le dos du poing (Uraken) horizontalement au niveau de la tête. Délivrée depuis une position de chambre avec un mouvement de fouet du coude. Rapide et trompeuse.'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+hiza+geri+knee+strike' },
-      { japanese:'足払い', romaji:'Ashi Barai', tag:'kumite',
-        english:'Foot Sweep', french:'Balayage du pied',
+        video:'https://www.youtube.com/results?search_query=kyokushin+uraken+jodan+yoko+uchi' },
+      { japanese:'裏拳顔面打ち', romaji:'Uraken Ganmen Uchi', tag:'kihon',
+        english:'Back-Fist Face Strike', french:'Frappe Uraken au visage',
         desc:{
-          en:'A low sweep targeting the ankle or lower leg to unbalance the opponent. Can set up follow-up strikes. Sweep as weight shifts forward.',
-          fr:'Un balayage bas ciblant la cheville ou le bas de la jambe pour déséquilibrer l\'adversaire. Peut préparer des frappes de suivi. Balayez quand le poids avance.'
+          en:'Direct back-fist strike to the face, delivered in a straight line. Uses the snap of the wrist for acceleration. Effective as a quick counter from close range.',
+          fr:'Frappe directe dos-du-poing au visage, délivrée en ligne droite. Utilise le claquement du poignet pour l\'accélération. Efficace comme contre rapide à courte portée.'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+ashi+barai+foot+sweep' },
-      { japanese:'平安その一', romaji:'Pinan Sono Ichi', tag:'kata',
-        english:'Peaceful Mind — Form 1', french:'Esprit Serein — Forme 1',
+        video:'https://www.youtube.com/results?search_query=kyokushin+uraken+ganmen+uchi' },
+      { japanese:'内回し蹴り', romaji:'Uchimawashi Geri', tag:'kihon',
+        english:'Inside Roundhouse (Haisoku) — Mawashi Uchi Keage', french:'Circulaire intérieur (Haisoku) — Mawashi Uchi Keage',
         desc:{
-          en:'More complex than Taikyoku. Introduces new stances, timing changes, and multi-directional movement. Builds the foundation of kata knowledge.',
-          fr:'Plus complexe que le Taikyoku. Introduit de nouvelles postures, changements de rythme et mouvements multidirectionnels. Pose les bases de la connaissance des kata.'
+          en:'Kick sweeping inward in a circular arc (inside-out). Also called Mawashi Uchi Keage in Japanese terminology. Strikes with the instep. Targets face or ribs.',
+          fr:'Coup de pied balayant vers l\'intérieur en arc circulaire (dedans-dehors). Aussi appelé Mawashi Uchi Keage. Frappe avec le cou-de-pied. Cible le visage ou les côtes.'
         },
-        video:'https://www.youtube.com/results?search_query=kyokushin+pinan+sono+ichi+kata' },
+        video:'https://www.youtube.com/results?search_query=kyokushin+uchimawashi+geri' },
+      { japanese:'後ろ蹴り', romaji:'Ushiro Geri', tag:'kihon',
+        english:'Back Kick (Chusoku/Kakato) — all levels', french:'Coup de pied arrière (Chusoku/Kakato) — tous niveaux',
+        desc:{
+          en:'Rear kick striking with ball of foot or heel. Practiced at Jodan, Chudan, and Gedan levels in ido keiko. The pivot and heel drive are critical.',
+          fr:'Coup de pied arrière frappant avec la plante ou le talon. Pratiqué aux niveaux Jodan, Chudan et Gedan en ido keiko. Le pivot et la poussée du talon sont essentiels.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+ushiro+geri+all+levels' },
+      { japanese:'太極その三', romaji:'Taikyoku Sono San', tag:'kata',
+        english:'First Cause — Form 3', french:'Première Cause — Forme 3',
+        desc:{
+          en:'Completes the Taikyoku trilogy. Introduces middle inside block (Uchi Uke). Same H-pattern. Now the student references all three defense levels in one framework. Also learned as Sokugi.',
+          fr:'Complète la trilogie Taikyoku. Introduit le blocage médian intérieur (Uchi Uke). Même schéma H. L\'élève référence désormais les trois niveaux de défense dans un même cadre. Aussi en version Sokugi.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+taikyoku+sono+san+kata' },
     ],
     kata:[
-      { name:'Pinan Sono Ichi',
-        meaning:{ en:'Peaceful Mind — Number One', fr:'Esprit Serein — Numéro Un' },
+      { name:'Taikyoku Sono San',
+        meaning:{ en:'First Cause — Number Three', fr:'Première Cause — Numéro Trois' },
         desc:{
-          en:'Introduces side stance (kiba dachi) and the elbow strike. More directional changes than Taikyoku. The embusen forms an elongated pattern requiring mental mapping.',
-          fr:'Introduit la posture latérale (kiba dachi) et la frappe du coude. Plus de changements de direction qu\'en Taikyoku. L\'embusen forme un motif allongé exigeant une carte mentale.'
-        }
-      },
-      { name:'Pinan Sono Ni',
-        meaning:{ en:'Peaceful Mind — Number Two', fr:'Esprit Serein — Numéro Deux' },
-        desc:{
-          en:'Introduces the knife hand block (shuto uke) in back stance. Longer and more complex sequence. Teaches transition between open and closed hand techniques.',
-          fr:'Introduit le blocage tranchant (shuto uke) en posture arrière. Séquence plus longue et complexe. Enseigne la transition entre techniques main ouverte et fermée.'
+          en:'Completes the Taikyoku trilogy with middle inside block (Uchi Uke). All three Taikyoku kata are also required in their Sokugi (kicking) versions at this grade.',
+          fr:'Complète la trilogie Taikyoku avec le blocage médian intérieur (Uchi Uke). Les trois kata Taikyoku sont également exigés en version Sokugi (coups de pied) à ce grade.'
         }
       }
     ]
   },
   {
     id:'yellow',
-    name:{ en:'Yellow Belt', fr:'Ceinture Jaune' },
-    nameJP:'黄帯', kyu:'5th Kyu',
-    color:'#c4960c', borderTop:'#e8b820',
+    name:{ en:'Blue Belt', fr:'Ceinture Bleue' },
+    nameJP:'青帯', kyu:'8th Kyu',
+    color:'#1a5fa8', borderTop:'#3a7fd8',
     desc:{
-      en:'The energy of sunlight. Combinations flow, kata have meaning, and the student begins to understand the deeper principles beneath each technique.',
-      fr:'L\'énergie du soleil. Les combinaisons s\'enchaînent, les kata ont du sens, et l\'élève commence à comprendre les principes plus profonds sous-jacents à chaque technique.'
+      en:'The goal of KARATE-DO: mastery of the spirit through mastery of the body. At 8th Kyu the student adds Kiba Dachi and Sanchin Dachi, Sanchin-static kihon, advanced kicks in Heiko Dachi, and Pinan Sono Ichi kata.',
+      fr:'Le but du KARATE-DO : la maîtrise de l\'esprit à travers celle du corps. Au 8e Kyu, l\'élève ajoute Kiba Dachi et Sanchin Dachi, le kihon statique en Sanchin Dachi, des coups de pied avancés en Heiko Dachi, et le kata Pinan Sono Ichi.'
     },
     examRequirements:{
       en:[
