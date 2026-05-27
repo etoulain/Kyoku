@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#0a0a0c">
 <meta name="description" content="Belt-by-belt Kyokushin Karate study guide">
 <link rel="manifest" href="manifest.json">
-<script src="figures.js"></script>
+<script src="poster-imgs.js"></script>
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>Kyokushin — Path of the Belt</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -187,11 +187,20 @@
 
 
   /* ── TECHNIQUE FIGURE ── */
-  .tech-fig {
+  .poster-fig {
     width: 100%;
-    height: 140px;
-    display: block;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    height: 170px;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: #c8b89a;
+  }
+  .poster-fig-img {
+    position: absolute;
+    width: 600px;
+    height: 800px;
+    object-fit: none;
+    image-rendering: auto;
   }
   .technique-card-body { padding: 16px; }
   /* ── TECHNIQUE CARDS ── */
@@ -434,35 +443,35 @@ const belts = [
       ]
     },
     techniques:[
-      { japanese:'礼', romaji:'Rei', tag:'kihon',
+      { japanese:'礼', romaji:'Rei', posterKey:'musubi-dachi', tag:'kihon',
         english:'Bow / Salutation', french:'Salut / Révérence',
         desc:{
           en:'The bow is the foundation of respect in the dojo. Performed at entrance, before and after training, and toward partners.',
           fr:'Le salut est le fondement du respect au dojo. Il se pratique à l\'entrée, avant et après l\'entraînement, et envers les partenaires.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+rei+bow+etiquette' },
-      { japanese:'正拳突き', romaji:'Seiken Tsuki', tag:'kihon',
+      { japanese:'正拳突き', romaji:'Seiken Tsuki', posterKey:'oi-zuki', tag:'kihon',
         english:'Straight Punch', french:'Coup de poing direct',
         desc:{
           en:'The foundational punch. Delivered from the hip, rotating to impact. The first two knuckles make contact. Core is engaged throughout.',
           fr:'Le coup de poing fondamental. Propulsé depuis la hanche, avec rotation jusqu\'à l\'impact. Les deux premières articulations font contact. Les abdominaux restent engagés.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+seiken+tsuki+technique' },
-      { japanese:'前蹴り', romaji:'Mae Geri', tag:'kihon',
+      { japanese:'前蹴り', romaji:'Mae Geri', posterKey:'mae-geri', tag:'kihon',
         english:'Front Kick', french:'Coup de pied frontal',
         desc:{
           en:'A linear kick driven from the hip. The knee rises first, then the foot snaps forward using the ball of the foot. Retract fully after impact.',
           fr:'Un coup de pied linéaire propulsé depuis la hanche. Le genou monte d\'abord, puis le pied fuse en avant avec la plante. Retractez complètement après l\'impact.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+mae+geri+front+kick' },
-      { japanese:'下段払い', romaji:'Gedan Barai', tag:'kihon',
+      { japanese:'下段払い', romaji:'Gedan Barai', posterKey:'gedan-barai', tag:'kihon',
         english:'Low Block', french:'Blocage bas',
         desc:{
           en:'Sweeps down to deflect low attacks. Start from opposite ear, sweep diagonally down-and-out. Opposite hand retracts sharply to the hip.',
           fr:'Balaye vers le bas pour dévier les attaques basses. Partez de l\'oreille opposée, balayez en diagonale vers le bas et l\'extérieur. La main opposée se rétracte vivement sur la hanche.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+gedan+barai+low+block' },
-      { japanese:'太極その一', romaji:'Taikyoku Sono Ichi', tag:'kata',
+      { japanese:'太極その一', romaji:'Taikyoku Sono Ichi', posterKey:'oi-zuki', tag:'kata',
         english:'First Cause — Form 1', french:'Première Cause — Forme 1',
         desc:{
           en:'The first kata of Kyokushin. Twenty movements in an H-pattern: low blocks and straight punches in forward stance. Teaches structure, rhythm, and directional awareness.',
@@ -520,28 +529,28 @@ const belts = [
       ]
     },
     techniques:[
-      { japanese:'平行立ち', romaji:'Heiko Dachi', tag:'kihon',
+      { japanese:'平行立ち', romaji:'Heiko Dachi', posterKey:'heisoku-dachi', tag:'kihon',
         english:'Parallel Stance', french:'Posture parallèle',
         desc:{
           en:'Feet shoulder-width apart, parallel. The neutral training stance used for static kihon practice. Allows equal weight distribution and full focus on arm techniques.',
           fr:'Pieds écartés à la largeur des épaules, parallèles. La posture neutre utilisée pour le kihon statique. Permet une répartition égale du poids et une pleine concentration sur les techniques de bras.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+heiko+dachi+stance' },
-      { japanese:'前屈立ち', romaji:'Zenkutsu Dachi', tag:'kihon',
+      { japanese:'前屈立ち', romaji:'Zenkutsu Dachi', posterKey:'zenkutsu-dachi', tag:'kihon',
         english:'Forward Stance (70–30%)', french:'Posture avancée (70–30%)',
         desc:{
           en:'70% weight on front leg, 30% on rear. The primary moving stance for ido keiko (moving basics). Long stance providing strong forward drive and stability.',
           fr:'70% du poids sur la jambe avant, 30% sur l\'arrière. La posture de déplacement principale pour l\'ido keiko. Posture longue offrant une forte poussée frontale et une bonne stabilité.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+zenkutsu+dachi+stance' },
-      { japanese:'正拳上段突き', romaji:'Seiken Jodan Tsuki', tag:'kihon',
+      { japanese:'正拳上段突き', romaji:'Seiken Jodan Tsuki', posterKey:'oi-zuki', tag:'kihon',
         english:'Upper-Level Straight Punch', french:'Coup de poing direct niveau haut',
         desc:{
           en:'Straight punch targeting the face/head level (Jodan). Delivered from the hip with full body rotation. First two knuckles make contact.',
           fr:'Coup de poing direct ciblant le visage/la tête (Jodan). Propulsé depuis la hanche avec rotation complète du corps. Les deux premières articulations font contact.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+seiken+jodan+tsuki' },
-      { japanese:'正拳中段突き', romaji:'Seiken Chudan Tsuki', tag:'kihon',
+      { japanese:'正拳中段突き', romaji:'Seiken Chudan Tsuki', posterKey:'oi-zuki', tag:'kihon',
         english:'Middle-Level Straight Punch', french:'Coup de poing direct niveau milieu',
         desc:{
           en:'Straight punch targeting the solar plexus / chest level (Chudan). The most commonly used punch in Kyokushin kumite. Delivered with a sharp hip rotation.',
@@ -555,14 +564,14 @@ const belts = [
           fr:'Coup de pied frontal linéaire avec la plante du pied (Chusoku). Le genou monte d\'abord, puis fuse en avant. Rétractez complètement après l\'impact. Pratiqué statique et en ido keiko.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+mae+geri+front+kick' },
-      { japanese:'回し蹴り', romaji:'Mawashi Geri', tag:'kihon',
+      { japanese:'回し蹴り', romaji:'Mawashi Geri', posterKey:'mawashi-geri', tag:'kihon',
         english:'Roundhouse Kick (Haisoku) — Gedan/Chudan/Jodan', french:'Coup de pied circulaire (Haisoku) — Gedan/Chudan/Jodan',
         desc:{
           en:'Circular kick striking with the instep (Haisoku). Practiced at all three levels: Gedan (low), Chudan (body), Jodan (head). The signature Kyokushin kick.',
           fr:'Coup de pied circulaire frappant avec le cou-de-pied (Haisoku). Pratiqué aux trois niveaux : Gedan (bas), Chudan (corps), Jodan (tête). Le coup de pied emblématique du Kyokushin.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+mawashi+geri+haisoku' },
-      { japanese:'横蹴り', romaji:'Yoko Geri', tag:'kihon',
+      { japanese:'横蹴り', romaji:'Yoko Geri', posterKey:'yoko-geri-kekomi', tag:'kihon',
         english:'Side Kick (Sokuto)', french:'Coup de pied latéral (Sokuto)',
         desc:{
           en:'Side kick using the blade of the foot (Sokuto). Hip turns over, knee drives up, leg extends directly sideways. Also practiced as Yoko Keage (side snap kick).',
@@ -576,7 +585,7 @@ const belts = [
           fr:'Premier kata du Kyokushin. 20 mouvements en schéma H avec blocages bas et coups de poing en Zenkutsu Dachi. Également pratiqué en version Sokugi (coups de pied).'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+taikyoku+sono+ichi+kata' },
-      { japanese:'約束一本組手', romaji:'Yakusoku Ippon Kumite', tag:'kumite',
+      { japanese:'約束一本組手', romaji:'Yakusoku Ippon Kumite', posterKey:'morote-uke', tag:'kumite',
         english:'Yakusoku Ippon Kumite (Tori–Uke)', french:'Yakusoku Ippon Kumite (Tori–Uke)',
         desc:{
           en:'Formal one-step sparring: Tori attacks with arm or leg; Uke blocks and counter-attacks with arm or leg. Builds distance, timing, and block-counter reflexes in a controlled format.',
@@ -643,49 +652,49 @@ const belts = [
       ]
     },
     techniques:[
-      { japanese:'後屈立ち', romaji:'Kokutsu Dachi', tag:'kihon',
+      { japanese:'後屈立ち', romaji:'Kokutsu Dachi', posterKey:'kokutsu-dachi', tag:'kihon',
         english:'Back Stance (30–70%)', french:'Posture arrière (30–70%)',
         desc:{
           en:'30% weight on front leg, 70% on rear. Used for defensive techniques and knife-hand blocks. Allows rapid withdrawal and counter-attack.',
           fr:'30% du poids sur la jambe avant, 70% sur l\'arrière. Utilisée pour les techniques défensives et les blocages tranchants. Permet un retrait rapide et une contre-attaque.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+kokutsu+dachi+back+stance' },
-      { japanese:'用意立ち', romaji:'Yoi Dachi', tag:'kihon',
+      { japanese:'用意立ち', romaji:'Yoi Dachi', posterKey:'heisoku-dachi', tag:'kihon',
         english:'Ready Stance (50–50%)', french:'Posture prête (50–50%)',
         desc:{
           en:'Equal weight on both legs (50–50%). A neutral fighting stance between Zenkutsu and Kokutsu. Provides balance between offense and defense.',
           fr:'Poids égal sur les deux jambes (50–50%). Une posture de combat neutre entre Zenkutsu et Kokutsu. Offre un équilibre entre attaque et défense.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+yoi+dachi+stance' },
-      { japanese:'裏拳上段横打ち', romaji:'Uraken Jodan Yoko Uchi', tag:'kihon',
+      { japanese:'裏拳上段横打ち', romaji:'Uraken Jodan Yoko Uchi', posterKey:'uraken-uchi', tag:'kihon',
         english:'Back-Fist Upper-Level Side Strike', french:'Frappe latérale Uraken niveau haut',
         desc:{
           en:'Strike using the back of the fist (Uraken) horizontally to the head level. Delivered from a chamber position with a snapping elbow action. Fast and deceptive.',
           fr:'Frappe avec le dos du poing (Uraken) horizontalement au niveau de la tête. Délivrée depuis une position de chambre avec un mouvement de fouet du coude. Rapide et trompeuse.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+uraken+jodan+yoko+uchi' },
-      { japanese:'裏拳顔面打ち', romaji:'Uraken Ganmen Uchi', tag:'kihon',
+      { japanese:'裏拳顔面打ち', romaji:'Uraken Ganmen Uchi', posterKey:'uraken-uchi', tag:'kihon',
         english:'Back-Fist Face Strike', french:'Frappe Uraken au visage',
         desc:{
           en:'Direct back-fist strike to the face, delivered in a straight line. Uses the snap of the wrist for acceleration. Effective as a quick counter from close range.',
           fr:'Frappe directe dos-du-poing au visage, délivrée en ligne droite. Utilise le claquement du poignet pour l\'accélération. Efficace comme contre rapide à courte portée.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+uraken+ganmen+uchi' },
-      { japanese:'内回し蹴り', romaji:'Uchimawashi Geri', tag:'kihon',
+      { japanese:'内回し蹴り', romaji:'Uchimawashi Geri', posterKey:'yoko-geri-keage', tag:'kihon',
         english:'Inside Roundhouse (Haisoku) — Mawashi Uchi Keage', french:'Circulaire intérieur (Haisoku) — Mawashi Uchi Keage',
         desc:{
           en:'Kick sweeping inward in a circular arc (inside-out). Also called Mawashi Uchi Keage in Japanese terminology. Strikes with the instep. Targets face or ribs.',
           fr:'Coup de pied balayant vers l\'intérieur en arc circulaire (dedans-dehors). Aussi appelé Mawashi Uchi Keage. Frappe avec le cou-de-pied. Cible le visage ou les côtes.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+uchimawashi+geri' },
-      { japanese:'後ろ蹴り', romaji:'Ushiro Geri', tag:'kihon',
+      { japanese:'後ろ蹴り', romaji:'Ushiro Geri', posterKey:'ushiro-geri', tag:'kihon',
         english:'Back Kick (Chusoku/Kakato) — all levels', french:'Coup de pied arrière (Chusoku/Kakato) — tous niveaux',
         desc:{
           en:'Rear kick striking with ball of foot or heel. Practiced at Jodan, Chudan, and Gedan levels in ido keiko. The pivot and heel drive are critical.',
           fr:'Coup de pied arrière frappant avec la plante ou le talon. Pratiqué aux niveaux Jodan, Chudan et Gedan en ido keiko. Le pivot et la poussée du talon sont essentiels.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+ushiro+geri+all+levels' },
-      { japanese:'太極その三', romaji:'Taikyoku Sono San', tag:'kata',
+      { japanese:'太極その三', romaji:'Taikyoku Sono San', posterKey:'oi-zuki', tag:'kata',
         english:'First Cause — Form 3', french:'Première Cause — Forme 3',
         desc:{
           en:'Completes the Taikyoku trilogy. Introduces middle inside block (Uchi Uke). Same H-pattern. Now the student references all three defense levels in one framework. Also learned as Sokugi.',
@@ -824,21 +833,21 @@ const belts = [
       ]
     },
     techniques:[
-      { japanese:'安三', romaji:'Yantsu', tag:'kata',
+      { japanese:'安三', romaji:'Yantsu', posterKey:'morote-uke', tag:'kata',
         english:'Yantsu Kata', french:'Kata Yantsu',
         desc:{
           en:'A Chinese-derived kata meaning "to keep pure." Features low stances, powerful sweeping techniques, and characteristic Kyokushin circular movements.',
           fr:'Un kata d\'origine chinoise signifiant "rester pur". Comprend des postures basses, de puissantes techniques de balayage et les mouvements circulaires caractéristiques du Kyokushin.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+yantsu+kata' },
-      { japanese:'月の型', romaji:'Tsuki no Kata', tag:'kata',
+      { japanese:'月の型', romaji:'Tsuki no Kata', posterKey:'gyaku-zuki', tag:'kata',
         english:'Moon Kata', french:'Kata de la Lune',
         desc:{
           en:'Focused entirely on punching. Develops consistent punching power, hip rotation, and kime. Shorter but intensely focused.',
           fr:'Entièrement axé sur les coups de poing. Développe la puissance de frappe constante, la rotation des hanches et le kime. Plus court mais intensément concentré.'
         },
         video:'https://www.youtube.com/results?search_query=kyokushin+tsuki+no+kata' },
-      { japanese:'観空', romaji:'Kanku', tag:'kata',
+      { japanese:'観空', romaji:'Kanku', posterKey:'age-uke', tag:'kata',
         english:'Viewing the Sky', french:'Contempler le Ciel',
         desc:{
           en:'One of the longest and most important kata in Kyokushin. 65 movements including a dramatic opening, jumps, sweeps, and grappling applications.',
@@ -1195,9 +1204,9 @@ function buildPanel(belt) {
 }
 
 function buildTechCard(t, ui) {
-  const figSvg = (typeof getFig !== 'undefined') ? getFig(t.romaji) : null;
+  const figHtml = (typeof getPosterFig !== 'undefined') ? getPosterFig(t.posterKey || t.romaji.toLowerCase().replace(/\s+/g,'').replace(/[^a-z-]/g,'')) : null;
   return `<div class="technique-card">
-    ${figSvg ? figSvg : ''}
+    ${figHtml || ''}
     <div class="technique-card-body">
       <div class="technique-japanese">${t.japanese}</div>
       <div class="technique-romaji">${t.romaji}</div>
