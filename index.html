@@ -697,6 +697,28 @@
   }
   .glossary-item-jp { font-size: 11px; color: var(--mist); margin-top: 1px; }
 
+  /* Category headers inside the list */
+  .glossary-cat-header {
+    display: flex; align-items: center; gap: 9px;
+    padding: 14px 14px 5px;
+    margin-top: 2px;
+  }
+  .glossary-cat-header:first-child { padding-top: 10px; margin-top: 0; }
+  .glossary-cat-pip {
+    width: 18px; height: 2px; border-radius: 1px; flex-shrink: 0;
+  }
+  .glossary-cat-name {
+    font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-sub); flex: 1;
+  }
+  .glossary-cat-count {
+    font-size: 9px; font-family: 'Inter', sans-serif;
+    color: var(--mist);
+    background: rgba(255,255,255,0.06);
+    padding: 1px 7px; border-radius: 8px;
+  }
+
   /* Detail view — absolute overlay within panel */
   .glossary-detail {
     display: none; flex-direction: column;
@@ -909,52 +931,32 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'Natural stance (Heiko dachi)',
-        'Fighting stance (Zenkutsu dachi)',
-        'Front kick (Mae geri) — stationary',
-        'Straight punch (Oi tsuki)',
-        'Low block (Gedan barai)',
-        'Middle block (Uchi uke)',
-        'Horse stance (Kiba dachi)',
-        'Taikyoku Sono Ichi — first kata',
-        'Basic etiquette (Rei)',
-        'Dojo kun recitation',
-        'Know the meaning of: KARATE-DO, KYOKUSHIN-KAI, DOJO',
-        'Level vocabulary: Gedan (low), Chudan (middle), Jodan (high)',
-        'Direction vocabulary: Mae (front), Ushiro (back), Yoko (side), Sayu (left/right)',
-        'TACHIKATA: Heiko Dachi, Shizen Tai = Pudo Dachi (parallel stance), Zenkutsu Dachi (70-30%)',
-        'KIHON in Heiko Dachi static: Seiken Jodan/Chudan/Gedan Tsuki, Seiken Chudan Soto Uke, Seiken Chudan Uchi Uke, Seiken Jodan Uke, Seiken Gedan Barai',
-        'KIHON kicks static: Kin Geri, Kinteki Geri (Haisoku), Mae Geri (Chusoku), Mawashi Geri (Haisoku) gedan/chudan/jodan, Kansetsou Geri (Sokuto), Yoko Geri (Sokuto), Mae/Yoko Keage (Sokuto/Chusoku)',
-        'IDO KEIKO in Zenkutsu Dachi: advance, retreat, turn — Seiken Oi Tsuki or Gyaku Tsuki + Geri + Uke',
-        'KATA: Taikyoku Sono Ichi, Taikyoku Sono Ni',
-        'SOKUGI Taikyoku Sono Ichi, Ni',
-        'KUMITE: Yakusoku Ippon Kumite (Tori–Uke) — block an arm or leg attack, counter with arm or leg',
-        'KUMITE (18–40 yrs): 2 × 1 minute; RANDORI (+40 yrs and female under 18)',
-        'Evaluation criteria: attitude, guard, stability',
+        'VOCABULARY — Meaning of: Karate-Do · Kyokushin-Kai · Dojo · Rei (bow)',
+        'VOCABULARY — Levels: Gedan (low) · Chudan (middle) · Jodan (high)',
+        'VOCABULARY — Directions: Mae (front) · Ushiro (back) · Yoko (side) · Sayu (left/right)',
+        'VOCABULARY — Dojo Kun: recite the five precepts',
+        'TACHIKATA — Heiko Dachi · Fudo Dachi (Shizen Tai) · Zenkutsu Dachi (70/30%) · Kiba Dachi',
+        'KIHON (static, Heiko Dachi) — Seiken Jodan / Chudan / Gedan Tsuki · Chudan Soto Uke · Chudan Uchi Uke · Jodan Uke · Gedan Barai',
+        'KIHON — Kicks (static): Kin Geri · Kinteki Geri (Haisoku) · Mae Geri (Chusoku) · Mawashi Geri (Haisoku) Gedan/Chudan/Jodan · Kansetsu Geri (Sokuto) · Yoko Geri (Sokuto) · Mae/Yoko Keage',
+        'IDO KEIKO (Zenkutsu Dachi — maeni, sagari, mawatte) — Seiken Oi Tsuki or Gyaku Tsuki + Geri + Uke',
+        'KATA — Taikyoku Sono Ichi & Ni · Sokugi Taikyoku Sono Ichi & Ni',
+        'KUMITE — Yakusoku Ippon Kumite (Tori–Uke): block arm or leg attack, counter with arm or leg',
+        'KUMITE — 18–40 yrs: 2 × 1 min · +40 yrs / females under 18: Randori',
+        'EVALUATION — Attitude · Guard · Stability',
       ],
       fr:[
-        'Posture naturelle (Heiko dachi)',
-        'Posture de combat (Zenkutsu dachi)',
-        'Coup de pied frontal (Mae geri) — sur place',
-        'Coup de poing direct (Oi tsuki)',
-        'Blocage bas (Gedan barai)',
-        'Blocage médian (Uchi uke)',
-        'Posture du cavalier (Kiba dachi)',
-        'Taikyoku Sono Ichi — premier kata',
-        'Étiquette de base (Rei)',
-        'Récitation du Dojo kun',
-        'Connaître la signification de : KARATE-DO, KYOKUSHIN-KAI, DOJO',
-        'Vocabulaire des niveaux : Gedan (bas), Chudan (milieu), Jodan (haut)',
-        'Vocabulaire des directions : Mae (devant), Ushiro (derrière), Yoko (côté), Sayu (gauche/droite)',
-        'TACHIKATA : Heiko Dachi, Shizen Tai = Pudo Dachi (pieds parallèles), Zenkutsu Dachi (70-30%)',
-        'KIHON en Heiko Dachi statique : Seiken Jodan/Chudan/Gedan Tsuki, Seiken Chudan Soto Uke, Seiken Chudan Uchi Uke, Seiken Jodan Uke, Seiken Gedan Barai',
-        'KIHON coups de pied statiques : Kin Geri, Kinteki Geri (Haisoku), Mae Geri (Chusoku), Mawashi Geri (Haisoku) gedan/chudan/jodan, Kansetsou Geri (Sokuto), Yoko Geri (Sokuto), Mae/Yoko Keage (Sokuto/Chusoku)',
-        'IDO KEIKO en Zenkutsu Dachi : avancer, reculer, tourner — Seiken Oi Tsuki ou Gyaku Tsuki + Geri + Uke',
-        'KATA : Taikyoku Sono Ichi, Taikyoku Sono Ni',
-        'SOKUGI Taikyoku Sono Ichi, Ni',
-        'KUMITE : Yakusoku Ippon Kumite (Tori–Uke) — bloquer attaque de bras/jambe, contre-attaque bras/jambe',
-        'KUMITE (18–40 ans) : 2 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines – 18 ans)',
-        'Critères d\'évaluation : l\'attitude, la garde, la stabilité',
+        'VOCABULAIRE — Signification de : Karate-Do · Kyokushin-Kai · Dojo · Rei (salut)',
+        'VOCABULAIRE — Niveaux : Gedan (bas) · Chudan (milieu) · Jodan (haut)',
+        'VOCABULAIRE — Directions : Mae (avant) · Ushiro (arrière) · Yoko (côté) · Sayu (gauche/droite)',
+        'VOCABULAIRE — Dojo Kun : réciter les cinq préceptes',
+        'TACHIKATA — Heiko Dachi · Fudo Dachi (Shizen Tai) · Zenkutsu Dachi (70/30%) · Kiba Dachi',
+        'KIHON (statique, Heiko Dachi) — Seiken Jodan / Chudan / Gedan Tsuki · Chudan Soto Uke · Chudan Uchi Uke · Jodan Uke · Gedan Barai',
+        'KIHON — Coups de pied (statiques) : Kin Geri · Kinteki Geri (Haisoku) · Mae Geri (Chusoku) · Mawashi Geri (Haisoku) Gedan/Chudan/Jodan · Kansetsu Geri (Sokuto) · Yoko Geri (Sokuto) · Mae/Yoko Keage',
+        'IDO KEIKO (Zenkutsu Dachi — maeni, sagari, mawatte) — Seiken Oi Tsuki ou Gyaku Tsuki + Geri + Uke',
+        'KATA — Taikyoku Sono Ichi & Ni · Sokugi Taikyoku Sono Ichi & Ni',
+        'KUMITE — Yakusoku Ippon Kumite (Tori–Uke) : bloquer bras ou jambe, contre-attaquer bras ou jambe',
+        'KUMITE — 18–40 ans : 2 × 1 min · +40 ans / féminines –18 ans : Randori',
+        'ÉVALUATION — Attitude · Garde · Stabilité',
       ]
     },
     techniques:[
@@ -1050,34 +1052,34 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'Know: Sosai = Founder, Kancho = Director; Anza = seated cross-legged, Seiza = seated on heels',
-        'Know: Uchi = attack, Uke = block, Oi Tsuki = lunge punch, Gyaku Tsuki = reverse punch',
-        'Know: Maeni = forward, Sagari = backward, Mawatte = turn, Migi = right, Hidari = left, Uraken = back of fist',
-        'Count to 10 in Japanese',
-        'TACHIKATA: Kokutsu Dachi (30–70%), Yoi Dachi (50–50%)',
-        'KIHON in Heiko Dachi static — Uraken techniques: Uraken Jodan Yoko Uchi, Uraken Ganmen Uchi, Uraken Sayu Uchi, Uraken Hizo Uchi, Uraken Oroshi Uchi, Uraken Mawashi Uchi',
-        'IDO KEIKO in Zenkutsu Dachi (maeni, sagari, mawatte): Uchimawashi Geri (Japon) = Mawashi Uchi Keage (Haisoku), Sotomawashi Geri (Japon) = Mawashi Soto Keage (Teisoku), Ushiro Geri (Chusoku/Kakato) jodan/chudan/gedan',
-        'IDO KEIKO in Kokutsu Dachi (maeni, sagari, mawatte): Seiken Oi Tsuki or Gyaku Tsuki + Uke + Geri',
-        'IDO KEIKO in Zenkutsu Dachi — 2-technique chains (maeni, sagari, mawatte): e.g. Jodan Oi Tsuki suivi de Chudan Gyaku Tsuki sur 1 déplacement, Chudan Mae Geri suivi de Jodan Mawashi Geri (même pied, reposant entre les 2 coups), Jodan Uke suivi de Gedan Barai même bras',
-        'KATA: Taikyoku Sono Ichi, Ni, San; Sokugi Taikyoku Sono Ichi, Ni, San',
-        'KUMITE: Yakusoku Ippon Kumite (Tori–Uke) — block arm or leg attack, counter with arm or leg',
-        'KUMITE (18–40 yrs): 3 × 1 minute; RANDORI (+40 yrs and female under 18)',
-        'Evaluation criteria: attitude, guard, stability',
+        'VOCABULARY — Sosai (Founder) · Kancho (Director) · Anza (seated cross-legged) · Seiza (seated on heels)',
+        'VOCABULARY — Oi Tsuki (lunge punch) · Gyaku Tsuki (reverse punch) · Uchi (attack) · Uraken (back-fist)',
+        'VOCABULARY — Maeni (forward) · Sagari (backward) · Mawatte (turn) · Migi (right) · Hidari (left)',
+        'VOCABULARY — Count 1–10 in Japanese',
+        'TACHIKATA — Kokutsu Dachi (30/70%) · Yoi Dachi (50/50%)',
+        'KIHON — Uraken (static, Heiko Dachi): Jodan Yoko Uchi · Ganmen Uchi · Sayu Uchi · Hizo Uchi · Oroshi Uchi · Mawashi Uchi',
+        'IDO KEIKO (Zenkutsu Dachi) — Uchimawashi Geri (Haisoku) · Sotomawashi Geri (Teisoku) · Ushiro Geri (Chusoku/Kakato) Jodan/Chudan/Gedan',
+        'IDO KEIKO (Kokutsu Dachi) — Seiken Oi Tsuki or Gyaku Tsuki + Uke + Geri',
+        'IDO KEIKO — 2-technique chains (Zenkutsu Dachi): Jodan Oi Tsuki → Chudan Gyaku Tsuki · Chudan Mae Geri → Jodan Mawashi Geri (same foot) · Jodan Uke → Gedan Barai (same arm)',
+        'KATA — Taikyoku Sono Ichi, Ni, San · Sokugi Taikyoku Sono Ichi, Ni, San',
+        'KUMITE — Yakusoku Ippon Kumite (Tori–Uke): block arm or leg, counter with arm or leg',
+        'KUMITE — 18–40 yrs: 3 × 1 min · +40 yrs / females under 18: Randori',
+        'EVALUATION — Attitude · Guard · Stability',
       ],
       fr:[
-        'Connaître : Sosai = Fondateur, Kancho = Directeur ; Anza = assis en tailleur, Seiza = assis sur les talons',
-        'Connaître : Uchi = attaque, Uke = blocage, Oi Tsuki = coup en avançant, Gyaku Tsuki = coup de poing opposé',
-        'Connaître : Maeni = en avançant, Sagari = en reculant, Mawatte = tournez, Migi = droit, Hidari = gauche, Uraken = dessus du poing',
-        'Savoir compter jusqu\'à 10 en Japonais',
-        'TACHIKATA : Kokutsu Dachi (30–70%), Yoi Dachi (50–50%)',
-        'KIHON en Heiko Dachi statique — techniques Uraken : Uraken Jodan Yoko Uchi, Uraken Ganmen Uchi, Uraken Sayu Uchi, Uraken Hizo Uchi, Uraken Oroshi Uchi, Uraken Mawashi Uchi',
-        'IDO KEIKO en Zenkutsu Dachi (maeni, sagari, mawatte) : Uchimawashi Geri (Japon) = Mawashi Uchi Keage (Haisoku), Sotomawashi Geri (Japon) = Mawashi Soto Keage (Teisoku), Ushiro Geri (Chusoku/Kakato) jodan/chudan/gedan',
-        'IDO KEIKO en Kokutsu Dachi (maeni, sagari, mawatte) : Seiken Oi Tsuki ou Gyaku Tsuki + Uke + Geri',
-        'IDO KEIKO en Zenkutsu Dachi — enchaînement de 2 techniques (maeni, sagari, mawatte) : ex. Jodan Oi Tsuki suivi de Chudan Gyaku Tsuki sur 1 déplacement, Chudan Mae Geri suivi de Jodan Mawashi Geri même pied, Jodan Uke suivi de Gedan Barai même bras',
-        'KATA : Taikyoku Sono Ichi, Ni, San ; Sokugi Taikyoku Sono Ichi, Ni, San',
-        'KUMITE : Yakusoku Ippon Kumite (Tori–Uke) — bloquer attaque de bras ou de jambe, contre-attaque bras ou jambe',
-        'KUMITE (18–40 ans) : 3 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines – 18 ans)',
-        'Critères d\'évaluation : l\'attitude, la garde, la stabilité',
+        'VOCABULAIRE — Sosai (Fondateur) · Kancho (Directeur) · Anza (assis en tailleur) · Seiza (assis sur les talons)',
+        'VOCABULAIRE — Oi Tsuki (coup en avançant) · Gyaku Tsuki (coup opposé) · Uchi (attaque) · Uraken (dos du poing)',
+        'VOCABULAIRE — Maeni (en avançant) · Sagari (en reculant) · Mawatte (tourner) · Migi (droite) · Hidari (gauche)',
+        'VOCABULAIRE — Compter de 1 à 10 en japonais',
+        'TACHIKATA — Kokutsu Dachi (30/70%) · Yoi Dachi (50/50%)',
+        'KIHON — Uraken (statique, Heiko Dachi) : Jodan Yoko Uchi · Ganmen Uchi · Sayu Uchi · Hizo Uchi · Oroshi Uchi · Mawashi Uchi',
+        'IDO KEIKO (Zenkutsu Dachi) — Uchimawashi Geri (Haisoku) · Sotomawashi Geri (Teisoku) · Ushiro Geri (Chusoku/Kakato) Jodan/Chudan/Gedan',
+        'IDO KEIKO (Kokutsu Dachi) — Seiken Oi Tsuki ou Gyaku Tsuki + Uke + Geri',
+        'IDO KEIKO — Enchaînements 2 techniques (Zenkutsu Dachi) : Jodan Oi Tsuki → Chudan Gyaku Tsuki · Chudan Mae Geri → Jodan Mawashi Geri (même pied) · Jodan Uke → Gedan Barai (même bras)',
+        'KATA — Taikyoku Sono Ichi, Ni, San · Sokugi Taikyoku Sono Ichi, Ni, San',
+        'KUMITE — Yakusoku Ippon Kumite (Tori–Uke) : bloquer bras ou jambe, contre-attaquer bras ou jambe',
+        'KUMITE — 18–40 ans : 3 × 1 min · +40 ans / féminines –18 ans : Randori',
+        'ÉVALUATION — Attitude · Garde · Stabilité',
       ]
     },
     techniques:[
@@ -1152,26 +1154,20 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'All previous requirements',
-        'Jumping front kick (Tobi mae geri)',
-        'Jumping roundhouse (Tobi mawashi geri)',
-        'Pinan Sono San–Go kata',
-        'Gekisai Dai kata',
-        'Full contact sparring — 2 rounds',
-        'Breaking: 3 boards with hand, 3 with foot',
-        'Tameshiwari demonstration',
-        'Teaching a basic technique to junior belts',
+        'VOCABULARY — Jiyu Kumite (free sparring) · Mogorei (stop command) · Dan / Kyu (grade system) · Sensei / Shihan (instructor titles)',
+        'KIHON — Tobi Mae Geri (jumping front kick) · Tobi Mawashi Geri (jumping roundhouse)',
+        'KATA — Pinan Sono San, Yon, Go · Gekisai Dai',
+        'KUMITE — Full contact: 2 × 1 min',
+        'TAMESHIWARI — 3 boards (hand) · 3 boards (foot)',
+        'Teach a basic technique to a junior belt',
       ],
       fr:[
-        'Toutes les exigences précédentes',
-        'Coup de pied frontal sauté (Tobi mae geri)',
-        'Circulaire sauté (Tobi mawashi geri)',
-        'Kata Pinan Sono San à Go',
-        'Kata Gekisai Dai',
-        'Sparring contact complet — 2 rounds',
-        'Cassage : 3 planches main, 3 planches pied',
-        'Démonstration de Tameshiwari',
-        'Enseigner une technique de base aux ceintures inférieures',
+        'VOCABULAIRE — Jiyu Kumite (combat libre) · Mogorei (commande d\'arrêt) · Dan / Kyu (système de grades) · Sensei / Shihan (titres d\'instructeurs)',
+        'KIHON — Tobi Mae Geri (coup de pied frontal sauté) · Tobi Mawashi Geri (circulaire sauté)',
+        'KATA — Pinan Sono San, Yon, Go · Gekisai Dai',
+        'KUMITE — Contact complet : 2 × 1 min',
+        'TAMESHIWARI — 3 planches (main) · 3 planches (pied)',
+        'Enseigner une technique de base à une ceinture inférieure',
       ]
     },
     techniques:[
@@ -1239,32 +1235,32 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'Know: Hiji Uchi = Hiji Ate = Empi Uchi, Kamae-Te (assume indicated position), Kamae (guard)',
-        'Know: Kumite No Kamae = Kumite Dachi, Yonju Go-Do, Kyuju-Do, Hidari Kumite No Kamae',
-        'Know: Tameshiwari (breaking), Jodan/Chudan Mae Jodan Hiji Uchi',
-        'KIHON in Kiba Dachi static: Jodan/Chudan/Mae Jodan Hiji Uchi, Jodan/Chudan Hiji Age Uchi, Mae Chudan Hiji Uchi, Hiji Ushiro Uchi, Hiji Oroshi Uchi',
-        'IDO KEIKO in Zenkutsu Dachi (maeni, sagari, mawatte): Uchi Mawashi Geri, Oroshi Uchi Kakato Geri, Oroshi Soto Kakato Geri',
-        'IDO KEIKO in Kokutsu Dachi (maeni, sagari) front leg: Mae Geri, Yoko Geri, Shuto Mawashi Uke (les 2 formes Kyokushin) + Gyaku Tsuki',
-        'IDO KEIKO in Kiba Dachi Yonju Go-Do (maeni, sagari, mawatte) passing to Zenkutsu: blocks + Gyaku Tsuki',
-        'IDO KEIKO in Han Kiba Dachi (Mae Kosa, Ushiro Kosa, mawatte cross front/back Kyuju-Do): Mawashi Geri, Kaka Geri (Kakato) jodan, Yoko Geri (Sokuto) jodan',
-        'IDO KEIKO in Sanchin Dachi (maeni, sagari, mawatte): blocks + Chudan Gyaku Tsuki, Seiken Gyaku Tate Tsuki (jodan/chudan/gedan), Seiken Morote Tsuki (jodan/chudan/gedan or jodan+chudan)',
-        'KATA: Pinan Sono San; 1 or 2 Bunkai Pinan Sono San; Yantsu',
-        'KUMITE (18–40 yrs): 5 × 1 minute; RANDORI (+40 yrs and female under 18)',
-        'Evaluation: attitude, guard, stability, Kiai, determination, speed, power, breath, movements, opportunity of blocks and counters',
+        'VOCABULARY — Hiji Uchi = Hiji Ate = Empi Uchi (elbow strike) · Kamae / Kamae-Te (guard / assume position)',
+        'VOCABULARY — Kumite No Kamae = Kumite Dachi · Yonju Go-Do (45°) · Kyuju-Do (90°) · Hidari Kumite No Kamae · Tameshiwari (breaking)',
+        'TACHIKATA — Han Kiba Dachi (Mae/Ushiro Kosa)',
+        'KIHON — Hiji Uchi (static, Kiba Dachi): Jodan/Chudan/Mae Jodan Hiji Uchi · Jodan/Chudan Hiji Age Uchi · Mae Chudan Hiji Uchi · Hiji Ushiro Uchi · Hiji Oroshi Uchi',
+        'IDO KEIKO (Zenkutsu Dachi) — Uchimawashi Geri · Oroshi Uchi Kakato Geri · Oroshi Soto Kakato Geri',
+        'IDO KEIKO (Kokutsu Dachi, front leg) — Mae Geri · Yoko Geri · Shuto Mawashi Uke (both Kyokushin forms) + Gyaku Tsuki',
+        'IDO KEIKO (Kiba Dachi, 45° → Zenkutsu) — basic blocks + Gyaku Tsuki',
+        'IDO KEIKO (Han Kiba Dachi, 90°) — Mawashi Geri · Kaka Geri (Kakato) Jodan · Yoko Geri (Sokuto) Jodan',
+        'IDO KEIKO (Sanchin Dachi) — blocks + Chudan Gyaku Tsuki · Seiken Gyaku Tate Tsuki Jodan/Chudan/Gedan · Seiken Morote Tsuki',
+        'KATA — Pinan Sono San (+ 1–2 Bunkai) · Yantsu',
+        'KUMITE — 18–40 yrs: 5 × 1 min · +40 yrs / females under 18: Randori',
+        'EVALUATION — Attitude · Guard · Stability · Kiai · Determination · Speed · Power · Breath · Footwork · Block/counter opportunity',
       ],
       fr:[
-        'Connaître : Hiji Uchi = Hiji Ate = Empi Uchi, Kamae-Te (prendre la position indiquée), Kamae (la garde)',
-        'Connaître : Kumite No Kamae = Kumite Dachi, Yonju Go-Do, Kyuju-Do, Hidari Kumite No Kamae',
-        'Connaître : Tameshiwari (la casse), Jodan/Chudan Mae Jodan Hiji Uchi',
-        'KIHON en Kiba Dachi statique : Jodan/Chudan/Mae Jodan Hiji Uchi, Jodan/Chudan Hiji Age Uchi, Mae Chudan Hiji Uchi, Hiji Ushiro Uchi, Hiji Oroshi Uchi',
-        'IDO KEIKO en Zenkutsu Dachi (maeni, sagari, mawatte) : Uchi Mawashi Geri, Oroshi Uchi Kakato Geri, Oroshi Soto Kakato Geri',
-        'IDO KEIKO en Kokutsu Dachi (maeni, sagari) jambe avant : Mae Geri, Yoko Geri, Shuto Mawashi Uke (les 2 formes Kyokushin) + Gyaku Tsuki',
-        'IDO KEIKO en Kiba Dachi Yonju Go-Do (maeni, sagari, mawatte) passant en Zenkutsu : blocages + Gyaku Tsuki',
-        'IDO KEIKO en Han Kiba Dachi (Mae Kosa, Ushiro Kosa, Mawatte croiser devant/derrière Kyuju-Do) : Mawashi Geri, Kaka Geri (Kakato) jodan, Yoko Geri (Sokuto) jodan',
-        'IDO KEIKO en Sanchin Dachi (maeni, sagari, mawatte) : blocages + Chudan Gyaku Tsuki, Seiken Gyaku Tate Tsuki, Seiken Morote Tsuki',
-        'KATA : Pinan Sono San ; 1 ou 2 Bunkai Pinan Sono San ; Yantsu',
-        'KUMITE (18–40 ans) : 5 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines – 18 ans)',
-        'Critères : l\'attitude, la garde, la stabilité, le kiai, la détermination, la vitesse, la puissance, la respiration, les déplacements, l\'opportunité des blocages et des contre-attaques',
+        'VOCABULAIRE — Hiji Uchi = Hiji Ate = Empi Uchi (frappe de coude) · Kamae / Kamae-Te (garde / prendre la position)',
+        'VOCABULAIRE — Kumite No Kamae = Kumite Dachi · Yonju Go-Do (45°) · Kyuju-Do (90°) · Hidari Kumite No Kamae · Tameshiwari (la casse)',
+        'TACHIKATA — Han Kiba Dachi (Mae/Ushiro Kosa)',
+        'KIHON — Hiji Uchi (statique, Kiba Dachi) : Jodan/Chudan/Mae Jodan Hiji Uchi · Jodan/Chudan Hiji Age Uchi · Mae Chudan Hiji Uchi · Hiji Ushiro Uchi · Hiji Oroshi Uchi',
+        'IDO KEIKO (Zenkutsu Dachi) — Uchimawashi Geri · Oroshi Uchi Kakato Geri · Oroshi Soto Kakato Geri',
+        'IDO KEIKO (Kokutsu Dachi, jambe avant) — Mae Geri · Yoko Geri · Shuto Mawashi Uke (les 2 formes Kyokushin) + Gyaku Tsuki',
+        'IDO KEIKO (Kiba Dachi, 45° → Zenkutsu) — blocages de base + Gyaku Tsuki',
+        'IDO KEIKO (Han Kiba Dachi, 90°) — Mawashi Geri · Kaka Geri (Kakato) Jodan · Yoko Geri (Sokuto) Jodan',
+        'IDO KEIKO (Sanchin Dachi) — blocages + Chudan Gyaku Tsuki · Seiken Gyaku Tate Tsuki Jodan/Chudan/Gedan · Seiken Morote Tsuki',
+        'KATA — Pinan Sono San (+ 1–2 Bunkai) · Yantsu',
+        'KUMITE — 18–40 ans : 5 × 1 min · +40 ans / féminines –18 ans : Randori',
+        'ÉVALUATION — Attitude · Garde · Stabilité · Kiai · Détermination · Vitesse · Puissance · Respiration · Déplacements · Opportunité blocages/contre-attaques',
       ]
     },
     techniques:[
@@ -1325,36 +1321,34 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'Know: Migi Ashi Mae, Low Kick = Gedan Mawashi Geri, Juji = Jyuji, Tate Tsuki, Hizo',
-        'Know: Hidari Ashi Ushiro, Ma = Ma Ai, Tettsui, Jun Tsuki, Sakutsu',
-        'Know: Nukite (Nihon, Yonhon)',
-        'TACHIKATA: Neko Ashi Dachi, Kake Ashi Dachi = Kake Dachi, Tsuruashi Dachi',
-        'IDO KEIKO in Kokutsu Dachi (maeni, sagari, mawatte): Tettsui Oroshi Ganmen Uchi, Tettsui Komi, Tettsui Hizo Uchi',
-        'IDO KEIKO in Zenkutsu Dachi (maeni, sagari, mawatte): Les Jyuji Uke (Seiken and Shuto) jodan and gedan + Morote Tsuki at choice',
-        'IDO KEIKO in Kokutsu Dachi (maeni, sagari, mawatte) front leg: Mae Geri suivi de Mawashi Geri same foot, Mawashi Geri suivi de Kake Geri same foot, Kin Geri suivi de Jodan Uchi Haisoku Geri same foot',
-        'IDO KEIKO in Sanchin Dachi (maeni, sagari, mawatte): Kin Geri, Seiken Gedan Barai (3 forms), Kansetsu Geri (45°), Mawashi Uke (Mae Mawashi Uke), Seiken Morote Tsuki avec Ibuki',
-        'IDO KEIKO in Neko Ashi Dachi (maeni, sagari): Chudan Mae Hiji Uchi, Chudan Hiji Sayu Uchi, Jodan Mae Hiji Uchi, Jodan Hiji Sayu Uchi',
-        'IDO KEIKO in Kiba Dachi Kyuju-Do (maeni, sagari, mawatte): Jun Tsuki (jodan/chudan/gedan), Tettsui Yoko Uchi (jodan/chudan/gedan), Jodan Haishu (Uchi and Uke), Chudan Haishu (Uchi and Uke)',
-        'KATA: Pinan Sono Yon; 1 or 2 Bunkai Pinan Sono Yon; Tsuki No Kata',
-        'KUMITE: Yakusoku Sanbon Kumite (Tori–Uke) — 3 blocks on same attack, with varied multiple counters combining arms and legs',
-        'KUMITE (18–40 yrs): 6 × 1 minute; TAMESHIWARI: 1 board with Seiken; RANDORI (+40 yrs and female under 18)',
-        'Evaluation: attitude, guard, stability, Kiai, kime, determination, speed, power, breath, endurance, Ma, opportunity of blocks and counters',
+        'VOCABULARY — Migi Ashi Mae · Hidari Ashi Ushiro · Low Kick = Gedan Mawashi Geri · Jyuji (cross) · Hizo (spleen)',
+        'VOCABULARY — Ma-Ai (distance/timing) · Tettsui (hammer fist) · Jun Tsuki · Tate Tsuki · Nukite (Nihon / Yonhon) · Sakutsu',
+        'TACHIKATA — Neko Ashi Dachi · Kake Dachi (Kake Ashi Dachi) · Tsuruashi Dachi',
+        'IDO KEIKO (Kokutsu Dachi) — Tettsui Oroshi Ganmen Uchi · Tettsui Komi · Tettsui Hizo Uchi',
+        'IDO KEIKO (Zenkutsu Dachi) — Juji Uke Jodan & Gedan (Seiken and Shuto) + Morote Tsuki',
+        'IDO KEIKO (Kokutsu Dachi, front leg — 2-kick chains) — Mae Geri → Mawashi Geri · Mawashi Geri → Kake Geri · Kin Geri → Jodan Uchi Haisoku Geri',
+        'IDO KEIKO (Sanchin Dachi) — Kin Geri · Seiken Gedan Barai (3 forms) · Kansetsu Geri (45°) · Mawashi Uke · Seiken Morote Tsuki with Ibuki',
+        'IDO KEIKO (Neko Ashi Dachi) — Chudan/Jodan Mae Hiji Uchi · Chudan/Jodan Hiji Sayu Uchi',
+        'IDO KEIKO (Kiba Dachi, 90°) — Jun Tsuki Jodan/Chudan/Gedan · Tettsui Yoko Uchi Jodan/Chudan/Gedan · Jodan/Chudan Haishu (Uchi & Uke)',
+        'KATA — Pinan Sono Yon (+ 1–2 Bunkai) · Tsuki No Kata',
+        'KUMITE — Yakusoku Sanbon Kumite (Tori–Uke): 3 blocks on same attack, varied counters combining arms and legs',
+        'KUMITE — 18–40 yrs: 6 × 1 min · Tameshiwari: 1 board (Seiken) · +40 yrs / females under 18: Randori',
+        'EVALUATION — Attitude · Guard · Stability · Kiai · Kime · Determination · Speed · Power · Breath · Endurance · Ma-Ai · Block/counter opportunity',
       ],
       fr:[
-        'Connaître : Migi Ashi Mae, Low Kick = Gedan Mawashi Geri, Juji = Jyuji, Tate Tsuki, Hizo',
-        'Connaître : Hidari Ashi Ushiro, Ma = Ma Aï, Tettsui, Jun Tsuki, Sakutsu',
-        'Connaître : Nukite (Nihon, Yonhon)',
-        'TACHIKATA : Neko Ashi Dachi, Kake Ashi Dachi = Kake Dachi, Tsuruashi Dachi',
-        'IDO KEIKO en Kokutsu Dachi (maeni, sagari, mawatte) : Tettsui Oroshi Ganmen Uchi, Tettsui Komi, Tettsui Hizo Uchi',
-        'IDO KEIKO en Zenkutsu Dachi (maeni, sagari, mawatte) : Les Jyuji Uke (Seiken et Shuto) jodan et gedan + Morote Tsuki au choix',
-        'IDO KEIKO en Kokutsu Dachi (maeni, sagari, mawatte) jambe avant : Mae Geri suivi de Mawashi Geri même pied, Mawashi Geri suivi de Kake Geri même pied, Kin Geri suivi de Jodan Uchi Haisoku Geri même pied',
-        'IDO KEIKO en Sanchin Dachi (maeni, sagari, mawatte) : Kin Geri, Seiken Gedan Barai (3 formes), Kansetsu Geri (45°), Mawashi Uke (Mae Mawashi Uke), Seiken Morote Tsuki avec Ibuki',
-        'IDO KEIKO en Neko Ashi Dachi (maeni, sagari) : Chudan Mae Hiji Uchi, Chudan Hiji Sayu Uchi, Jodan Mae Hiji Uchi, Jodan Hiji Sayu Uchi',
-        'IDO KEIKO en Kiba Dachi Kyuju-Do (maeni, sagari, mawatte) : Jun Tsuki, Tettsui Yoko Uchi, Jodan/Chudan Haishu (Uchi et Uke)',
-        'KATA : Pinan Sono Yon ; 1 ou 2 Bunkai Pinan Sono Yon ; Tsuki No Kata',
-        'KUMITE : Yakusoku Sanbon Kumite (Tori–Uke) — 3 blocages sur même attaque, contre-attaques variées et multiples associant jambes et bras',
-        'KUMITE (18–40 ans) : 6 × 1 minute ; TAMESHIWARI : 1 planche avec Seiken ; RANDORI (+ 40 ans)',
-        'Critères : l\'attitude, la garde, la stabilité, le kiai, le kime, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma, l\'opportunité des blocages et des contre-attaques',
+        'VOCABULAIRE — Migi Ashi Mae · Hidari Ashi Ushiro · Low Kick = Gedan Mawashi Geri · Jyuji (croisé) · Hizo (rate)',
+        'VOCABULAIRE — Ma-Aï (distance/timing) · Tettsui (poing marteau) · Jun Tsuki · Tate Tsuki · Nukite (Nihon / Yonhon) · Sakutsu',
+        'TACHIKATA — Neko Ashi Dachi · Kake Dachi (Kake Ashi Dachi) · Tsuruashi Dachi',
+        'IDO KEIKO (Kokutsu Dachi) — Tettsui Oroshi Ganmen Uchi · Tettsui Komi · Tettsui Hizo Uchi',
+        'IDO KEIKO (Zenkutsu Dachi) — Juji Uke Jodan & Gedan (Seiken et Shuto) + Morote Tsuki',
+        'IDO KEIKO (Kokutsu Dachi, jambe avant — 2 coups de pied enchaînés) — Mae Geri → Mawashi Geri · Mawashi Geri → Kake Geri · Kin Geri → Jodan Uchi Haisoku Geri',
+        'IDO KEIKO (Sanchin Dachi) — Kin Geri · Seiken Gedan Barai (3 formes) · Kansetsu Geri (45°) · Mawashi Uke · Seiken Morote Tsuki avec Ibuki',
+        'IDO KEIKO (Neko Ashi Dachi) — Chudan/Jodan Mae Hiji Uchi · Chudan/Jodan Hiji Sayu Uchi',
+        'IDO KEIKO (Kiba Dachi, 90°) — Jun Tsuki Jodan/Chudan/Gedan · Tettsui Yoko Uchi Jodan/Chudan/Gedan · Jodan/Chudan Haishu (Uchi & Uke)',
+        'KATA — Pinan Sono Yon (+ 1–2 Bunkai) · Tsuki No Kata',
+        'KUMITE — Yakusoku Sanbon Kumite (Tori–Uke) : 3 blocages sur même attaque, contre-attaques variées associant bras et jambes',
+        'KUMITE — 18–40 ans : 6 × 1 min · Tameshiwari : 1 planche (Seiken) · +40 ans / féminines –18 ans : Randori',
+        'ÉVALUATION — Attitude · Garde · Stabilité · Kiai · Kime · Détermination · Vitesse · Puissance · Respiration · Endurance · Ma-Aï · Opportunité blocages/contre-attaques',
       ]
     },
     techniques:[
@@ -1429,34 +1423,36 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'Know: Teisoku, Shotei, Sokuto, Koken, Yakusoku, Kaiten, Kaiten Ido, Haisoku',
-        'Know: Osae Uke, Shiai, Jiyu Kumite, Kaiten Maeni, Kaiten Sagari, Kata en Ura',
-        'Know: Chusoku, Haishu',
-        'TACHIKATA: Moroashi Dachi, Shiko Dachi',
-        'IDO KEIKO in Kokutsu Dachi (maeni, sagari, mawatte): Les Shotei Uchi (jodan/chudan/gedan), Les Shotei Uke (jodan/chudan/gedan)',
-        'IDO KEIKO in Sanchin Dachi: Mawashi Uchi Uke; IDO KEIKO in Shiko Dachi: Mawashi Gedan Barai',
-        'KAITEN IDO A) in Zenkutsu Dachi (Kaiten maeni and Kaiten sagari): basic Tsuki techniques, basic Uke techniques, basic Geri techniques',
-        'KAITEN IDO B) in Kokutsu Dachi (Kaiten maeni and Kaiten sagari): basic Tsuki, basic Uke, basic Geri',
-        'In Kumite No Kamae: Uchi Mawashi Geri + Yoko Geri same foot, Soto Mawashi Geri + Mae Geri same foot, Uchi Mawashi Geri + Oroshi Soto Kakato Geri same foot, Soto Mawashi Geri + Oroshi Uchi Kakato Geri same foot',
-        'KATA: Pinan Sono Go; 1 or 2 Bunkai Pinan Sono Go; Gekisai Sono Ichi; Taikyoku en Ura Sono Ichi, Ni',
-        'KUMITE: Yakusoku Ippon Kumite (Tori–Uke) — arm or leg attacks; physical test (push-ups, abs…)',
-        'KUMITE (18–40 yrs): 7 × 1 minute; TAMESHIWARI with Seiken, Geri …etc; RANDORI (+40 yrs)',
-        'Evaluation: attitude, guard, stability, movements, Kiai, kime la determination, speed, power, breath, endurance, Ma, opportunity of blocks and counters',
+        'VOCABULARY — Teisoku · Chusoku · Haisoku · Sokuto · Shotei · Koken · Haishu (striking surfaces)',
+        'VOCABULARY — Yakusoku (prearranged) · Kaiten (rotation) · Kaiten Ido · Kata en Ura (mirror/spinning version)',
+        'VOCABULARY — Osae Uke · Shiai (competition) · Jiyu Kumite (free sparring)',
+        'TACHIKATA — Moroashi Dachi · Shiko Dachi',
+        'IDO KEIKO (Kokutsu Dachi) — Shotei Uchi Jodan/Chudan/Gedan · Shotei Uke Jodan/Chudan/Gedan',
+        'IDO KEIKO (Sanchin Dachi) — Mawashi Uchi Uke',
+        'IDO KEIKO (Shiko Dachi) — Mawashi Gedan Barai',
+        'KAITEN IDO (Zenkutsu Dachi — Kaiten maeni & sagari) — basic Tsuki · basic Uke · basic Geri',
+        'KAITEN IDO (Kokutsu Dachi — Kaiten maeni & sagari) — basic Tsuki · basic Uke · basic Geri',
+        'KUMITE NO KAMAE — 2-kick chains: Uchi Mawashi Geri + Yoko Geri · Soto Mawashi Geri + Mae Geri · Uchi Mawashi Geri + Oroshi Soto Kakato Geri · Soto Mawashi Geri + Oroshi Uchi Kakato Geri',
+        'KATA — Pinan Sono Go (+ 1–2 Bunkai) · Gekisai Sono Ichi · Taikyoku en Ura Sono Ichi & Ni',
+        'KUMITE — Yakusoku Ippon Kumite (Tori–Uke): arm & leg attacks · Physical test (push-ups, sit-ups)',
+        'KUMITE — 18–40 yrs: 7 × 1 min · Tameshiwari: Seiken, Geri etc. · +40 yrs: Randori',
+        'EVALUATION — Attitude · Guard · Stability · Footwork · Kiai · Kime · Determination · Speed · Power · Breath · Endurance · Ma-Ai · Block/counter opportunity',
       ],
       fr:[
-        'Connaître : Teisoku, Shotei, Sokuto, Koken, Yakusoku, Kaiten, Kaiten Ido, Haisoku',
-        'Connaître : Osae Uke, Shiai, Jiyu Kumite, Kaiten Maeni, Kaiten Sagari, Kata en Ura',
-        'Connaître : Chusoku, Haishu',
-        'TACHIKATA : Moroashi Dachi, Shiko Dachi',
-        'IDO KEIKO en Kokutsu Dachi (maeni, sagari, mawatte) : Les Shotei Uchi (jodan/chudan/gedan), Les Shotei Uke (jodan/chudan/gedan)',
-        'IDO KEIKO en Sanchin Dachi : Mawashi Uchi Uke ; IDO KEIKO en Shiko Dachi : Mawashi Gedan Barai',
-        'KAITEN IDO A) en Zenkutsu Dachi (Kaiten maeni et Kaiten sagari) : techniques de base avec Tsuki, Uke, Geri',
-        'KAITEN IDO B) en Kokutsu Dachi (Kaiten maeni et Kaiten sagari) : techniques de base avec Tsuki, Uke, Geri',
-        'En Kumite No Kamae : Uchi Mawashi Geri + Yoko Geri même pied, Soto Mawashi Geri + Mae Geri même pied, Uchi/Soto Mawashi Geri + Oroshi Kakato Geri même pied',
-        'KATA : Pinan Sono Go ; 1 ou 2 Bunkai Pinan Sono Go ; Gekisai Sono Ichi ; Taikyoku en Ura Sono Ichi, Ni',
-        'KUMITE : Yakusoku Ippon Kumite (Tori–Uke) — attaques de bras ou de jambe ; épreuve physique (appuis faciaux, abdominaux…)',
-        'KUMITE (18–40 ans) : 7 × 1 minute ; TAMESHIWARI avec Seiken, Geri …etc ; RANDORI (+ 40 ans)',
-        'Critères : l\'attitude, la garde, la stabilité, les déplacements, le kiai, le kime, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma, l\'opportunité des blocages et des contre-attaques',
+        'VOCABULAIRE — Teisoku · Chusoku · Haisoku · Sokuto · Shotei · Koken · Haishu (surfaces de frappe)',
+        'VOCABULAIRE — Yakusoku (prédéfini) · Kaiten (rotation) · Kaiten Ido · Kata en Ura (version miroir/tournante)',
+        'VOCABULAIRE — Osae Uke · Shiai (compétition) · Jiyu Kumite (combat libre)',
+        'TACHIKATA — Moroashi Dachi · Shiko Dachi',
+        'IDO KEIKO (Kokutsu Dachi) — Shotei Uchi Jodan/Chudan/Gedan · Shotei Uke Jodan/Chudan/Gedan',
+        'IDO KEIKO (Sanchin Dachi) — Mawashi Uchi Uke',
+        'IDO KEIKO (Shiko Dachi) — Mawashi Gedan Barai',
+        'KAITEN IDO (Zenkutsu Dachi — Kaiten maeni & sagari) — Tsuki de base · Uke de base · Geri de base',
+        'KAITEN IDO (Kokutsu Dachi — Kaiten maeni & sagari) — Tsuki de base · Uke de base · Geri de base',
+        'KUMITE NO KAMAE — Enchaînements 2 coups de pied : Uchi Mawashi Geri + Yoko Geri · Soto Mawashi Geri + Mae Geri · Uchi Mawashi Geri + Oroshi Soto Kakato Geri · Soto Mawashi Geri + Oroshi Uchi Kakato Geri',
+        'KATA — Pinan Sono Go (+ 1–2 Bunkai) · Gekisai Sono Ichi · Taikyoku en Ura Sono Ichi & Ni',
+        'KUMITE — Yakusoku Ippon Kumite (Tori–Uke) : attaques de bras & jambes · Épreuve physique (appuis faciaux, abdominaux)',
+        'KUMITE — 18–40 ans : 7 × 1 min · Tameshiwari : Seiken, Geri etc. · +40 ans : Randori',
+        'ÉVALUATION — Attitude · Garde · Stabilité · Déplacements · Kiai · Kime · Détermination · Vitesse · Puissance · Respiration · Endurance · Ma-Aï · Opportunité blocages/contre-attaques',
       ]
     },
     techniques:[
@@ -1517,32 +1513,30 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'Know: Yonjugo-do, Aka, Geri = Keri, Waza-Ari, Chui, Kyuju-do, Shiro, Hantei',
-        'Know: Ippon, Hansoku, Hyaku-Hachiju-do, Zanshin, Tsuki = Zuki, Zoko, Shikkaku',
-        'IDO KEIKO in Neko Ashi Dachi (maeni, sagari, mawatte): Les Koken Uchi (jodan/chudan/gedan), Les Koken Uke (jodan/chudan/gedan), Jodan Nihon Nukite',
-        'IDO KEIKO in Kokutsu Dachi and Zenkutsu Dachi (sagari, mawatte): Uchi Uke + Gedan Barai same arm passing to Zenkutsu making Gyaku Hiji Age Uchi, Jodan Uke + Soto Uke same arm, Gedan Barai + Jodan Uke, Gedan Barai + Jodan Uke same arm + Seiken Oyaku Shita Tsuki',
-        'IDO KEIKO in Kiba Dachi Yonju Go-Do (maeni, sagari): Yonjugo-do, basic Tsuki, basic Uke, basic Geri',
-        'In Kumite No Kamae (jambe arrière): Kin Geri (45°) + Kansetsu Geri (45°) same foot, Mae Geri 45° other side + Mawashi Geri 45° same foot, Mawashi Geri 45° one side + Ushiro Geri 45° same foot, Kake Geri 45° one side + Mawashi Geri 45° other side same foot',
-        'KAITEN IDO in Kiba Dachi (Kaiten maeni and Kaiten sagari): Yonjugo-do, basic Tsuki, basic Uke, basic Geri',
-        'KATA: Gekisai Sono Ni; Tekki Sono Ichi; Taikyoku en Ura Sono Ichi, Ni, San',
-        'KUMITE: Yakusoku Sanbon Kumite (Tori–Uke) — 3 different attacks, 3 different blocks with varied counters; starting position for Tori and Uke in Heiko Dachi',
-        'Physical test (push-ups, abs…)',
-        'KUMITE (18–40 yrs): 8 × 1 minute; TAMESHIWARI with Seiken, Geri …etc; RANDORI (+40 yrs)',
-        'Evaluation: attitude, guard, stability, movements, Kiai, kime, determination, speed, power, breath, endurance, Ma, opportunity of blocks/counters, rhythm, changes of rhythm',
+        'VOCABULARY — Competition: Aka (red) · Shiro (white) · Ippon · Waza-Ari · Chui (warning) · Hansoku (foul) · Hantei (decision) · Shikkaku (disqualification)',
+        'VOCABULARY — Hyaku-Hachiju-do (180°) · Yonjugo-do (45°) · Kyuju-do (90°) · Tsuki = Zuki · Geri = Keri · Zanshin (remaining awareness) · Zoko',
+        'IDO KEIKO (Neko Ashi Dachi) — Koken Uchi Jodan/Chudan/Gedan · Koken Uke Jodan/Chudan/Gedan · Jodan Nihon Nukite',
+        'IDO KEIKO (Kokutsu → Zenkutsu Dachi, 2-arm chains) — Uchi Uke + Gedan Barai → Gyaku Hiji Age Uchi · Jodan Uke + Soto Uke (same arm) · Gedan Barai + Jodan Uke · Gedan Barai + Jodan Uke + Seiken Oyaku Shita Tsuki',
+        'IDO KEIKO (Kiba Dachi, 45°) — basic Tsuki · basic Uke · basic Geri',
+        'KUMITE NO KAMAE (rear leg, 45° — 2-kick chains) — Kin Geri + Kansetsu Geri · Mae Geri + Mawashi Geri · Mawashi Geri + Ushiro Geri · Kake Geri + Mawashi Geri (opposite side)',
+        'KAITEN IDO (Kiba Dachi) — basic Tsuki · basic Uke · basic Geri',
+        'KATA — Gekisai Sono Ni · Tekki Sono Ichi · Taikyoku en Ura Sono Ichi, Ni, San',
+        'KUMITE — Yakusoku Sanbon Kumite (Tori–Uke): 3 different attacks, 3 different blocks, varied counters · Start: Heiko Dachi',
+        'KUMITE — 18–40 yrs: 8 × 1 min · Tameshiwari: Seiken, Geri etc. · +40 yrs: Randori · Physical test (push-ups, sit-ups)',
+        'EVALUATION — Attitude · Guard · Stability · Footwork · Kiai · Kime · Determination · Speed · Power · Breath · Endurance · Ma-Ai · Block/counter opportunity · Rhythm · Changes of rhythm',
       ],
       fr:[
-        'Connaître : Yonjugo-do, Aka, Geri = Keri, Waza-Ari, Chui, Kyuju-do, Shiro, Hantei',
-        'Connaître : Ippon, Hansoku, Hyaku-Hachiju-do, Zanshin, Tsuki = Zuki, Zoko, Shikkaku',
-        'IDO KEIKO en Neko Ashi Dachi (maeni, sagari, mawatte) : Les Koken Uchi (jodan/chudan/gedan), Les Koken Uke (jodan/chudan/gedan), Jodan Nihon Nukite',
-        'IDO KEIKO en Kokutsu Dachi et Zenkutsu Dachi (sagari, mawatte) : Uchi Uke + Gedan Barai même bras en passant en Zenkutsu Dachi faire Gyaku Hiji Age Uchi, Jodan Uke + Soto Uke même bras, Gedan Barai + Jodan Uke, Gedan Barai + Jodan Uke même bras + Seiken Oyaku Shita Tsuki',
-        'IDO KEIKO en Kiba Dachi Yonju Go-Do (maeni, sagari) : Yonjugo-do, techniques de base avec Tsuki, Uke, Geri',
-        'En Kumite No Kamae (jambe arrière) : Kin Geri (45°) + Kansetsu Geri, Mae Geri 45° + Mawashi Geri même pied, Mawashi Geri 45° + Ushiro Geri même pied, Kake Geri 45° + Mawashi Geri autre côté même pied',
-        'KAITEN IDO en Kiba Dachi (Kaiten maeni et Kaiten sagari) : Yonjugo-do, techniques de base',
-        'KATA : Gekisai Sono Ni ; Tekki Sono Ichi ; Taikyoku en Ura Sono Ichi, Ni, San',
-        'KUMITE : Yakusoku Sanbon Kumite (Tori–Uke) — 3 attaques différentes, 3 blocages différents avec contre-attaques variées ; position de départ en Heiko Dachi',
-        'Épreuve physique (appuis faciaux, abdominaux…)',
-        'KUMITE (18–40 ans) : 8 × 1 minute ; TAMESHIWARI avec Seiken, Geri …etc ; RANDORI (+ 40 ans)',
-        'Critères : l\'attitude, la garde, la stabilité, les déplacements, le kiai, le kime, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma, l\'opportunité des blocages et des contre-attaques, ainsi que le rythme, les changements de rythme',
+        'VOCABULAIRE — Compétition : Aka (rouge) · Shiro (blanc) · Ippon · Waza-Ari · Chui (avertissement) · Hansoku (faute) · Hantei (décision) · Shikkaku (disqualification)',
+        'VOCABULAIRE — Hyaku-Hachiju-do (180°) · Yonjugo-do (45°) · Kyuju-do (90°) · Tsuki = Zuki · Geri = Keri · Zanshin (conscience résiduelle) · Zoko',
+        'IDO KEIKO (Neko Ashi Dachi) — Koken Uchi Jodan/Chudan/Gedan · Koken Uke Jodan/Chudan/Gedan · Jodan Nihon Nukite',
+        'IDO KEIKO (Kokutsu → Zenkutsu Dachi, enchaînements 2 bras) — Uchi Uke + Gedan Barai → Gyaku Hiji Age Uchi · Jodan Uke + Soto Uke (même bras) · Gedan Barai + Jodan Uke · Gedan Barai + Jodan Uke + Seiken Oyaku Shita Tsuki',
+        'IDO KEIKO (Kiba Dachi, 45°) — Tsuki de base · Uke de base · Geri de base',
+        'KUMITE NO KAMAE (jambe arrière, 45° — 2 coups de pied enchaînés) — Kin Geri + Kansetsu Geri · Mae Geri + Mawashi Geri · Mawashi Geri + Ushiro Geri · Kake Geri + Mawashi Geri (côté opposé)',
+        'KAITEN IDO (Kiba Dachi) — Tsuki de base · Uke de base · Geri de base',
+        'KATA — Gekisai Sono Ni · Tekki Sono Ichi · Taikyoku en Ura Sono Ichi, Ni, San',
+        'KUMITE — Yakusoku Sanbon Kumite (Tori–Uke) : 3 attaques différentes, 3 blocages différents, contre-attaques variées · Départ : Heiko Dachi',
+        'KUMITE — 18–40 ans : 8 × 1 min · Tameshiwari : Seiken, Geri etc. · +40 ans : Randori · Épreuve physique (appuis faciaux, abdominaux)',
+        'ÉVALUATION — Attitude · Garde · Stabilité · Déplacements · Kiai · Kime · Détermination · Vitesse · Puissance · Respiration · Endurance · Ma-Aï · Opportunité blocages/contre-attaques · Rythme · Changements de rythme',
       ]
     },
     techniques:[
@@ -1603,36 +1597,34 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'Know the 30 Kihon No Waza in order: 19 Te No Waza – 11 Geri No Waza',
-        'IDO KEIKO in Neko Ashi Dachi (maeni, mawatte): Jodan Hiji Uchi, Jodan Hiji Age Uchi, Hiji Orashi Uchi, Hiji Ushiro Uchi',
-        'IDO KEIKO in Kokutsu Dachi (maeni, sagari): Haito Uchi (jodan/chudan/gedan), Chudan Haito Uchi Uke, Jodan Morote Kake Uke',
-        'IDO KEIKO in Yoko Zenkutsu Dachi: Gedan Barai / Gyaku Tsuki',
-        'In Kumite No Kamae (bouncing-foot technique): Kin Geri + Jodan Uchi Haisoku Geri same foot, Mawashi Geri + Ushiro Mawashi Geri same foot, Kake Geri + Mawashi Geri same foot, Low Kick + Hiza Geri same foot (Chudan/Jodan), Mae Geri + Kake Geri same foot',
-        'KAITEN IDO in Kokutsu Dachi and Zenkutsu Dachi (Kaiten maeni, sagari, mawatte): Shuto Jodan Uke, Shuto Chudan Uke, Shuto Gedan Barai, Shuto Soto Uke, Shuto Uchi Uke, Shuto Jodan Uchi Uchi',
-        'KAITEN IDO in Sanchin Dachi (Kaiten maeni and Kaiten sagari): basic Tsuki, basic Uke',
-        'KAITEN IDO in Kokutsu Dachi and Zenkutsu Dachi (Kaiten maeni, Kaiten sagari, mawatte): Shuto Mawashi + Osae Uke passing to Zenkutsu and making Chudan Yonhon Nukite',
-        'KATA: Gekisai Sono San; Tekki Sono Ni; Pinan en Ura: Ichi, Ni',
-        'KUMITE: Yakusoku Ippon Kumite — arm and leg attacks; use esquive and anticipation',
-        'TAMESHIWARI with Seiken, Geri … etc',
-        'Physical test (push-ups, abs, balance on hands…)',
-        'KUMITE (18–40 yrs): 10 × 1 minute; RANDORI (+40 yrs and female under 18)',
-        'Evaluation: attitude, guard, stability, movements, Kiai, determination, speed, power, breath, endurance, Ma-ai, opportunity of blocks/counters, rhythm, rhythm changes, opportunity of combinations, height changes of attacks/counters, esquives, anticipation, kime, kiai (à bon escient)',
+        'KIHON NO WAZA — Know all 30 basic techniques in order: 19 Te No Waza · 11 Geri No Waza',
+        'IDO KEIKO (Neko Ashi Dachi) — Jodan Hiji Uchi · Jodan Hiji Age Uchi · Hiji Oroshi Uchi · Hiji Ushiro Uchi',
+        'IDO KEIKO (Kokutsu Dachi) — Haito Uchi Jodan/Chudan/Gedan · Chudan Haito Uchi Uke · Jodan Morote Kake Uke',
+        'IDO KEIKO (Yoko Zenkutsu Dachi) — Gedan Barai + Gyaku Tsuki',
+        'KUMITE NO KAMAE (bouncing-foot — 2-kick chains) — Kin Geri + Jodan Uchi Haisoku Geri · Mawashi Geri + Ushiro Mawashi Geri · Kake Geri + Mawashi Geri · Low Kick + Hiza Geri (Chudan/Jodan) · Mae Geri + Kake Geri',
+        'KAITEN IDO (Kokutsu & Zenkutsu Dachi) — Shuto Jodan/Chudan Uke · Shuto Gedan Barai · Shuto Soto/Uchi Uke · Shuto Jodan Uchi Uchi',
+        'KAITEN IDO (Sanchin Dachi) — basic Tsuki · basic Uke',
+        'KAITEN IDO (Kokutsu → Zenkutsu Dachi) — Shuto Mawashi + Osae Uke → Chudan Yonhon Nukite',
+        'KATA — Gekisai Sono San · Tekki Sono Ni · Pinan en Ura Sono Ichi & Ni',
+        'KUMITE — Yakusoku Ippon Kumite (Tori–Uke): arm & leg attacks using evasion and anticipation',
+        'KUMITE — 18–40 yrs: 10 × 1 min · Tameshiwari: Seiken, Geri etc. · +40 yrs / females under 18: Randori',
+        'PHYSICAL TEST — Push-ups · Sit-ups · Handstand balance',
+        'EVALUATION — Attitude · Guard · Stability · Footwork · Kiai · Kime · Determination · Speed · Power · Breath · Endurance · Ma-Ai · Block/counter opportunity · Rhythm · Rhythm changes · Combinations · Level changes · Evasion · Anticipation',
       ],
       fr:[
-        'Connaître dans l\'ordre les 30 Kihon No Waza : 19 TE NO WAZA – 11 GERI NO WAZA',
-        'IDO KEIKO en Neko Ashi Dachi (maeni, mawatte) : Jodan Hiji Uchi, Jodan Hiji Age Uchi, Hiji Orashi Uchi, Hiji Ushiro Uchi',
-        'IDO KEIKO en Kokutsu Dachi (maeni, sagari) : Haito Uchi (jodan/chudan/gedan), Chudan Haito Uchi Uke, Jodan Morote Kake Uke',
-        'IDO KEIKO en Yoko Zenkutsu Dachi : Gedan Barai / Gyaku Tsuki',
-        'En Kumite No Kamae (technique de la balle qui rebondit) : Kin Geri + Jodan Uchi Haisoku Geri même jambe, Mawashi Geri + Ushiro Mawashi Geri même jambe, Kake Geri + Mawashi Geri même jambe, Low Kick + Hiza Geri même jambe, Mae Geri + Kake Geri même jambe',
-        'KAITEN IDO en Kokutsu Dachi et Zenkutsu Dachi : Shuto Jodan/Chudan Uke, Shuto Gedan Barai, Shuto Soto/Uchi Uke, Shuto Jodan Uchi Uchi',
-        'KAITEN IDO en Sanchin Dachi (Kaiten maeni et Kaiten sagari) : techniques de base avec Tsuki et Uke',
-        'KAITEN IDO en Kokutsu+Zenkutsu Dachi : Shuto Mawashi + Osae Uke + Chudan Yonhon Nukite',
-        'KATA : Gekisai Sono San ; Tekki Sono Ni ; Pinan en Ura : Ichi, Ni',
-        'KUMITE : Yakusoku Ippon Kumite — attaques de bras et de jambes ; vous devez utiliser esquive et anticipation',
-        'TAMESHIWARI avec Seiken, Geri … etc',
-        'Épreuve physique (appuis faciaux, abdominaux, équilibre sur les mains…)',
-        'KUMITE (18–40 ans) : 10 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines)',
-        'Critères : l\'attitude, la garde, la stabilité, les déplacements, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma-aï, l\'opportunité des blocages et des contre-attaques, le rythme, les changements de rythme, l\'opportunité des enchaînements, les changements de hauteur d\'attaques et de contre-attaques, les esquives, l\'anticipation, le kime, les kiai (à bon escient)',
+        'KIHON NO WAZA — Connaître les 30 techniques fondamentales dans l\'ordre : 19 Te No Waza · 11 Geri No Waza',
+        'IDO KEIKO (Neko Ashi Dachi) — Jodan Hiji Uchi · Jodan Hiji Age Uchi · Hiji Oroshi Uchi · Hiji Ushiro Uchi',
+        'IDO KEIKO (Kokutsu Dachi) — Haito Uchi Jodan/Chudan/Gedan · Chudan Haito Uchi Uke · Jodan Morote Kake Uke',
+        'IDO KEIKO (Yoko Zenkutsu Dachi) — Gedan Barai + Gyaku Tsuki',
+        'KUMITE NO KAMAE (technique rebond — 2 coups de pied enchaînés) — Kin Geri + Jodan Uchi Haisoku Geri · Mawashi Geri + Ushiro Mawashi Geri · Kake Geri + Mawashi Geri · Low Kick + Hiza Geri (Chudan/Jodan) · Mae Geri + Kake Geri',
+        'KAITEN IDO (Kokutsu & Zenkutsu Dachi) — Shuto Jodan/Chudan Uke · Shuto Gedan Barai · Shuto Soto/Uchi Uke · Shuto Jodan Uchi Uchi',
+        'KAITEN IDO (Sanchin Dachi) — Tsuki de base · Uke de base',
+        'KAITEN IDO (Kokutsu → Zenkutsu Dachi) — Shuto Mawashi + Osae Uke → Chudan Yonhon Nukite',
+        'KATA — Gekisai Sono San · Tekki Sono Ni · Pinan en Ura Sono Ichi & Ni',
+        'KUMITE — Yakusoku Ippon Kumite (Tori–Uke) : attaques de bras & jambes avec esquive et anticipation',
+        'KUMITE — 18–40 ans : 10 × 1 min · Tameshiwari : Seiken, Geri etc. · +40 ans / féminines : Randori',
+        'ÉPREUVE PHYSIQUE — Appuis faciaux · Abdominaux · Équilibre sur les mains',
+        'ÉVALUATION — Attitude · Garde · Stabilité · Déplacements · Kiai · Kime · Détermination · Vitesse · Puissance · Respiration · Endurance · Ma-Aï · Opportunité blocages/contre-attaques · Rythme · Changements de rythme · Enchaînements · Changements de hauteur · Esquives · Anticipation',
       ]
     },
     techniques:[
@@ -1693,42 +1685,38 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'Know all principles of the Kyokushinkai (Dojo Kun)',
-        'Know: Haito, Toho, Enkei, Hiraken, Keiko, Tameshiwari, Ashi Barai, Renraku, Ryu, Tobi',
-        'Explain the salutation to Shinzen at beginning and end of class',
-        'IDO KEIKO in Kokutsu Dachi and Kiba Dachi (maeni, sagari): Oyaku Uchi Uke + Gedan Barai (inside) + Chudan Tettsui Uchi, Gyaku Soto Uke + Gedan Barai (outside) + Jodan Tettsui Uchi',
-        'IDO KEIKO in Kiba Dachi (Kyuju-do): Sanbon Jun Tsuki',
-        'IDO KEIKO in Kiba Dachi Yonjugo and Zenkutsu Dachi (maeni, sagari, mawatte): Chudan Hiji Uchi + Uraken Ganmen Uchi (inside) + Seiken Gedan Barai (outside), passing to Zenkutsu and making Seiken Chudan Gyaku Tsuki',
-        'IDO KEIKO in Yoko Zenkutsu Dachi: Mae Geri / Gedan Barai / Gyaku Tsuki',
-        'Enkei Gyaku Tsuki: a) staying in Zenkutsu Dachi, b) passing through Kokutsu Dachi then to Zenkutsu, Sake Tsuki',
-        'IDO KEIKO in Moro Ashi Dachi (maeni, mawatte): Age Kakato Ushiro Geri + Gedan Shuto Morote Uke, Uraken Oroshi Uke (from other hand under elbow), Jodan Morote Haito Uchi, Chudan Morote Haito Uchi',
-        'IDO KEIKO in Kake Dachi (maeni, mawatte): Uraken Sayu Uchi, Morote Uke, Jodan Morote Kake Uke, Morote Tsuki (jodan/chudan)',
-        'RENRAKU in Kumite No Kamae: Gedan Mawashi Geri, Ushiro Mawashi Geri, Tettsui + Gyaku Tsuki, Mae Geri, Chudan Tsuki + Kagi Tsuki, Mawashi Geri, Ushiro Geri, Shita Tsuki',
-        'In Kumite No Kamae: Mae Hiza Tobi Geri, Mawashi Hiza Tobi Geri, Mae Tobi Geri, Mawashi Tobi Geri, Yoko Tobi Geri',
-        'KATA: Pinan Ura San, Yon, Go; Tekki Sono San',
-        'KUMITE: TAMESHIWARI with Seiken, Geri … etc',
-        'Physical test (push-ups, abs, balance on hands…)',
-        'KUMITE (18–40 yrs): 13 × 1 minute; RANDORI (+40 yrs and female under 18)',
-        'Evaluation: attitude, guard, stability, movements, Kiai, determination, speed, power, breath, endurance, Ma-ai, opportunity of blocks/counters, rhythm, rhythm changes, opportunity of combinations, height changes of attacks/counters, esquives, anticipation, kime, kiai (à bon escient)',
+        'VOCABULARY — Haito · Toho · Enkei · Hiraken · Ashi Barai · Renraku · Ryu · Tobi · Keiko',
+        'DOJO KUN — Know all five principles of the Kyokushinkai · Explain the Shinzen salutation at start and end of class',
+        'IDO KEIKO (Kokutsu & Kiba Dachi) — Oyaku Uchi Uke + Gedan Barai + Chudan Tettsui Uchi · Gyaku Soto Uke + Gedan Barai + Jodan Tettsui Uchi',
+        'IDO KEIKO (Kiba Dachi, 90°) — Sanbon Jun Tsuki',
+        'IDO KEIKO (Kiba Dachi 45° → Zenkutsu Dachi) — Chudan Hiji Uchi + Uraken Ganmen Uchi + Seiken Gedan Barai → Seiken Chudan Gyaku Tsuki',
+        'IDO KEIKO (Yoko Zenkutsu Dachi) — Mae Geri · Gedan Barai · Gyaku Tsuki',
+        'IDO KEIKO — Enkei Gyaku Tsuki: a) Zenkutsu Dachi · b) Kokutsu → Zenkutsu Dachi · Sake Tsuki',
+        'IDO KEIKO (Moroashi Dachi) — Age Kakato Ushiro Geri + Gedan Shuto Morote Uke · Uraken Oroshi Uke · Jodan/Chudan Morote Haito Uchi',
+        'IDO KEIKO (Kake Dachi) — Uraken Sayu Uchi · Morote Uke · Jodan Morote Kake Uke · Morote Tsuki Jodan/Chudan',
+        'RENRAKU (Kumite No Kamae) — Gedan Mawashi Geri · Ushiro Mawashi Geri · Tettsui + Gyaku Tsuki · Mae Geri · Chudan Tsuki + Kagi Tsuki · Mawashi Geri · Ushiro Geri · Shita Tsuki',
+        'KUMITE NO KAMAE — Jumping kicks: Mae Hiza Tobi Geri · Mawashi Hiza Tobi Geri · Mae Tobi Geri · Mawashi Tobi Geri · Yoko Tobi Geri',
+        'KATA — Pinan en Ura Sono San, Yon, Go · Tekki Sono San',
+        'KUMITE — 18–40 yrs: 13 × 1 min · Tameshiwari: Seiken, Geri etc. · +40 yrs / females under 18: Randori',
+        'PHYSICAL TEST — Push-ups · Sit-ups · Handstand balance',
+        'EVALUATION — Attitude · Guard · Stability · Footwork · Kiai · Kime · Determination · Speed · Power · Breath · Endurance · Ma-Ai · Block/counter opportunity · Rhythm · Rhythm changes · Combinations · Level changes · Evasion · Anticipation',
       ],
       fr:[
-        'Connaître tous les principes du Kyokushinkai (Dojo Kun)',
-        'Connaître : Haito, Toho, Enkei, Hiraken, Keiko, Tameshiwari, Ashi Barai, Renraku, Ryu, Tobi',
-        'Expliquer le salut au Shinzen en début et fin de cours',
-        'IDO KEIKO en Kokutsu Dachi et Kiba Dachi (maeni, sagari) : Oyaku Uchi Uke + Gedan Barai (intérieur) + Chudan Tettsui Uchi, Gyaku Soto Uke + Gedan Barai (extérieur) + Jodan Tettsui Uchi',
-        'IDO KEIKO en Kiba Dachi (Kyuju-do) : Sanbon Jun Tsuki',
-        'IDO KEIKO en Kiba Dachi Yonjugo et Zenkutsu Dachi (maeni, sagari, mawatte) : Chudan Hiji Uchi + Uraken Ganmen Uchi (intérieur) + Seiken Gedan Barai (extérieur), passant en Zenkutsu + Seiken Chudan Gyaku Tsuki',
-        'IDO KEIKO en Yoko Zenkutsu Dachi : Mae Geri / Gedan Barai / Gyaku Tsuki',
-        'Enkei Gyaku Tsuki : a) en restant en Zenkutsu Dachi, b) en passant en Kokutsu puis en Zenkutsu ; Sake Tsuki',
-        'IDO KEIKO en Moro Ashi Dachi (maeni, mawatte) : Age Kakato Ushiro Geri + Gedan Shuto Morote Uke, Uraken Oroshi Uke, Jodan/Chudan Morote Haito Uchi',
-        'IDO KEIKO en Kake Dachi (maeni, mawatte) : Uraken Sayu Uchi, Morote Uke, Jodan Morote Kake Uke, Morote Tsuki (jodan/chudan)',
-        'RENRAKU en Kumite No Kamae : Gedan Mawashi Geri, Ushiro Mawashi Geri, Tettsui + Gyaku Tsuki, Mae Geri, Chudan Tsuki + Kagi Tsuki, Mawashi Geri, Ushiro Geri, Shita Tsuki',
-        'En Kumite No Kamae : Mae/Mawashi/Mae Tobi Geri, Mawashi/Yoko Tobi Geri',
-        'KATA : Pinan Ura San, Yon, Go ; Tekki Sono San',
-        'KUMITE : TAMESHIWARI avec Seiken, Geri … etc',
-        'Épreuve physique (appuis faciaux, abdominaux, équilibre sur les mains…)',
-        'KUMITE (18–40 ans) : 13 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines)',
-        'Critères : l\'attitude, la garde, la stabilité, les déplacements, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma-aï, l\'opportunité des blocages et des contre-attaques, le rythme, les changements de rythme, l\'opportunité des enchaînements, les changements de hauteur, les esquives, l\'anticipation, le kime, les kiai (à bon escient)',
+        'VOCABULAIRE — Haito · Toho · Enkei · Hiraken · Ashi Barai · Renraku · Ryu · Tobi · Keiko',
+        'DOJO KUN — Connaître les cinq principes du Kyokushinkai · Expliquer le salut au Shinzen en début et fin de cours',
+        'IDO KEIKO (Kokutsu & Kiba Dachi) — Oyaku Uchi Uke + Gedan Barai + Chudan Tettsui Uchi · Gyaku Soto Uke + Gedan Barai + Jodan Tettsui Uchi',
+        'IDO KEIKO (Kiba Dachi, 90°) — Sanbon Jun Tsuki',
+        'IDO KEIKO (Kiba Dachi 45° → Zenkutsu Dachi) — Chudan Hiji Uchi + Uraken Ganmen Uchi + Seiken Gedan Barai → Seiken Chudan Gyaku Tsuki',
+        'IDO KEIKO (Yoko Zenkutsu Dachi) — Mae Geri · Gedan Barai · Gyaku Tsuki',
+        'IDO KEIKO — Enkei Gyaku Tsuki : a) Zenkutsu Dachi · b) Kokutsu → Zenkutsu Dachi · Sake Tsuki',
+        'IDO KEIKO (Moroashi Dachi) — Age Kakato Ushiro Geri + Gedan Shuto Morote Uke · Uraken Oroshi Uke · Jodan/Chudan Morote Haito Uchi',
+        'IDO KEIKO (Kake Dachi) — Uraken Sayu Uchi · Morote Uke · Jodan Morote Kake Uke · Morote Tsuki Jodan/Chudan',
+        'RENRAKU (Kumite No Kamae) — Gedan Mawashi Geri · Ushiro Mawashi Geri · Tettsui + Gyaku Tsuki · Mae Geri · Chudan Tsuki + Kagi Tsuki · Mawashi Geri · Ushiro Geri · Shita Tsuki',
+        'KUMITE NO KAMAE — Sauts : Mae Hiza Tobi Geri · Mawashi Hiza Tobi Geri · Mae Tobi Geri · Mawashi Tobi Geri · Yoko Tobi Geri',
+        'KATA — Pinan en Ura Sono San, Yon, Go · Tekki Sono San',
+        'KUMITE — 18–40 ans : 13 × 1 min · Tameshiwari : Seiken, Geri etc. · +40 ans / féminines : Randori',
+        'ÉPREUVE PHYSIQUE — Appuis faciaux · Abdominaux · Équilibre sur les mains',
+        'ÉVALUATION — Attitude · Garde · Stabilité · Déplacements · Kiai · Kime · Détermination · Vitesse · Puissance · Respiration · Endurance · Ma-Aï · Opportunité blocages/contre-attaques · Rythme · Changements de rythme · Enchaînements · Changements de hauteur · Esquives · Anticipation',
       ]
     },
     techniques:[
@@ -1782,27 +1770,21 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'All previous requirements — demonstrated flawlessly',
-        'Complete kata curriculum — all Kyokushin kata',
-        'Hyakunin Kumite — 100-man kumite (senior levels)',
-        'Naihanchi kata',
-        'Sochin kata',
-        'Ura kata series (all)',
-        'Demonstrated teaching ability',
-        'Minimum 3–5 years training from white belt',
-        'Committee review of character and spirit',
+        'All previous requirements — demonstrated to a high standard',
+        'KATA — Complete Kyokushin curriculum: Naihanchi · Sochin · all Ura kata series',
+        'HYAKUNIN KUMITE — 100-man kumite (senior black belts only)',
+        'Demonstrated teaching ability — lead a class section',
+        'Minimum 3–5 years continuous training from white belt',
+        'Character and spirit review by committee',
         'Approval by senior black belt council',
       ],
       fr:[
-        'Toutes les exigences précédentes — démontrées parfaitement',
-        'Programme complet de kata — tous les kata Kyokushin',
-        'Hyakunin Kumite — kumite à 100 adversaires (niveaux seniors)',
-        'Kata Naihanchi',
-        'Kata Sochin',
-        'Série des Ura kata (tous)',
-        'Capacité d\'enseignement démontrée',
-        'Minimum 3 à 5 ans d\'entraînement depuis la ceinture blanche',
-        'Évaluation du comité sur le caractère et l\'esprit',
+        'Toutes les exigences précédentes — démontrées à un haut niveau',
+        'KATA — Programme complet Kyokushin : Naihanchi · Sochin · toutes les séries Ura',
+        'HYAKUNIN KUMITE — Kumite à 100 adversaires (ceintures noires seniors uniquement)',
+        'Capacité d\'enseignement démontrée — animer une partie du cours',
+        'Minimum 3 à 5 ans d\'entraînement continu depuis la ceinture blanche',
+        'Évaluation du caractère et de l\'esprit par le comité',
         'Approbation du conseil des ceintures noires seniors',
       ]
     },
@@ -2495,9 +2477,13 @@ const glossaryTerms = (() => {
   return list.sort((a, b) => a.romaji.localeCompare(b.romaji));
 })();
 
-const TAG_COLORS = {
-  kihon: '#f08878', kata: '#78a8f0', kumite: '#72d080', 'kihon-waza': '#e0a860'
-};
+const CATEGORY_DEFS = [
+  { tag:'kihon',      color:'#f08878', jp:'基本', label:{ en:'Kihon — Basic Techniques', fr:'Kihon — Techniques de base' } },
+  { tag:'kata',       color:'#78a8f0', jp:'型',   label:{ en:'Kata — Forms',             fr:'Kata — Formes'              } },
+  { tag:'kumite',     color:'#72d080', jp:'組手', label:{ en:'Kumite — Sparring',        fr:'Kumite — Combat'            } },
+  { tag:'kihon-waza', color:'#e0a860', jp:'技',   label:{ en:'Waza — Special',           fr:'Waza — Spécial'            } },
+];
+const TAG_COLORS = Object.fromEntries(CATEGORY_DEFS.map(c => [c.tag, c.color]));
 
 let glossaryFilter = '';
 let glossaryActiveRomaji = null;
@@ -2515,11 +2501,23 @@ function closeGlossaryPanel() {
   document.body.style.overflow = '';
 }
 
+function _glossaryItemHtml(t) {
+  return `<div class="glossary-item${glossaryActiveRomaji === t.romaji ? ' g-active' : ''}"
+       onclick="openGlossaryDetail('${jsString(t.romaji)}')">
+    <div class="glossary-item-dot" style="background:${TAG_COLORS[t.tag] || '#888'}"></div>
+    <div class="glossary-item-text">
+      <div class="glossary-item-romaji">${t.romaji}</div>
+      <div class="glossary-item-jp">${t.japanese}</div>
+    </div>
+  </div>`;
+}
+
 function buildGlossaryList() {
   const container = document.getElementById('glossaryList');
   if (!container) return;
   const q = glossaryFilter.toLowerCase();
   const L = lang;
+
   const filtered = q
     ? glossaryTerms.filter(t =>
         (t.romaji || '').toLowerCase().includes(q) ||
@@ -2533,15 +2531,26 @@ function buildGlossaryList() {
     return;
   }
 
-  container.innerHTML = filtered.map(t => `
-    <div class="glossary-item${glossaryActiveRomaji === t.romaji ? ' g-active' : ''}"
-         onclick="openGlossaryDetail('${jsString(t.romaji)}')">
-      <div class="glossary-item-dot" style="background:${TAG_COLORS[t.tag] || '#888'}"></div>
-      <div class="glossary-item-text">
-        <div class="glossary-item-romaji">${t.romaji}</div>
-        <div class="glossary-item-jp">${t.japanese}</div>
-      </div>
-    </div>`).join('');
+  // Flat list when searching (categories may be partial)
+  if (q) {
+    container.innerHTML = filtered.map(_glossaryItemHtml).join('');
+    return;
+  }
+
+  // Grouped by category
+  let html = '';
+  let first = true;
+  for (const cat of CATEGORY_DEFS) {
+    const items = filtered.filter(t => t.tag === cat.tag);
+    if (!items.length) continue;
+    html += `<div class="glossary-cat-header${first ? ' g-first' : ''}">
+      <div class="glossary-cat-pip" style="background:${cat.color}"></div>
+      <span class="glossary-cat-name">${cat.jp} ${cat.label[L] || cat.label.en}</span>
+      <span class="glossary-cat-count">${items.length}</span>
+    </div>${items.map(_glossaryItemHtml).join('')}`;
+    first = false;
+  }
+  container.innerHTML = html;
 }
 
 function filterGlossary(val) {
