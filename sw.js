@@ -1,4 +1,4 @@
-const CACHE = 'kyokushin-v5';
+const CACHE = 'kyokushin-v7';
 const ASSETS = [
   './index.html',
   './manifest.json',

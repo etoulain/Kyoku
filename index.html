@@ -148,17 +148,26 @@
   .belt-tab[data-belt="white"] .belt-dot { background:#e8e4dc; }
   .belt-tab[data-belt="orange"] .belt-dot { background:#e07020; }
   .belt-tab[data-belt="blue"] .belt-dot { background:#1a5fa8; }
-  .belt-tab[data-belt="yellow"] .belt-dot { background:#1a5fa8; }
-  .belt-tab[data-belt="green"] .belt-dot { background:#2a7a3a; }
-  .belt-tab[data-belt="brown"] .belt-dot { background:#6b3a1f; }
-  .belt-tab[data-belt="black"] .belt-dot { background:#1a1a1a; border-color:var(--gold); }
+  .belt-tab[data-belt="yellow"] .belt-dot { background:#1a70b8; }
+  .belt-tab[data-belt="green"] .belt-dot { background:#c8a010; }
+  .belt-tab[data-belt="brown"] .belt-dot { background:#c8a010; }
+  .belt-tab[data-belt="brown1"] .belt-dot { background:#6b3a1f; }
+  .belt-tab[data-belt="brown1"] .belt-dot { background:#2a7a3a; }
+  .belt-tab[data-belt="black"] .belt-dot { background:#2a7a3a; border-color:#3a9a4a; }
+  .belt-tab[data-belt="brown2kyu"] .belt-dot { background:#6b3a1f; }
+  .belt-tab[data-belt="brown1kyu"] .belt-dot { background:#6b3a1f; border-color:var(--gold); }
+  .belt-tab[data-belt="shodan"] .belt-dot { background:#1a1a1a; border-color:var(--gold); }
   .belt-tab[data-belt="white"].active::after { background:#e8e4dc; }
   .belt-tab[data-belt="orange"].active::after { background:#e07020; }
   .belt-tab[data-belt="blue"].active::after { background:#1a5fa8; }
-  .belt-tab[data-belt="yellow"].active::after { background:#1a5fa8; }
-  .belt-tab[data-belt="green"].active::after { background:#2a7a3a; }
-  .belt-tab[data-belt="brown"].active::after { background:#6b3a1f; }
-  .belt-tab[data-belt="black"].active::after { background:var(--gold); }
+  .belt-tab[data-belt="yellow"].active::after { background:#1a70b8; }
+  .belt-tab[data-belt="green"].active::after { background:#c8a010; }
+  .belt-tab[data-belt="brown"].active::after { background:#c8a010; }
+  .belt-tab[data-belt="brown1"].active::after { background:#2a7a3a; }
+  .belt-tab[data-belt="black"].active::after { background:#2a7a3a; }
+  .belt-tab[data-belt="brown2kyu"].active::after { background:#6b3a1f; }
+  .belt-tab[data-belt="brown1kyu"].active::after { background:#6b3a1f; }
+  .belt-tab[data-belt="shodan"].active::after { background:var(--gold); }
   .you-badge { font-size:7px; background:var(--red); color:white; padding:1px 4px; border-radius:2px; letter-spacing:1px; }
 
   /* ── APP SHELL ── */
@@ -411,6 +420,116 @@
     margin-left: 6px; vertical-align: middle;
   }
 
+
+  /* ── BELT PICKER MODAL ── */
+  #beltPickerModal {
+    display: none;
+    position: fixed; inset: 0; z-index: 10001;
+    background: rgba(0,0,0,0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+  }
+  #beltPickerModal.open { display: flex; }
+  #beltPickerModal.open .picker-sheet { animation: sheetUp 0.28s cubic-bezier(0.34,1.1,0.64,1); }
+  @keyframes sheetUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .picker-sheet {
+    width: 100%;
+    max-width: 560px;
+    background: #17161a;
+    border-radius: 16px 16px 0 0;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    overflow: hidden;
+    max-height: 88dvh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -12px 60px rgba(0,0,0,0.6);
+  }
+
+  .picker-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+  }
+  .picker-header h2 {
+    font-family: 'Cinzel', serif; font-size: 13px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .picker-close {
+    background: rgba(255,255,255,0.07); border: none;
+    color: var(--text-sub); font-size: 16px;
+    width: 30px; height: 30px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .picker-close:hover { background: rgba(255,255,255,0.14); }
+
+  .picker-list {
+    overflow-y: auto; overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 12px 24px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+
+  .picker-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 14px; border-radius: 10px; cursor: pointer;
+    border: 1.5px solid transparent;
+    background: rgba(255,255,255,0.03);
+    transition: all 0.18s; text-align: left; width: 100%;
+  }
+  .picker-item:hover  { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  .picker-item.active {
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.35);
+  }
+
+  .picker-swatch {
+    width: 36px; height: 10px; border-radius: 3px;
+    flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  .picker-info { flex: 1; }
+  .picker-name {
+    font-size: 15px; font-weight: 600; color: var(--white);
+    margin-bottom: 2px;
+  }
+  .picker-kyu {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 2px; color: var(--text-sub);
+  }
+
+  .picker-check {
+    font-size: 18px; color: var(--gold-light);
+    opacity: 0; transition: opacity 0.18s; flex-shrink: 0;
+  }
+  .picker-item.active .picker-check { opacity: 1; }
+
+  /* MY BELT button in header */
+  .my-belt-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 6px 14px;
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.5px; color: var(--text);
+    cursor: pointer; transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .my-belt-btn:hover { background: rgba(255,255,255,0.10); border-color: rgba(201,168,76,0.4); color: var(--gold-light); }
+  .my-belt-swatch {
+    width: 14px; height: 14px; border-radius: 50%;
+    flex-shrink: 0; border: 1.5px solid rgba(255,255,255,0.2);
+  }
+
 </style>
 </head>
 <body>
@@ -424,6 +543,10 @@
 <header>
   <div class="header-top">
     <div class="header-badge"><span>⛩</span><span>Kyokushinkai Karate</span></div>
+    <button class="my-belt-btn" id="myBeltBtn" onclick="openBeltPicker()">
+      <span class="my-belt-swatch" id="myBeltSwatch"></span>
+      <span id="myBeltLabel">My Belt</span>
+    </button>
     <div class="lang-switcher">
       <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
       <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
@@ -799,12 +922,12 @@ const belts = [
   },
   {
     id:'yellow',
-    name:{ en:'Blue Belt', fr:'Ceinture Bleue' },
-    nameJP:'青帯', kyu:'8th Kyu',
-    color:'#1a5fa8', borderTop:'#3a7fd8',
+    name:{ en:'Blue Stripe Belt', fr:'Ceinture Bleue Barrette' },
+    nameJP:'青帯', kyu:'7th Kyu',
+    color:'#1a5fa8', borderTop:'#60a0e0',
     desc:{
-      en:'The goal of KARATE-DO: mastery of the spirit through mastery of the body. At 8th Kyu the student adds Kiba Dachi and Sanchin Dachi, Sanchin-static kihon, advanced kicks in Heiko Dachi, and Pinan Sono Ichi kata.',
-      fr:'Le but du KARATE-DO : la maîtrise de l\'esprit à travers celle du corps. Au 8e Kyu, l\'élève ajoute Kiba Dachi et Sanchin Dachi, le kihon statique en Sanchin Dachi, des coups de pied avancés en Heiko Dachi, et le kata Pinan Sono Ichi.'
+      en:'At 7th Kyu the student learns new vocabulary (Jiyu Kumite, Mogorei, Dan/Kyu, Sensei/Shihan), masters three new stances, and trains advanced Ido Keiko sequences in Kokutsu, Zenkutsu, and Sanchin Dachi including combat-guard combinations.',
+      fr:'Au 7e Kyu, l\'élève apprend de nouveaux termes (Jiyu Kumite, Mogorei, Dan/Kyu, Sensei/Shihan), maîtrise trois nouvelles postures et s\'entraîne à des séquences avancées d\'Ido Keiko en Kokutsu, Zenkutsu et Sanchin Dachi incluant des combinaisons en garde de combat.'
     },
     examRequirements:{
       en:[
@@ -886,35 +1009,41 @@ const belts = [
   },
   {
     id:'green',
-    name:{ en:'Green Belt', fr:'Ceinture Verte' },
-    nameJP:'緑帯', kyu:'4th Kyu',
-    color:'#2a7a3a', borderTop:'#3a9a4a',
+    name:{ en:'Yellow Belt', fr:'Ceinture Jaune' },
+    nameJP:'黄帯', kyu:'6th Kyu',
+    color:'#c8a010', borderTop:'#e8c020',
     desc:{
-      en:'Growth made visible. Kata have depth; kumite has strategy. This is where the martial art truly begins to reveal itself.',
-      fr:'La croissance rendue visible. Les kata ont de la profondeur ; le kumite a de la stratégie. C\'est ici que l\'art martial commence véritablement à se révéler.'
+      en:'At 6th Kyu the student masters elbow techniques in Kiba Dachi, learns new Ido Keiko sequences across four stances, and deepens combat-guard training. New vocabulary covers Hiji Uchi, Tameshiwari, Kamae, and Kyuju-Do.',
+      fr:'Au 6e Kyu, l\'élève maîtrise les techniques de coude en Kiba Dachi, apprend de nouvelles séquences d\'Ido Keiko dans quatre postures et approfondit l\'entraînement en garde de combat. Nouveau vocabulaire : Hiji Uchi, Tameshiwari, Kamae et Kyuju-Do.'
     },
     examRequirements:{
       en:[
-        'All previous requirements',
-        'Yantsu kata',
-        'Tsuki no kata',
-        'Kanku kata',
-        'Advanced combination sparring (5+ techniques)',
-        'Free sparring — 3 rounds minimum',
-        'Demonstrate all previous kata',
-        '100 push-ups on knuckles',
-        'Sanchin kata with pressure testing',
+        'Know: Hiji Uchi = Hiji Ate = Empi Uchi, Kamae-Te (assume indicated position), Kamae (guard)',
+        'Know: Kumite No Kamae = Kumite Dachi, Yonju Go-Do, Kyuju-Do, Hidari Kumite No Kamae',
+        'Know: Tameshiwari (breaking), Jodan/Chudan Mae Jodan Hiji Uchi',
+        'KIHON in Kiba Dachi static: Jodan/Chudan/Mae Jodan Hiji Uchi, Jodan/Chudan Hiji Age Uchi, Mae Chudan Hiji Uchi, Hiji Ushiro Uchi, Hiji Oroshi Uchi',
+        'IDO KEIKO in Zenkutsu Dachi (maeni, sagari, mawatte): Uchi Mawashi Geri, Oroshi Uchi Kakato Geri, Oroshi Soto Kakato Geri',
+        'IDO KEIKO in Kokutsu Dachi (maeni, sagari) front leg: Mae Geri, Yoko Geri, Shuto Mawashi Uke (les 2 formes Kyokushin) + Gyaku Tsuki',
+        'IDO KEIKO in Kiba Dachi Yonju Go-Do (maeni, sagari, mawatte) passing to Zenkutsu: blocks + Gyaku Tsuki',
+        'IDO KEIKO in Han Kiba Dachi (Mae Kosa, Ushiro Kosa, mawatte cross front/back Kyuju-Do): Mawashi Geri, Kaka Geri (Kakato) jodan, Yoko Geri (Sokuto) jodan',
+        'IDO KEIKO in Sanchin Dachi (maeni, sagari, mawatte): blocks + Chudan Gyaku Tsuki, Seiken Gyaku Tate Tsuki (jodan/chudan/gedan), Seiken Morote Tsuki (jodan/chudan/gedan or jodan+chudan)',
+        'KATA: Pinan Sono San; 1 or 2 Bunkai Pinan Sono San; Yantsu',
+        'KUMITE (18–40 yrs): 5 × 1 minute; RANDORI (+40 yrs and female under 18)',
+        'Evaluation: attitude, guard, stability, Kiai, determination, speed, power, breath, movements, opportunity of blocks and counters',
       ],
       fr:[
-        'Toutes les exigences précédentes',
-        'Kata Yantsu',
-        'Kata Tsuki no kata',
-        'Kata Kanku',
-        'Sparring en combinaisons avancées (5+ techniques)',
-        'Kumite libre — 3 rounds minimum',
-        'Démontrer tous les kata précédents',
-        '100 pompes sur les phalanges',
-        'Kata Sanchin avec test de pression',
+        'Connaître : Hiji Uchi = Hiji Ate = Empi Uchi, Kamae-Te (prendre la position indiquée), Kamae (la garde)',
+        'Connaître : Kumite No Kamae = Kumite Dachi, Yonju Go-Do, Kyuju-Do, Hidari Kumite No Kamae',
+        'Connaître : Tameshiwari (la casse), Jodan/Chudan Mae Jodan Hiji Uchi',
+        'KIHON en Kiba Dachi statique : Jodan/Chudan/Mae Jodan Hiji Uchi, Jodan/Chudan Hiji Age Uchi, Mae Chudan Hiji Uchi, Hiji Ushiro Uchi, Hiji Oroshi Uchi',
+        'IDO KEIKO en Zenkutsu Dachi (maeni, sagari, mawatte) : Uchi Mawashi Geri, Oroshi Uchi Kakato Geri, Oroshi Soto Kakato Geri',
+        'IDO KEIKO en Kokutsu Dachi (maeni, sagari) jambe avant : Mae Geri, Yoko Geri, Shuto Mawashi Uke (les 2 formes Kyokushin) + Gyaku Tsuki',
+        'IDO KEIKO en Kiba Dachi Yonju Go-Do (maeni, sagari, mawatte) passant en Zenkutsu : blocages + Gyaku Tsuki',
+        'IDO KEIKO en Han Kiba Dachi (Mae Kosa, Ushiro Kosa, Mawatte croiser devant/derrière Kyuju-Do) : Mawashi Geri, Kaka Geri (Kakato) jodan, Yoko Geri (Sokuto) jodan',
+        'IDO KEIKO en Sanchin Dachi (maeni, sagari, mawatte) : blocages + Chudan Gyaku Tsuki, Seiken Gyaku Tate Tsuki, Seiken Morote Tsuki',
+        'KATA : Pinan Sono San ; 1 ou 2 Bunkai Pinan Sono San ; Yantsu',
+        'KUMITE (18–40 ans) : 5 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines – 18 ans)',
+        'Critères : l\'attitude, la garde, la stabilité, le kiai, la détermination, la vitesse, la puissance, la respiration, les déplacements, l\'opportunité des blocages et des contre-attaques',
       ]
     },
     techniques:[
@@ -948,65 +1077,87 @@ const belts = [
         video:'https://www.youtube.com/results?search_query=kyokushin+sanchin+kata' },
     ],
     kata:[
+      { name:'Pinan Sono San',
+        meaning:{ en:'Peaceful Mind — Number Three', fr:'Esprit Serein — Numéro Trois' },
+        desc:{
+          en:'Introduces open-hand techniques and spinning movements. At 6th Kyu, 1–2 Bunkai applications must be demonstrated alongside the kata.',
+          fr:'Introduit les techniques à main ouverte et les mouvements tournants. Au 6e Kyu, 1 à 2 Bunkai doivent être démontrés avec le kata.'
+        }
+      },
       { name:'Yantsu',
         meaning:{ en:'To Keep Pure (Chinese origin)', fr:'Rester Pur (origine chinoise)' },
         desc:{
-          en:'Chinese kata with low sweeping movements and circular blocking. One of the defining katas of Kyokushin. Tests the ability to generate power from deep stances.',
-          fr:'Kata chinois avec des mouvements de balayage bas et des blocages circulaires. L\'un des kata définissants du Kyokushin. Teste la capacité à générer de la puissance depuis des postures profondes.'
-        }
-      },
-      { name:'Tsuki no Kata',
-        meaning:{ en:'Moon Form / Punching Form', fr:'Forme de la Lune / Forme des Coups de Poing' },
-        desc:{
-          en:'Focused entirely on punching. Develops consistency, hip rotation, kime, and the understanding that one technique done perfectly beats many done poorly.',
-          fr:'Entièrement centré sur les coups de poing. Développe la constance, la rotation des hanches, le kime, et la compréhension qu\'une technique parfaite vaut mieux que de nombreuses mal exécutées.'
-        }
-      },
-      { name:'Kanku',
-        meaning:{ en:'Viewing the Sky', fr:'Contempler le Ciel' },
-        desc:{
-          en:'The grandest intermediate kata. 65 movements. Opens with hands forming a diamond to frame the sky. Contains jumping, spinning, and grappling concepts.',
-          fr:'Le plus grand kata intermédiaire. 65 mouvements. S\'ouvre avec les mains formant un diamant pour encadrer le ciel. Contient des concepts de sauts, rotations et projections.'
+          en:'A Chinese-derived kata meaning "to keep pure." Features low stances, powerful sweeping techniques, and Kyokushin circular movements. One of the defining katas of the style.',
+          fr:'Kata d\'origine chinoise signifiant "rester pur". Comprend des postures basses, de puissantes techniques de balayage et les mouvements circulaires caractéristiques du Kyokushin.'
         }
       }
     ]
   },
   {
     id:'brown',
-    name:{ en:'Brown Belt', fr:'Ceinture Marron' },
-    nameJP:'茶帯', kyu:'3rd–1st Kyu',
-    color:'#6b3a1f', borderTop:'#8b5a3f',
+    name:{ en:'Yellow Stripe Belt', fr:'Ceinture Jaune Barrette' },
+    nameJP:'黄帯', kyu:'5th Kyu',
+    color:'#c8a010', borderTop:'#6b3a1f',
     desc:{
-      en:'The earth beneath the forest — solid, tested, essential. Brown belt is the final stage before black. Technique is refined to its essence.',
-      fr:'La terre sous la forêt — solide, éprouvée, essentielle. La ceinture marron est la dernière étape avant le noir. La technique est affinée jusqu\'à son essence.'
+      en:'At 5th Kyu new vocabulary covers low kicks, Nukite, Tate Tsuki, Ma-Ai and more. New stances Neko Ashi Dachi, Kake Ashi Dachi, and Tsuruashi Dachi are introduced. Yakusoku Sanbon Kumite and Tameshiwari (1 board with Seiken) are now required.',
+      fr:'Au 5e Kyu, le nouveau vocabulaire couvre les coups de pied bas, Nukite, Tate Tsuki, Ma-Aï et plus encore. Les nouvelles postures Neko Ashi Dachi, Kake Ashi Dachi et Tsuruashi Dachi sont introduites. Le Yakusoku Sanbon Kumite et le Tameshiwari (1 planche au Seiken) sont exigés.'
     },
     examRequirements:{
       en:[
-        'All previous requirements',
-        'Seienchin kata',
-        'Garyu kata',
-        'Seipai kata',
-        'Bassai kata',
-        'Sustained free sparring — multiple opponents',
-        'Extended kumite: 10-man sparring (Ju hon kumite)',
-        'Full demonstration of entire curriculum',
-        'Written knowledge of Kyokushin history',
-        'Dojo kun — full recitation with meaning',
+        'Know: Migi Ashi Mae, Low Kick = Gedan Mawashi Geri, Juji = Jyuji, Tate Tsuki, Hizo',
+        'Know: Hidari Ashi Ushiro, Ma = Ma Ai, Tettsui, Jun Tsuki, Sakutsu',
+        'Know: Nukite (Nihon, Yonhon)',
+        'TACHIKATA: Neko Ashi Dachi, Kake Ashi Dachi = Kake Dachi, Tsuruashi Dachi',
+        'IDO KEIKO in Kokutsu Dachi (maeni, sagari, mawatte): Tettsui Oroshi Ganmen Uchi, Tettsui Komi, Tettsui Hizo Uchi',
+        'IDO KEIKO in Zenkutsu Dachi (maeni, sagari, mawatte): Les Jyuji Uke (Seiken and Shuto) jodan and gedan + Morote Tsuki at choice',
+        'IDO KEIKO in Kokutsu Dachi (maeni, sagari, mawatte) front leg: Mae Geri suivi de Mawashi Geri same foot, Mawashi Geri suivi de Kake Geri same foot, Kin Geri suivi de Jodan Uchi Haisoku Geri same foot',
+        'IDO KEIKO in Sanchin Dachi (maeni, sagari, mawatte): Kin Geri, Seiken Gedan Barai (3 forms), Kansetsu Geri (45°), Mawashi Uke (Mae Mawashi Uke), Seiken Morote Tsuki avec Ibuki',
+        'IDO KEIKO in Neko Ashi Dachi (maeni, sagari): Chudan Mae Hiji Uchi, Chudan Hiji Sayu Uchi, Jodan Mae Hiji Uchi, Jodan Hiji Sayu Uchi',
+        'IDO KEIKO in Kiba Dachi Kyuju-Do (maeni, sagari, mawatte): Jun Tsuki (jodan/chudan/gedan), Tettsui Yoko Uchi (jodan/chudan/gedan), Jodan Haishu (Uchi and Uke), Chudan Haishu (Uchi and Uke)',
+        'KATA: Pinan Sono Yon; 1 or 2 Bunkai Pinan Sono Yon; Tsuki No Kata',
+        'KUMITE: Yakusoku Sanbon Kumite (Tori–Uke) — 3 blocks on same attack, with varied multiple counters combining arms and legs',
+        'KUMITE (18–40 yrs): 6 × 1 minute; TAMESHIWARI: 1 board with Seiken; RANDORI (+40 yrs and female under 18)',
+        'Evaluation: attitude, guard, stability, Kiai, kime, determination, speed, power, breath, endurance, Ma, opportunity of blocks and counters',
       ],
       fr:[
-        'Toutes les exigences précédentes',
-        'Kata Seienchin',
-        'Kata Garyu',
-        'Kata Seipai',
-        'Kata Bassai',
-        'Kumite libre soutenu — adversaires multiples',
-        'Kumite étendu : sparring à 10 adversaires (Ju hon kumite)',
-        'Démonstration complète de tout le programme',
-        'Connaissance écrite de l\'histoire du Kyokushin',
-        'Dojo kun — récitation complète avec sens',
+        'Connaître : Migi Ashi Mae, Low Kick = Gedan Mawashi Geri, Juji = Jyuji, Tate Tsuki, Hizo',
+        'Connaître : Hidari Ashi Ushiro, Ma = Ma Aï, Tettsui, Jun Tsuki, Sakutsu',
+        'Connaître : Nukite (Nihon, Yonhon)',
+        'TACHIKATA : Neko Ashi Dachi, Kake Ashi Dachi = Kake Dachi, Tsuruashi Dachi',
+        'IDO KEIKO en Kokutsu Dachi (maeni, sagari, mawatte) : Tettsui Oroshi Ganmen Uchi, Tettsui Komi, Tettsui Hizo Uchi',
+        'IDO KEIKO en Zenkutsu Dachi (maeni, sagari, mawatte) : Les Jyuji Uke (Seiken et Shuto) jodan et gedan + Morote Tsuki au choix',
+        'IDO KEIKO en Kokutsu Dachi (maeni, sagari, mawatte) jambe avant : Mae Geri suivi de Mawashi Geri même pied, Mawashi Geri suivi de Kake Geri même pied, Kin Geri suivi de Jodan Uchi Haisoku Geri même pied',
+        'IDO KEIKO en Sanchin Dachi (maeni, sagari, mawatte) : Kin Geri, Seiken Gedan Barai (3 formes), Kansetsu Geri (45°), Mawashi Uke (Mae Mawashi Uke), Seiken Morote Tsuki avec Ibuki',
+        'IDO KEIKO en Neko Ashi Dachi (maeni, sagari) : Chudan Mae Hiji Uchi, Chudan Hiji Sayu Uchi, Jodan Mae Hiji Uchi, Jodan Hiji Sayu Uchi',
+        'IDO KEIKO en Kiba Dachi Kyuju-Do (maeni, sagari, mawatte) : Jun Tsuki, Tettsui Yoko Uchi, Jodan/Chudan Haishu (Uchi et Uke)',
+        'KATA : Pinan Sono Yon ; 1 ou 2 Bunkai Pinan Sono Yon ; Tsuki No Kata',
+        'KUMITE : Yakusoku Sanbon Kumite (Tori–Uke) — 3 blocages sur même attaque, contre-attaques variées et multiples associant jambes et bras',
+        'KUMITE (18–40 ans) : 6 × 1 minute ; TAMESHIWARI : 1 planche avec Seiken ; RANDORI (+ 40 ans)',
+        'Critères : l\'attitude, la garde, la stabilité, le kiai, le kime, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma, l\'opportunité des blocages et des contre-attaques',
       ]
     },
     techniques:[
+      { japanese:'猫足立ち', romaji:'Neko Ashi Dachi', tag:'kihon', posterKey:'neko-ashi-dachi',
+        english:'Cat Stance', french:'Posture du chat',
+        desc:{
+          en:'90% weight on rear leg, front foot lightly touching the floor on the ball. Highly mobile and deceptive. Used for front leg kicks and elbow strikes in Neko Ashi Dachi Ido Keiko at 5th Kyu.',
+          fr:'90% du poids sur la jambe arrière, le pied avant touche légèrement le sol sur la plante. Très mobile et trompeuse. Utilisée pour les coups de pied de la jambe avant et les coups de coude en Ido Keiko Neko Ashi Dachi au 5e Kyu.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+neko+ashi+dachi+cat+stance' },
+      { japanese:'鉄槌打ち', romaji:'Tettsui Uchi', tag:'kihon', posterKey:'tettsui-uchi',
+        english:'Hammer Fist Strike', french:'Frappe marteau',
+        desc:{
+          en:'Strike using the bottom of the fist like a hammer. At 5th Kyu practiced in Kokutsu Dachi: Oroshi Ganmen Uchi (dropping face strike), Komi (compressing inward), Hizo Uchi (spleen strike). Devastating at close range.',
+          fr:'Frappe avec le bas du poing comme un marteau. Au 5e Kyu pratiqué en Kokutsu Dachi : Oroshi Ganmen Uchi (frappe descendante visage), Komi (compressant vers l\'intérieur), Hizo Uchi (frappe rate). Dévastateur à courte portée.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+tettsui+uchi+hammer+fist' },
+      { japanese:'十字受け', romaji:'Juji Uke', tag:'kihon', posterKey:'juji-uke',
+        english:'X-Block (Seiken and Shuto)', french:'Blocage en X (Seiken et Shuto)',
+        desc:{
+          en:'Both forearms cross to form an X and intercept the attack simultaneously — upper (jodan) or lower (gedan). Practiced with both closed fist (Seiken) and knife hand (Shuto) versions. Followed by Morote Tsuki.',
+          fr:'Les deux avant-bras se croisent en X pour intercepter l\'attaque simultanément — haut (jodan) ou bas (gedan). Pratiqué avec poing fermé (Seiken) et main tranchante (Shuto). Suivi de Morote Tsuki.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+juji+uke+x+block' },
       { japanese:'征遠鎮', romaji:'Seienchin', tag:'kata',
         english:'Storm in the Calm', french:'Tempête dans le Calme',
         desc:{
@@ -1030,41 +1181,380 @@ const belts = [
         video:'https://www.youtube.com/results?search_query=kyokushin+10+man+kumite+brown+belt' },
     ],
     kata:[
-      { name:'Seienchin',
-        meaning:{ en:'Storm in the Calm / Conquer & Suppress', fr:'Tempête dans le Calme / Conquérir et Réprimer' },
+      { name:'Pinan Sono Yon',
+        meaning:{ en:'Peaceful Mind — Number Four', fr:'Esprit Serein — Numéro Quatre' },
         desc:{
-          en:'Goju-ryu derived. Alternates between slow tense movements and explosive fast ones. Deep stances and powerful strikes represent controlling aggression.',
-          fr:'Dérivé du Goju-ryu. Alterne entre mouvements lents et tendus et mouvements explosifs rapides. Les postures profondes et les frappes puissantes représentent le contrôle de l\'agressivité.'
+          en:'Features spinning techniques and a double-block combination. At 5th Kyu, 1–2 Bunkai must be demonstrated. The longest of the Pinan series — tests memory, coordination, and rhythm.',
+          fr:'Comprend des techniques tournantes et une combinaison de double blocage. Au 5e Kyu, 1 à 2 Bunkai doivent être démontrés. Le plus long de la série Pinan — teste la mémoire, la coordination et le rythme.'
         }
       },
-      { name:'Garyu',
-        meaning:{ en:'Reclining Dragon', fr:'Dragon Couché' },
+      { name:'Tsuki No Kata',
+        meaning:{ en:'Moon / Punching Form', fr:'Forme de la Lune / des Coups de Poing' },
         desc:{
-          en:"The only kata created by Mas Oyama. Uniquely Kyokushin. Named after Oyama's pen name. Contains his characteristic direct and powerful approach to combat.",
-          fr:"Le seul kata créé par Mas Oyama. Uniquement Kyokushin. Nommé d'après le nom de plume d'Oyama. Contient son approche directe et puissante caractéristique du combat."
+          en:'Focused entirely on punching sequences. Develops consistency, hip rotation, and kime. Short but intensely focused — proves that one perfect technique beats many poor ones.',
+          fr:'Entièrement axé sur les enchaînements de coups de poing. Développe la constance, la rotation des hanches et le kime. Court mais intensément concentré.'
+        }
+      }
+    ]
+  },
+  {
+    id:'brown1',
+    name:{ en:'Green Belt', fr:'Ceinture Verte' },
+    nameJP:'緑帯', kyu:'4th Kyu',
+    color:'#2a7a3a', borderTop:'#4ab05a',
+    desc:{
+      en:'At 4th Kyu new vocabulary covers Teisoku, Shotei, Sokuto, Koken, Haisoku, Osae Uke, Shiai, Kaiten, and Kata en Ura. New stances Moroashi Dachi and Shiko Dachi. Kaiten Ido (rotating moving practice) and physical fitness test are introduced.',
+      fr:'Au 4e Kyu, nouveau vocabulaire : Teisoku, Shotei, Sokuto, Koken, Haisoku, Osae Uke, Shiai, Kaiten et Kata en Ura. Nouvelles postures Moroashi Dachi et Shiko Dachi. Le Kaiten Ido (déplacements en rotation) et l\'épreuve physique sont introduits.'
+    },
+    examRequirements:{
+      en:[
+        'Know: Teisoku, Shotei, Sokuto, Koken, Yakusoku, Kaiten, Kaiten Ido, Haisoku',
+        'Know: Osae Uke, Shiai, Jiyu Kumite, Kaiten Maeni, Kaiten Sagari, Kata en Ura',
+        'Know: Chusoku, Haishu',
+        'TACHIKATA: Moroashi Dachi, Shiko Dachi',
+        'IDO KEIKO in Kokutsu Dachi (maeni, sagari, mawatte): Les Shotei Uchi (jodan/chudan/gedan), Les Shotei Uke (jodan/chudan/gedan)',
+        'IDO KEIKO in Sanchin Dachi: Mawashi Uchi Uke; IDO KEIKO in Shiko Dachi: Mawashi Gedan Barai',
+        'KAITEN IDO A) in Zenkutsu Dachi (Kaiten maeni and Kaiten sagari): basic Tsuki techniques, basic Uke techniques, basic Geri techniques',
+        'KAITEN IDO B) in Kokutsu Dachi (Kaiten maeni and Kaiten sagari): basic Tsuki, basic Uke, basic Geri',
+        'In Kumite No Kamae: Uchi Mawashi Geri + Yoko Geri same foot, Soto Mawashi Geri + Mae Geri same foot, Uchi Mawashi Geri + Oroshi Soto Kakato Geri same foot, Soto Mawashi Geri + Oroshi Uchi Kakato Geri same foot',
+        'KATA: Pinan Sono Go; 1 or 2 Bunkai Pinan Sono Go; Gekisai Sono Ichi; Taikyoku en Ura Sono Ichi, Ni',
+        'KUMITE: Yakusoku Ippon Kumite (Tori–Uke) — arm or leg attacks; physical test (push-ups, abs…)',
+        'KUMITE (18–40 yrs): 7 × 1 minute; TAMESHIWARI with Seiken, Geri …etc; RANDORI (+40 yrs)',
+        'Evaluation: attitude, guard, stability, movements, Kiai, kime la determination, speed, power, breath, endurance, Ma, opportunity of blocks and counters',
+      ],
+      fr:[
+        'Connaître : Teisoku, Shotei, Sokuto, Koken, Yakusoku, Kaiten, Kaiten Ido, Haisoku',
+        'Connaître : Osae Uke, Shiai, Jiyu Kumite, Kaiten Maeni, Kaiten Sagari, Kata en Ura',
+        'Connaître : Chusoku, Haishu',
+        'TACHIKATA : Moroashi Dachi, Shiko Dachi',
+        'IDO KEIKO en Kokutsu Dachi (maeni, sagari, mawatte) : Les Shotei Uchi (jodan/chudan/gedan), Les Shotei Uke (jodan/chudan/gedan)',
+        'IDO KEIKO en Sanchin Dachi : Mawashi Uchi Uke ; IDO KEIKO en Shiko Dachi : Mawashi Gedan Barai',
+        'KAITEN IDO A) en Zenkutsu Dachi (Kaiten maeni et Kaiten sagari) : techniques de base avec Tsuki, Uke, Geri',
+        'KAITEN IDO B) en Kokutsu Dachi (Kaiten maeni et Kaiten sagari) : techniques de base avec Tsuki, Uke, Geri',
+        'En Kumite No Kamae : Uchi Mawashi Geri + Yoko Geri même pied, Soto Mawashi Geri + Mae Geri même pied, Uchi/Soto Mawashi Geri + Oroshi Kakato Geri même pied',
+        'KATA : Pinan Sono Go ; 1 ou 2 Bunkai Pinan Sono Go ; Gekisai Sono Ichi ; Taikyoku en Ura Sono Ichi, Ni',
+        'KUMITE : Yakusoku Ippon Kumite (Tori–Uke) — attaques de bras ou de jambe ; épreuve physique (appuis faciaux, abdominaux…)',
+        'KUMITE (18–40 ans) : 7 × 1 minute ; TAMESHIWARI avec Seiken, Geri …etc ; RANDORI (+ 40 ans)',
+        'Critères : l\'attitude, la garde, la stabilité, les déplacements, le kiai, le kime, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma, l\'opportunité des blocages et des contre-attaques',
+      ]
+    },
+    techniques:[
+      { japanese:'掌底打ち', romaji:'Shotei Uchi', tag:'kihon', posterKey:'teisho-uchi',
+        english:'Palm Heel Strike', french:'Frappe talon de paume',
+        desc:{
+          en:'Strike using the heel of the palm (Shotei). Practiced in Kokutsu Dachi at all three levels (jodan/chudan/gedan) both as strike and block. The heel of the palm absorbs impact well and is ideal for close-range pushing strikes.',
+          fr:'Frappe avec le talon de la paume (Shotei). Pratiquée en Kokutsu Dachi aux trois niveaux (jodan/chudan/gedan) en frappe et en blocage. Le talon de la paume absorbe bien l\'impact et est idéal pour les frappes poussantes à courte portée.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+shotei+uchi+palm+heel' },
+      { japanese:'回転移動', romaji:'Kaiten Ido', tag:'kihon', posterKey:'oi-zuki',
+        english:'Rotating Moving Practice', french:'Déplacements en rotation',
+        desc:{
+          en:'Ido Keiko performed with 180° rotations (Kaiten maeni = rotate and advance, Kaiten sagari = rotate and retreat). Combines direction change with immediate technique execution. Tests spatial awareness and quick adaptation.',
+          fr:'Ido Keiko effectué avec des rotations à 180° (Kaiten maeni = tourner et avancer, Kaiten sagari = tourner et reculer). Combine changement de direction et exécution immédiate de technique. Teste la conscience spatiale et l\'adaptation rapide.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+kaiten+ido+rotating' },
+      { japanese:'平安その五', romaji:'Pinan Sono Go', tag:'kata', posterKey:'kata',
+        english:'Peaceful Mind — Form 5 (+ Bunkai)', french:'Esprit Serein — Forme 5 (+ Bunkai)',
+        desc:{
+          en:'The most advanced Pinan kata — features jumps, multiple spins, and nage application concepts. Completes the Pinan series. At 4th Kyu, 1–2 Bunkai must be demonstrated alongside the kata.',
+          fr:'Le Pinan le plus avancé — comprend sauts, rotations multiples et concepts de nage. Complète la série Pinan. Au 4e Kyu, 1 à 2 Bunkai doivent être démontrés avec le kata.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+pinan+sono+go+kata' },
+    ],
+    kata:[
+      { name:'Pinan Sono Go',
+        meaning:{ en:'Peaceful Mind — Number Five', fr:'Esprit Serein — Numéro Cinq' },
+        desc:{
+          en:'The most advanced Pinan. Jumps, spins, and nage concepts. Completes the Pinan series study. At 4th Kyu 1–2 Bunkai applications must also be demonstrated.',
+          fr:'Le Pinan le plus avancé. Sauts, rotations et concepts de projection. Complète la série Pinan. Au 4e Kyu 1–2 Bunkai doivent aussi être démontrés.'
         }
       },
-      { name:'Seipai',
-        meaning:{ en:'18 (Chinese numerology)', fr:'18 (numérologie chinoise)' },
+      { name:'Gekisai Sono Ichi',
+        meaning:{ en:'Attack and Smash — Number One', fr:'Attaque et Destruction — Numéro Un' },
         desc:{
-          en:'Goju-ryu kata with complex circular movements, multiple direction changes, and hidden grappling techniques. Requires precise body mechanics.',
-          fr:'Kata Goju-ryu avec des mouvements circulaires complexes, plusieurs changements de direction et des techniques de lutte cachées. Nécessite une mécanique corporelle précise.'
+          en:'Okinawan kata adapted by Kyokushin. Strong, grounded movements with hammer fists and sweeping blocks. Bridges the Pinan series and advanced kata.',
+          fr:'Kata okinawanais adapté par le Kyokushin. Mouvements forts et ancrés avec poings marteaux et blocages balayants. Fait le lien entre la série Pinan et les kata avancés.'
         }
       },
-      { name:'Bassai',
-        meaning:{ en:'Penetrating the Fortress', fr:'Pénétrer la Forteresse' },
+      { name:'Taikyoku en Ura Sono Ichi & Ni',
+        meaning:{ en:'First Cause — Reversed/Spinning Versions 1 & 2', fr:'Première Cause — Versions inversées/tournantes 1 et 2' },
         desc:{
-          en:'A major kata shared across many karate styles, adapted for Kyokushin. Powerful linear attacks and strong blocking sequences.',
-          fr:'Un kata majeur partagé par de nombreux styles de karaté, adapté pour le Kyokushin. Attaques linéaires puissantes et séquences de blocages robustes.'
+          en:'Mirror/spinning versions of Taikyoku Sono Ichi and Ni performed with spinning kicks. Tests whether the practitioner truly understands the kata or has only memorized a sequence.',
+          fr:'Versions miroir/tournantes de Taikyoku Sono Ichi et Ni exécutées avec des coups de pied tournants. Teste si le pratiquant comprend vraiment le kata ou n\'a mémorisé qu\'une séquence.'
         }
       }
     ]
   },
   {
     id:'black',
-    name:{ en:'Black Belt', fr:'Ceinture Noire' },
-    nameJP:'黒帯', kyu:'1st Dan (Shodan)',
-    color:'#2a2a2a', borderTop:'#c9a84c',
+    name:{ en:'Green Stripe Belt', fr:'Ceinture Verte Barrette' },
+    nameJP:'緑帯', kyu:'3rd Kyu',
+    color:'#2a7a3a', borderTop:'#8b5a3f',
+    desc:{
+      en:'At 3rd Kyu new vocabulary covers Yonjugo-do, Aka, Geri, Waza-Ari, Chui, Kachi, Kyuju-do, Shiro, Hantei, Ippon, Hansoku, Hyaku-Hachiju-do, Zanshin, Zoko, Shikkaku. Gekisai Sono Ni and Tekki Sono Ichi kata are introduced.',
+      fr:'Au 3e Kyu, nouveau vocabulaire : Yonjugo-do, Aka, Geri, Waza-Ari, Chui, Kachi, Kyuju-do, Shiro, Hantei, Ippon, Hansoku, Hyaku-Hachiju-do, Zanshin, Zoko, Shikkaku. Les kata Gekisai Sono Ni et Tekki Sono Ichi sont introduits.'
+    },
+    examRequirements:{
+      en:[
+        'Know: Yonjugo-do, Aka, Geri = Keri, Waza-Ari, Chui, Kyuju-do, Shiro, Hantei',
+        'Know: Ippon, Hansoku, Hyaku-Hachiju-do, Zanshin, Tsuki = Zuki, Zoko, Shikkaku',
+        'IDO KEIKO in Neko Ashi Dachi (maeni, sagari, mawatte): Les Koken Uchi (jodan/chudan/gedan), Les Koken Uke (jodan/chudan/gedan), Jodan Nihon Nukite',
+        'IDO KEIKO in Kokutsu Dachi and Zenkutsu Dachi (sagari, mawatte): Uchi Uke + Gedan Barai same arm passing to Zenkutsu making Gyaku Hiji Age Uchi, Jodan Uke + Soto Uke same arm, Gedan Barai + Jodan Uke, Gedan Barai + Jodan Uke same arm + Seiken Oyaku Shita Tsuki',
+        'IDO KEIKO in Kiba Dachi Yonju Go-Do (maeni, sagari): Yonjugo-do, basic Tsuki, basic Uke, basic Geri',
+        'In Kumite No Kamae (jambe arrière): Kin Geri (45°) + Kansetsu Geri (45°) same foot, Mae Geri 45° other side + Mawashi Geri 45° same foot, Mawashi Geri 45° one side + Ushiro Geri 45° same foot, Kake Geri 45° one side + Mawashi Geri 45° other side same foot',
+        'KAITEN IDO in Kiba Dachi (Kaiten maeni and Kaiten sagari): Yonjugo-do, basic Tsuki, basic Uke, basic Geri',
+        'KATA: Gekisai Sono Ni; Tekki Sono Ichi; Taikyoku en Ura Sono Ichi, Ni, San',
+        'KUMITE: Yakusoku Sanbon Kumite (Tori–Uke) — 3 different attacks, 3 different blocks with varied counters; starting position for Tori and Uke in Heiko Dachi',
+        'Physical test (push-ups, abs…)',
+        'KUMITE (18–40 yrs): 8 × 1 minute; TAMESHIWARI with Seiken, Geri …etc; RANDORI (+40 yrs)',
+        'Evaluation: attitude, guard, stability, movements, Kiai, kime, determination, speed, power, breath, endurance, Ma, opportunity of blocks/counters, rhythm, changes of rhythm',
+      ],
+      fr:[
+        'Connaître : Yonjugo-do, Aka, Geri = Keri, Waza-Ari, Chui, Kyuju-do, Shiro, Hantei',
+        'Connaître : Ippon, Hansoku, Hyaku-Hachiju-do, Zanshin, Tsuki = Zuki, Zoko, Shikkaku',
+        'IDO KEIKO en Neko Ashi Dachi (maeni, sagari, mawatte) : Les Koken Uchi (jodan/chudan/gedan), Les Koken Uke (jodan/chudan/gedan), Jodan Nihon Nukite',
+        'IDO KEIKO en Kokutsu Dachi et Zenkutsu Dachi (sagari, mawatte) : Uchi Uke + Gedan Barai même bras en passant en Zenkutsu Dachi faire Gyaku Hiji Age Uchi, Jodan Uke + Soto Uke même bras, Gedan Barai + Jodan Uke, Gedan Barai + Jodan Uke même bras + Seiken Oyaku Shita Tsuki',
+        'IDO KEIKO en Kiba Dachi Yonju Go-Do (maeni, sagari) : Yonjugo-do, techniques de base avec Tsuki, Uke, Geri',
+        'En Kumite No Kamae (jambe arrière) : Kin Geri (45°) + Kansetsu Geri, Mae Geri 45° + Mawashi Geri même pied, Mawashi Geri 45° + Ushiro Geri même pied, Kake Geri 45° + Mawashi Geri autre côté même pied',
+        'KAITEN IDO en Kiba Dachi (Kaiten maeni et Kaiten sagari) : Yonjugo-do, techniques de base',
+        'KATA : Gekisai Sono Ni ; Tekki Sono Ichi ; Taikyoku en Ura Sono Ichi, Ni, San',
+        'KUMITE : Yakusoku Sanbon Kumite (Tori–Uke) — 3 attaques différentes, 3 blocages différents avec contre-attaques variées ; position de départ en Heiko Dachi',
+        'Épreuve physique (appuis faciaux, abdominaux…)',
+        'KUMITE (18–40 ans) : 8 × 1 minute ; TAMESHIWARI avec Seiken, Geri …etc ; RANDORI (+ 40 ans)',
+        'Critères : l\'attitude, la garde, la stabilité, les déplacements, le kiai, le kime, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma, l\'opportunité des blocages et des contre-attaques, ainsi que le rythme, les changements de rythme',
+      ]
+    },
+    techniques:[
+      { japanese:'弧拳打ち', romaji:'Koken Uchi', tag:'kihon', posterKey:'oi-zuki',
+        english:'Wrist Sword Strike', french:'Frappe arc du poignet',
+        desc:{
+          en:'Strike using the bent wrist (Koken = arc fist). The wrist bends back and the outer ridge strikes. Practiced in Neko Ashi Dachi at all levels. Can also be used as a block (Koken Uke). Rare and deceptive.',
+          fr:'Frappe avec le poignet fléchi (Koken = poing arc). Le poignet se fléchit en arrière et la crête extérieure frappe. Pratiqué en Neko Ashi Dachi à tous les niveaux. Peut aussi être utilisé comme blocage (Koken Uke).'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+koken+uchi+wrist+strike' },
+      { japanese:'撃砕その二', romaji:'Gekisai Sono Ni', tag:'kata', posterKey:'kata',
+        english:'Attack & Smash — Number Two', french:'Attaque et Destruction — Numéro Deux',
+        desc:{
+          en:'The second Gekisai kata, more complex than Sono Ichi. Features more direction changes, additional striking combinations, and develops dynamic footwork. Bridges basic and advanced kata study.',
+          fr:'Le deuxième kata Gekisai, plus complexe que Sono Ichi. Comprend plus de changements de direction, des combinaisons de frappes supplémentaires, et développe un jeu de pieds dynamique.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+gekisai+sono+ni+kata' },
+      { japanese:'鉄騎その一', romaji:'Tekki Sono Ichi', tag:'kata', posterKey:'kata',
+        english:'Iron Horse — Number One', french:'Cheval de Fer — Numéro Un',
+        desc:{
+          en:'Performed entirely sideways in Kiba Dachi (horse stance). Tests the ability to generate power in a lateral plane. Ancient kata with deep grappling applications hidden in its movements.',
+          fr:'Exécuté entièrement de côté en Kiba Dachi (posture du cavalier). Teste la capacité à générer de la puissance dans un plan latéral. Kata ancien avec de profondes applications de lutte cachées dans ses mouvements.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+tekki+sono+ichi+kata' },
+    ],
+    kata:[
+      { name:'Gekisai Sono Ni',
+        meaning:{ en:'Attack and Smash — Number Two', fr:'Attaque et Destruction — Numéro Deux' },
+        desc:{
+          en:'More complex than Sono Ichi with additional direction changes and combinations. Builds on the foundation of Sono Ichi to develop dynamic footwork and powerful strikes.',
+          fr:'Plus complexe que Sono Ichi avec des changements de direction et combinaisons supplémentaires. Développe le jeu de pieds dynamique et les frappes puissantes.'
+        }
+      },
+      { name:'Tekki Sono Ichi',
+        meaning:{ en:'Iron Horse — Number One', fr:'Cheval de Fer — Numéro Un' },
+        desc:{
+          en:'Performed entirely sideways in Kiba Dachi. One of the oldest kata in existence. Hidden grappling, throws, and joint locks. Mastery required before all other kata in ancient Okinawan systems.',
+          fr:'Exécuté entièrement de côté en Kiba Dachi. L\'un des kata les plus anciens. Projections, clés articulaires et lutte cachées. Maîtrise exigée avant tous les autres kata dans les anciens systèmes okinawanais.'
+        }
+      },
+      { name:'Taikyoku en Ura Sono Ichi, Ni, San',
+        meaning:{ en:'First Cause — All Three Reversed Spinning Versions', fr:'Première Cause — Les Trois Versions Inversées' },
+        desc:{
+          en:'All three Taikyoku kata performed in their spinning/reversed versions. Tests complete understanding of the kata — not just memorized sequences but true comprehension of movement.',
+          fr:'Les trois kata Taikyoku dans leurs versions tournantes/inversées. Teste la compréhension complète des kata — pas seulement des séquences mémorisées mais une vraie compréhension du mouvement.'
+        }
+      }
+    ]
+  },
+  {
+    id:'brown2kyu',
+    name:{ en:'Brown Belt', fr:'Ceinture Marron' },
+    nameJP:'茶帯', kyu:'2nd Kyu',
+    color:'#6b3a1f', borderTop:'#8b5a3f',
+    desc:{
+      en:'At 2nd Kyu the student must know the 30 Kihon No Waza in order (19 Te No Waza – 11 Geri No Waza). Advanced Kaiten Ido with Shuto techniques, Yoko Zenkutsu Dachi, and combat-guard combinations using the bouncing-foot technique are introduced. Tameshiwari requires esquive and anticipation.',
+      fr:'Au 2e Kyu, l\'élève doit connaître dans l\'ordre les 30 Kihon No Waza (19 TE NO WAZA – 11 GERI NO WAZA). Le Kaiten Ido avancé avec les techniques Shuto, Yoko Zenkutsu Dachi et les combinaisons en garde de combat utilisant la technique de la balle rebondissante sont introduits. Le Tameshiwari exige esquive et anticipation.'
+    },
+    examRequirements:{
+      en:[
+        'Know the 30 Kihon No Waza in order: 19 Te No Waza – 11 Geri No Waza',
+        'IDO KEIKO in Neko Ashi Dachi (maeni, mawatte): Jodan Hiji Uchi, Jodan Hiji Age Uchi, Hiji Orashi Uchi, Hiji Ushiro Uchi',
+        'IDO KEIKO in Kokutsu Dachi (maeni, sagari): Haito Uchi (jodan/chudan/gedan), Chudan Haito Uchi Uke, Jodan Morote Kake Uke',
+        'IDO KEIKO in Yoko Zenkutsu Dachi: Gedan Barai / Gyaku Tsuki',
+        'In Kumite No Kamae (bouncing-foot technique): Kin Geri + Jodan Uchi Haisoku Geri same foot, Mawashi Geri + Ushiro Mawashi Geri same foot, Kake Geri + Mawashi Geri same foot, Low Kick + Hiza Geri same foot (Chudan/Jodan), Mae Geri + Kake Geri same foot',
+        'KAITEN IDO in Kokutsu Dachi and Zenkutsu Dachi (Kaiten maeni, sagari, mawatte): Shuto Jodan Uke, Shuto Chudan Uke, Shuto Gedan Barai, Shuto Soto Uke, Shuto Uchi Uke, Shuto Jodan Uchi Uchi',
+        'KAITEN IDO in Sanchin Dachi (Kaiten maeni and Kaiten sagari): basic Tsuki, basic Uke',
+        'KAITEN IDO in Kokutsu Dachi and Zenkutsu Dachi (Kaiten maeni, Kaiten sagari, mawatte): Shuto Mawashi + Osae Uke passing to Zenkutsu and making Chudan Yonhon Nukite',
+        'KATA: Gekisai Sono San; Tekki Sono Ni; Pinan en Ura: Ichi, Ni',
+        'KUMITE: Yakusoku Ippon Kumite — arm and leg attacks; use esquive and anticipation',
+        'TAMESHIWARI with Seiken, Geri … etc',
+        'Physical test (push-ups, abs, balance on hands…)',
+        'KUMITE (18–40 yrs): 10 × 1 minute; RANDORI (+40 yrs and female under 18)',
+        'Evaluation: attitude, guard, stability, movements, Kiai, determination, speed, power, breath, endurance, Ma-ai, opportunity of blocks/counters, rhythm, rhythm changes, opportunity of combinations, height changes of attacks/counters, esquives, anticipation, kime, kiai (à bon escient)',
+      ],
+      fr:[
+        'Connaître dans l\'ordre les 30 Kihon No Waza : 19 TE NO WAZA – 11 GERI NO WAZA',
+        'IDO KEIKO en Neko Ashi Dachi (maeni, mawatte) : Jodan Hiji Uchi, Jodan Hiji Age Uchi, Hiji Orashi Uchi, Hiji Ushiro Uchi',
+        'IDO KEIKO en Kokutsu Dachi (maeni, sagari) : Haito Uchi (jodan/chudan/gedan), Chudan Haito Uchi Uke, Jodan Morote Kake Uke',
+        'IDO KEIKO en Yoko Zenkutsu Dachi : Gedan Barai / Gyaku Tsuki',
+        'En Kumite No Kamae (technique de la balle qui rebondit) : Kin Geri + Jodan Uchi Haisoku Geri même jambe, Mawashi Geri + Ushiro Mawashi Geri même jambe, Kake Geri + Mawashi Geri même jambe, Low Kick + Hiza Geri même jambe, Mae Geri + Kake Geri même jambe',
+        'KAITEN IDO en Kokutsu Dachi et Zenkutsu Dachi : Shuto Jodan/Chudan Uke, Shuto Gedan Barai, Shuto Soto/Uchi Uke, Shuto Jodan Uchi Uchi',
+        'KAITEN IDO en Sanchin Dachi (Kaiten maeni et Kaiten sagari) : techniques de base avec Tsuki et Uke',
+        'KAITEN IDO en Kokutsu+Zenkutsu Dachi : Shuto Mawashi + Osae Uke + Chudan Yonhon Nukite',
+        'KATA : Gekisai Sono San ; Tekki Sono Ni ; Pinan en Ura : Ichi, Ni',
+        'KUMITE : Yakusoku Ippon Kumite — attaques de bras et de jambes ; vous devez utiliser esquive et anticipation',
+        'TAMESHIWARI avec Seiken, Geri … etc',
+        'Épreuve physique (appuis faciaux, abdominaux, équilibre sur les mains…)',
+        'KUMITE (18–40 ans) : 10 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines)',
+        'Critères : l\'attitude, la garde, la stabilité, les déplacements, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma-aï, l\'opportunité des blocages et des contre-attaques, le rythme, les changements de rythme, l\'opportunité des enchaînements, les changements de hauteur d\'attaques et de contre-attaques, les esquives, l\'anticipation, le kime, les kiai (à bon escient)',
+      ]
+    },
+    techniques:[
+      { japanese:'背刀打ち', romaji:'Haito Uchi', tag:'kihon', posterKey:'haito-uchi',
+        english:'Ridge Hand Strike', french:'Frappe crête de la main',
+        desc:{
+          en:'Strike using the inner ridge of the hand (between thumb and index). At 2nd Kyu practiced in Kokutsu Dachi: jodan, chudan, gedan. Can also be used as a block (Haito Uchi Uke). Whipping action from the shoulder generates surprising speed.',
+          fr:'Frappe avec la crête intérieure de la main (entre pouce et index). Au 2e Kyu pratiqué en Kokutsu Dachi : jodan, chudan, gedan. Peut aussi être utilisé comme blocage (Haito Uchi Uke). L\'action de fouet depuis l\'épaule génère une vitesse surprenante.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+haito+uchi+ridge+hand' },
+      { japanese:'撃砕その三', romaji:'Gekisai Sono San', tag:'kata', posterKey:'kata',
+        english:'Attack & Smash — Number Three', french:'Attaque et Destruction — Numéro Trois',
+        desc:{
+          en:'The third and most complex Gekisai kata. Builds on Sono Ichi and Ni with additional combinations, more precise timing, and deeper technical content. A bridge toward the advanced kata curriculum.',
+          fr:'Le troisième et plus complexe kata Gekisai. Basé sur Sono Ichi et Ni avec des combinaisons supplémentaires, un timing plus précis et un contenu technique plus approfondi.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+gekisai+sono+san+kata' },
+      { japanese:'鉄騎その二', romaji:'Tekki Sono Ni', tag:'kata', posterKey:'kata',
+        english:'Iron Horse — Number Two', french:'Cheval de Fer — Numéro Deux',
+        desc:{
+          en:'More complex than Tekki Sono Ichi — additional lateral movements and hidden applications. Continues the development of power generation in the lateral plane and deep understanding of Kiba Dachi.',
+          fr:'Plus complexe que Tekki Sono Ichi — mouvements latéraux supplémentaires et applications cachées. Continue le développement de la puissance dans le plan latéral.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+tekki+sono+ni+kata' },
+    ],
+    kata:[
+      { name:'Gekisai Sono San',
+        meaning:{ en:'Attack and Smash — Number Three', fr:'Attaque et Destruction — Numéro Trois' },
+        desc:{
+          en:'The most complex of the Gekisai series. Develops dynamic footwork, powerful strikes, and precise timing. A bridge toward the advanced kata curriculum.',
+          fr:'Le plus complexe de la série Gekisai. Développe le jeu de pieds dynamique, les frappes puissantes et le timing précis.'
+        }
+      },
+      { name:'Tekki Sono Ni',
+        meaning:{ en:'Iron Horse — Number Two', fr:'Cheval de Fer — Numéro Deux' },
+        desc:{
+          en:'Second iron horse kata with additional lateral movements and hidden grappling applications. Develops mastery of Kiba Dachi and lateral power generation.',
+          fr:'Deuxième kata cheval de fer avec mouvements latéraux supplémentaires et applications de lutte cachées.'
+        }
+      },
+      { name:'Pinan en Ura Sono Ichi & Ni',
+        meaning:{ en:'Peaceful Mind — Reversed Spinning Versions 1 & 2', fr:'Esprit Serein — Versions Inversées 1 et 2' },
+        desc:{
+          en:'Pinan Sono Ichi and Ni performed in their mirror/spinning versions. Tests deep understanding of the kata beyond memorized sequences.',
+          fr:'Pinan Sono Ichi et Ni dans leurs versions miroir/tournantes. Teste la compréhension profonde des kata au-delà des séquences mémorisées.'
+        }
+      }
+    ]
+  },
+  {
+    id:'brown1kyu',
+    name:{ en:'Brown Belt 1st Kyu', fr:'Ceinture Marron 1er Kyu' },
+    nameJP:'茶帯', kyu:'1st Kyu',
+    color:'#6b3a1f', borderTop:'#c9a84c',
+    desc:{
+      en:'The final step before black belt. Know all principles of the Kyokushinkai (Dojo Kun). New vocabulary: Haito, Toho, Enkei, Hiraken, Keiko, Tameshiwari, Ashi Barai, Renraku, Ryu, Tobi. Explain the salutation to Shinzen at start and end of class. Renraku (combination) sequences in Kumite No Kamae. Jumping kicks introduced.',
+      fr:'La dernière étape avant la ceinture noire. Connaître tous les principes du Kyokushinkai (Dojo Kun). Nouveau vocabulaire : Haito, Toho, Enkei, Hiraken, Keiko, Tameshiwari, Ashi Barai, Renraku, Ryu, Tobi. Expliquer le salut au Shinzen en début et fin de cours. Les séquences Renraku en Kumite No Kamae et les coups de pied sautés sont introduits.'
+    },
+    examRequirements:{
+      en:[
+        'Know all principles of the Kyokushinkai (Dojo Kun)',
+        'Know: Haito, Toho, Enkei, Hiraken, Keiko, Tameshiwari, Ashi Barai, Renraku, Ryu, Tobi',
+        'Explain the salutation to Shinzen at beginning and end of class',
+        'IDO KEIKO in Kokutsu Dachi and Kiba Dachi (maeni, sagari): Oyaku Uchi Uke + Gedan Barai (inside) + Chudan Tettsui Uchi, Gyaku Soto Uke + Gedan Barai (outside) + Jodan Tettsui Uchi',
+        'IDO KEIKO in Kiba Dachi (Kyuju-do): Sanbon Jun Tsuki',
+        'IDO KEIKO in Kiba Dachi Yonjugo and Zenkutsu Dachi (maeni, sagari, mawatte): Chudan Hiji Uchi + Uraken Ganmen Uchi (inside) + Seiken Gedan Barai (outside), passing to Zenkutsu and making Seiken Chudan Gyaku Tsuki',
+        'IDO KEIKO in Yoko Zenkutsu Dachi: Mae Geri / Gedan Barai / Gyaku Tsuki',
+        'Enkei Gyaku Tsuki: a) staying in Zenkutsu Dachi, b) passing through Kokutsu Dachi then to Zenkutsu, Sake Tsuki',
+        'IDO KEIKO in Moro Ashi Dachi (maeni, mawatte): Age Kakato Ushiro Geri + Gedan Shuto Morote Uke, Uraken Oroshi Uke (from other hand under elbow), Jodan Morote Haito Uchi, Chudan Morote Haito Uchi',
+        'IDO KEIKO in Kake Dachi (maeni, mawatte): Uraken Sayu Uchi, Morote Uke, Jodan Morote Kake Uke, Morote Tsuki (jodan/chudan)',
+        'RENRAKU in Kumite No Kamae: Gedan Mawashi Geri, Ushiro Mawashi Geri, Tettsui + Gyaku Tsuki, Mae Geri, Chudan Tsuki + Kagi Tsuki, Mawashi Geri, Ushiro Geri, Shita Tsuki',
+        'In Kumite No Kamae: Mae Hiza Tobi Geri, Mawashi Hiza Tobi Geri, Mae Tobi Geri, Mawashi Tobi Geri, Yoko Tobi Geri',
+        'KATA: Pinan Ura San, Yon, Go; Tekki Sono San',
+        'KUMITE: TAMESHIWARI with Seiken, Geri … etc',
+        'Physical test (push-ups, abs, balance on hands…)',
+        'KUMITE (18–40 yrs): 13 × 1 minute; RANDORI (+40 yrs and female under 18)',
+        'Evaluation: attitude, guard, stability, movements, Kiai, determination, speed, power, breath, endurance, Ma-ai, opportunity of blocks/counters, rhythm, rhythm changes, opportunity of combinations, height changes of attacks/counters, esquives, anticipation, kime, kiai (à bon escient)',
+      ],
+      fr:[
+        'Connaître tous les principes du Kyokushinkai (Dojo Kun)',
+        'Connaître : Haito, Toho, Enkei, Hiraken, Keiko, Tameshiwari, Ashi Barai, Renraku, Ryu, Tobi',
+        'Expliquer le salut au Shinzen en début et fin de cours',
+        'IDO KEIKO en Kokutsu Dachi et Kiba Dachi (maeni, sagari) : Oyaku Uchi Uke + Gedan Barai (intérieur) + Chudan Tettsui Uchi, Gyaku Soto Uke + Gedan Barai (extérieur) + Jodan Tettsui Uchi',
+        'IDO KEIKO en Kiba Dachi (Kyuju-do) : Sanbon Jun Tsuki',
+        'IDO KEIKO en Kiba Dachi Yonjugo et Zenkutsu Dachi (maeni, sagari, mawatte) : Chudan Hiji Uchi + Uraken Ganmen Uchi (intérieur) + Seiken Gedan Barai (extérieur), passant en Zenkutsu + Seiken Chudan Gyaku Tsuki',
+        'IDO KEIKO en Yoko Zenkutsu Dachi : Mae Geri / Gedan Barai / Gyaku Tsuki',
+        'Enkei Gyaku Tsuki : a) en restant en Zenkutsu Dachi, b) en passant en Kokutsu puis en Zenkutsu ; Sake Tsuki',
+        'IDO KEIKO en Moro Ashi Dachi (maeni, mawatte) : Age Kakato Ushiro Geri + Gedan Shuto Morote Uke, Uraken Oroshi Uke, Jodan/Chudan Morote Haito Uchi',
+        'IDO KEIKO en Kake Dachi (maeni, mawatte) : Uraken Sayu Uchi, Morote Uke, Jodan Morote Kake Uke, Morote Tsuki (jodan/chudan)',
+        'RENRAKU en Kumite No Kamae : Gedan Mawashi Geri, Ushiro Mawashi Geri, Tettsui + Gyaku Tsuki, Mae Geri, Chudan Tsuki + Kagi Tsuki, Mawashi Geri, Ushiro Geri, Shita Tsuki',
+        'En Kumite No Kamae : Mae/Mawashi/Mae Tobi Geri, Mawashi/Yoko Tobi Geri',
+        'KATA : Pinan Ura San, Yon, Go ; Tekki Sono San',
+        'KUMITE : TAMESHIWARI avec Seiken, Geri … etc',
+        'Épreuve physique (appuis faciaux, abdominaux, équilibre sur les mains…)',
+        'KUMITE (18–40 ans) : 13 × 1 minute ; RANDORI (+ 40 ans et pratiquantes féminines)',
+        'Critères : l\'attitude, la garde, la stabilité, les déplacements, la détermination, la vitesse, la puissance, la respiration, l\'endurance, le Ma-aï, l\'opportunité des blocages et des contre-attaques, le rythme, les changements de rythme, l\'opportunité des enchaînements, les changements de hauteur, les esquives, l\'anticipation, le kime, les kiai (à bon escient)',
+      ]
+    },
+    techniques:[
+      { japanese:'延慶逆突き', romaji:'Enkei Gyaku Tsuki', tag:'kihon', posterKey:'gyaku-zuki',
+        english:'Circle Reverse Punch', french:'Coup de poing inverse en cercle',
+        desc:{
+          en:'A circular reverse punch — either staying in Zenkutsu Dachi or transitioning through Kokutsu Dachi then back to Zenkutsu. Tests body rotation and the ability to maintain power through stance transitions.',
+          fr:'Un coup de poing inverse circulaire — soit en restant en Zenkutsu Dachi, soit en passant par Kokutsu Dachi puis revenant en Zenkutsu. Teste la rotation du corps et la capacité à maintenir la puissance lors des transitions de posture.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+enkei+gyaku+tsuki' },
+      { japanese:'飛び蹴り', romaji:'Tobi Geri', tag:'kihon', posterKey:'mae-geri',
+        english:'Jumping Kicks (all forms)', french:'Coups de pied sautés (toutes formes)',
+        desc:{
+          en:'At 1st Kyu all jumping kicks are required: Mae Hiza Tobi Geri (jumping knee), Mawashi Hiza Tobi Geri, Mae Tobi Geri, Mawashi Tobi Geri, Yoko Tobi Geri. Jumping kicks test explosive power, coordination, and aerial body control.',
+          fr:'Au 1er Kyu tous les coups de pied sautés sont exigés : Mae/Mawashi Hiza Tobi Geri, Mae Tobi Geri, Mawashi Tobi Geri, Yoko Tobi Geri. Les coups de pied sautés testent la puissance explosive, la coordination et le contrôle aérien du corps.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+tobi+geri+jumping+kicks' },
+      { japanese:'連絡', romaji:'Renraku', tag:'kumite', posterKey:'morote-zuki',
+        english:'Combination Sequences', french:'Séquences d\'enchaînements',
+        desc:{
+          en:'At 1st Kyu the student must perform the full Renraku sequence in Kumite No Kamae: Gedan Mawashi Geri → Ushiro Mawashi Geri → Tettsui + Gyaku Tsuki → Mae Geri → Chudan Tsuki + Kagi Tsuki → Mawashi Geri → Ushiro Geri → Shita Tsuki. This sequence tests all combat skills simultaneously.',
+          fr:'Au 1er Kyu l\'élève doit exécuter la séquence Renraku complète en Kumite No Kamae : Gedan Mawashi Geri → Ushiro Mawashi Geri → Tettsui + Gyaku Tsuki → Mae Geri → Chudan Tsuki + Kagi Tsuki → Mawashi Geri → Ushiro Geri → Shita Tsuki. Cette séquence teste toutes les compétences de combat simultanément.'
+        },
+        video:'https://www.youtube.com/results?search_query=kyokushin+renraku+combination+kumite' },
+    ],
+    kata:[
+      { name:'Pinan en Ura San, Yon, Go',
+        meaning:{ en:'Peaceful Mind — Reversed Spinning Versions 3, 4, 5', fr:'Esprit Serein — Versions Inversées 3, 4, 5' },
+        desc:{
+          en:'Pinan Sono San, Yon, and Go performed in their spinning/reversed versions. At 1st Kyu all five Pinan reversed versions are tested, demonstrating complete mastery of the Pinan series.',
+          fr:'Pinan Sono San, Yon et Go dans leurs versions tournantes/inversées. Au 1er Kyu, les cinq versions inversées des Pinan sont testées, démontrant une maîtrise complète de la série Pinan.'
+        }
+      },
+      { name:'Tekki Sono San',
+        meaning:{ en:'Iron Horse — Number Three', fr:'Cheval de Fer — Numéro Trois' },
+        desc:{
+          en:'The third and most advanced Iron Horse kata. Completes the Tekki series. The full mastery of lateral power generation and hidden Kiba Dachi applications is expected at this level.',
+          fr:'Le troisième et plus avancé kata Cheval de Fer. Complète la série Tekki. La maîtrise complète de la puissance latérale et des applications cachées en Kiba Dachi est attendue à ce niveau.'
+        }
+      }
+    ]
+  },
+  {
+    id:'shodan',
+    name:{ en:'Black Belt — Shodan', fr:'Ceinture Noire — Shodan' },
+    nameJP:'黒帯', kyu:'1st Dan',
+    color:'#111', borderTop:'#c9a84c',
     desc:{
       en:'Not the end — the true beginning. Black absorbs all colors, just as the Shodan must now contain all lessons. The belt fades, becomes white again — the circle is complete.',
       fr:'Pas la fin — le vrai commencement. Le noir absorbe toutes les couleurs, tout comme le Shodan doit désormais contenir toutes les leçons. La ceinture s\'use, redevient blanche — le cercle est complet.'
@@ -1154,7 +1644,7 @@ const belts = [
 // ════════════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════════════
-const beltOrder = ['white','orange','blue','yellow','green','brown','black'];
+const beltOrder = ['white','orange','blue','yellow','green','brown','brown1','black','brown2kyu','brown1kyu','shodan'];
 const userBelt = 'orange';
 let lang = localStorage.getItem('kyokushin-lang') || 'en';
 let activeBelt = 'orange';
@@ -1179,14 +1669,26 @@ function setLang(l) {
     btn.querySelector('.sidebar-belt-name').textContent = belt.name[l];
   });
   // Rebuild belt tabs (name changes)
+  const tabLabelsLang = {
+    en: { white:'White', orange:'Orange', blue:'Blue 8', yellow:'Blue 7★', green:'Yellow 6',
+          brown:'Yellow 5★', brown1:'Green 4', black:'Green 3★', brown2kyu:'Brown 2', brown1kyu:'Brown 1', shodan:'Black' },
+    fr: { white:'Blanche', orange:'Orange', blue:'Bleue 8', yellow:'Bleue 7★', green:'Jaune 6',
+          brown:'Jaune 5★', brown1:'Verte 4', black:'Verte 3★', brown2kyu:'Marron 2', brown1kyu:'Marron 1', shodan:'Noire' }
+  };
   document.querySelectorAll('.belt-tab').forEach(btn => {
     const id = btn.dataset.belt;
     const belt = belts.find(b => b.id === id);
     const isUser = id === userBelt;
-    btn.innerHTML = `<span class="belt-dot"></span>${belt.name[l].split(' ')[0]}${isUser ? ` <span class="you-badge">${UI[l].youLabel}</span>` : ''}`;
+    const lbl = (tabLabelsLang[l] && tabLabelsLang[l][id]) || belt.name[l].split(' ')[0];
+    btn.innerHTML = `<span class="belt-dot"></span>${lbl}${isUser ? ` <span class="you-badge">${UI[l].youLabel}</span>` : ''}`;
   });
   // Re-render current panel
   renderPanel(activeBelt);
+  // Rebuild progress with current belt
+  const pc = document.getElementById('progressPath');
+  pc.innerHTML = '';
+  buildProgressPathDynamic();
+  updateMyBeltButton();
 }
 
 // ════════════════════════════════════════════════
@@ -1194,14 +1696,18 @@ function setLang(l) {
 // ════════════════════════════════════════════════
 function buildProgressPath() {
   const c = document.getElementById('progressPath');
-  const userIdx = beltOrder.indexOf(userBelt);
+  const userIdx = beltOrder.indexOf(userBeltMutable);
+  const kyuLabels = {
+    white:'10', orange:'9-8', blue:'8', yellow:'7', green:'6',
+    brown:'5', brown1:'4', black:'3', brown2kyu:'2', brown1kyu:'1', shodan:'Dan'
+  };
   beltOrder.forEach((id, i) => {
     const belt = belts.find(b => b.id === id);
     const status = i < userIdx ? 'achieved' : i === userIdx ? 'current' : 'future';
     const node = document.createElement('div');
     node.className = `progress-node ${status}`;
     node.innerHTML = `<div class="progress-dot" style="background:${belt.color};border-color:${belt.color}"></div>
-      <span class="progress-label">${id.slice(0,3)}</span>`;
+      <span class="progress-label">${kyuLabels[id] || id.slice(0,2)}</span>`;
     node.onclick = () => switchBelt(id);
     c.appendChild(node);
     if (i < beltOrder.length - 1) {
@@ -1212,13 +1718,21 @@ function buildProgressPath() {
 
 function buildBeltNav() {
   const nav = document.getElementById('beltNav');
+  // Short tab labels for compact nav
+  const tabLabels = {
+    en: { white:'White', orange:'Orange', blue:'Blue 8', yellow:'Blue 7★', green:'Yellow 6',
+          brown:'Yellow 5★', brown1:'Green 4', black:'Green 3★', brown2kyu:'Brown 2', brown1kyu:'Brown 1', shodan:'Black' },
+    fr: { white:'Blanche', orange:'Orange', blue:'Bleue 8', yellow:'Bleue 7★', green:'Jaune 6',
+          brown:'Jaune 5★', brown1:'Verte 4', black:'Verte 3★', brown2kyu:'Marron 2', brown1kyu:'Marron 1', shodan:'Noire' }
+  };
   beltOrder.forEach(id => {
     const belt = belts.find(b => b.id === id);
     const isUser = id === userBelt;
     const btn = document.createElement('button');
     btn.className = `belt-tab${isUser ? ' active' : ''}`;
     btn.dataset.belt = id;
-    btn.innerHTML = `<span class="belt-dot"></span>${belt.name[lang].split(' ')[0]}${isUser ? ` <span class="you-badge">${UI[lang].youLabel}</span>` : ''}`;
+    const label = (tabLabels[lang] && tabLabels[lang][id]) || belt.name[lang].split(' ')[0];
+    btn.innerHTML = `<span class="belt-dot"></span>${label}${isUser ? ` <span class="you-badge">${UI[lang].youLabel}</span>` : ''}`;
     btn.onclick = () => switchBelt(id);
     nav.appendChild(btn);
   });
@@ -1235,8 +1749,12 @@ function buildSidebar() {
     btn.className = `sidebar-belt${isUser ? ' active' : ''}`;
     btn.dataset.belt = id;
     btn.style.opacity = i <= userIdx ? '1' : '0.4';
+    // For stripe belts, show a two-tone swatch
+    const swatchStyle = id.includes('bar') || id === 'yellow' || id === 'brown' || id === 'black'
+      ? `background:linear-gradient(90deg,${belt.color} 70%,#6b3a1f 70%);box-shadow:0 2px 6px ${belt.color}55`
+      : `background:${belt.color};box-shadow:0 2px 6px ${belt.color}55`;
     btn.innerHTML = `
-      <div class="sidebar-belt-swatch" style="background:${belt.color};box-shadow:0 2px 6px ${belt.color}55"></div>
+      <div class="sidebar-belt-swatch" style="${swatchStyle}"></div>
       <div class="sidebar-belt-info">
         <div class="sidebar-belt-name">${belt.name[lang]}</div>
         <div class="sidebar-belt-kyu">${belt.kyu}</div>
@@ -1353,6 +1871,142 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closePosterModal();
 });
 
+
+// ── BELT PICKER ──────────────────────────────────────────────────────
+let userBeltMutable = localStorage.getItem('kyokushin-my-belt') || 'orange';
+
+const tabLabelsForPicker = {
+  en: { white:'White Belt', orange:'Orange Belt', blue:'Blue Belt',
+        yellow:'Blue Stripe Belt', green:'Yellow Belt', brown:'Yellow Stripe Belt',
+        brown1:'Green Belt', black:'Green Stripe Belt',
+        brown2kyu:'Brown Belt', brown1kyu:'Brown Belt 1st Kyu', shodan:'Black Belt — Shodan' },
+  fr: { white:'Ceinture Blanche', orange:'Ceinture Orange', blue:'Ceinture Bleue',
+        yellow:'Ceinture Bleue Barrette', green:'Ceinture Jaune', brown:'Ceinture Jaune Barrette',
+        brown1:'Ceinture Verte', black:'Ceinture Verte Barrette',
+        brown2kyu:'Ceinture Marron', brown1kyu:'Ceinture Marron 1er Kyu', shodan:'Ceinture Noire — Shodan' }
+};
+
+function getMyBelt() { return userBeltMutable; }
+
+function updateMyBeltButton() {
+  const belt = belts.find(b => b.id === userBeltMutable);
+  if (!belt) return;
+  const swatch = document.getElementById('myBeltSwatch');
+  const label  = document.getElementById('myBeltLabel');
+  if (swatch) swatch.style.cssText = `background:${belt.color};border-color:${belt.color};width:14px;height:14px;border-radius:50%;flex-shrink:0;border:1.5px solid rgba(255,255,255,0.2)`;
+  if (label)  label.textContent = (tabLabelsForPicker[lang] && tabLabelsForPicker[lang][userBeltMutable]) || belt.name[lang];
+}
+
+function buildPickerList() {
+  const list = document.getElementById('pickerList');
+  if (!list) return;
+  list.innerHTML = '';
+  beltOrder.forEach(id => {
+    const belt = belts.find(b => b.id === id);
+    const isSelected = id === userBeltMutable;
+    const item = document.createElement('button');
+    item.className = `picker-item${isSelected ? ' active' : ''}`;
+    item.dataset.belt = id;
+
+    // Two-tone swatch for stripe belts
+    const isStripe = ['yellow','brown','black','brown1kyu'].includes(id);
+    const swatchStyle = isStripe
+      ? `background:linear-gradient(90deg,${belt.color} 65%,#5a3010 65%)`
+      : `background:${belt.color}`;
+
+    const displayName = (tabLabelsForPicker[lang] && tabLabelsForPicker[lang][id]) || belt.name[lang];
+
+    item.innerHTML = `
+      <div class="picker-swatch" style="${swatchStyle}"></div>
+      <div class="picker-info">
+        <div class="picker-name">${displayName}</div>
+        <div class="picker-kyu">${belt.kyu} · ${belt.nameJP}</div>
+      </div>
+      <span class="picker-check">✓</span>
+    `;
+    item.onclick = () => selectMyBelt(id);
+    list.appendChild(item);
+  });
+}
+
+function openBeltPicker() {
+  document.getElementById('pickerTitle').textContent =
+    lang === 'fr' ? 'Ma ceinture actuelle' : 'My Current Belt';
+  buildPickerList();
+  document.getElementById('beltPickerModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeBeltPicker() {
+  document.getElementById('beltPickerModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeBeltPickerOnBg(e) {
+  if (e.target === document.getElementById('beltPickerModal')) closeBeltPicker();
+}
+
+function selectMyBelt(id) {
+  userBeltMutable = id;
+  localStorage.setItem('kyokushin-my-belt', id);
+
+  // Update picker UI
+  document.querySelectorAll('.picker-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.belt === id);
+  });
+
+  // Update header button
+  updateMyBeltButton();
+
+  // Update progress path dots (re-render)
+  const c = document.getElementById('progressPath');
+  c.innerHTML = '';
+  buildProgressPathDynamic();
+
+  // Update sidebar opacity
+  document.querySelectorAll('.sidebar-belt').forEach((btn, i) => {
+    const beltIdx = beltOrder.indexOf(btn.dataset.belt);
+    const userIdx = beltOrder.indexOf(userBeltMutable);
+    btn.style.opacity = beltIdx <= userIdx ? '1' : '0.4';
+  });
+
+  // YOU badge on tabs
+  document.querySelectorAll('.belt-tab .you-badge').forEach(b => b.remove());
+  const activeTab = document.querySelector(`.belt-tab[data-belt="${id}"]`);
+  if (activeTab) {
+    const badge = document.createElement('span');
+    badge.className = 'you-badge';
+    badge.textContent = UI[lang].youLabel;
+    activeTab.appendChild(badge);
+  }
+
+  // Close after short delay for satisfying feedback
+  setTimeout(closeBeltPicker, 280);
+}
+
+// Separate progress path builder that uses userBeltMutable
+function buildProgressPathDynamic() {
+  const c = document.getElementById('progressPath');
+  const userIdx = beltOrder.indexOf(userBeltMutable);
+  const kyuLabels = {
+    white:'10', orange:'9-8', blue:'8', yellow:'7', green:'6',
+    brown:'5', brown1:'4', black:'3', brown2kyu:'2', brown1kyu:'1', shodan:'Dan'
+  };
+  beltOrder.forEach((id, i) => {
+    const belt = belts.find(b => b.id === id);
+    const status = i < userIdx ? 'achieved' : i === userIdx ? 'current' : 'future';
+    const node = document.createElement('div');
+    node.className = `progress-node ${status}`;
+    node.innerHTML = `<div class="progress-dot" style="background:${belt.color};border-color:${belt.color}"></div>
+      <span class="progress-label">${kyuLabels[id] || id.slice(0,2)}</span>`;
+    node.onclick = () => switchBelt(id);
+    c.appendChild(node);
+    if (i < beltOrder.length - 1) {
+      const line = document.createElement('div'); line.className = 'progress-line'; c.appendChild(line);
+    }
+  });
+}
+
 // ── PWA: SERVICE WORKER ──
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -1389,11 +2043,26 @@ if (lang === 'fr') {
   document.getElementById('mainTitle').textContent = UI.fr.title;
   document.getElementById('subtitleText').textContent = UI.fr.subtitle;
 }
-buildProgressPath();
+// Override with saved belt
+userBeltMutable = localStorage.getItem('kyokushin-my-belt') || 'orange';
+buildProgressPathDynamic();
 buildBeltNav();
 buildSidebar();
-switchBelt('orange');
+updateMyBeltButton();
+switchBelt(userBeltMutable);
 </script>
+
+
+<!-- BELT PICKER MODAL -->
+<div id="beltPickerModal" onclick="closeBeltPickerOnBg(event)">
+  <div class="picker-sheet">
+    <div class="picker-header">
+      <h2 id="pickerTitle">My Current Belt</h2>
+      <button class="picker-close" onclick="closeBeltPicker()">✕</button>
+    </div>
+    <div class="picker-list" id="pickerList"></div>
+  </div>
+</div>
 
 <!-- POSTER MODAL -->
 <div id="posterModal" onclick="closeModal(event)">
