@@ -188,6 +188,35 @@
   .belt-hero-text h2 { font-family:'Cinzel Decorative',serif; font-size:clamp(20px,3vw,30px); margin-bottom:10px; color:var(--white); }
   .belt-hero-text p { font-size:clamp(15px,1.4vw,17px); color:var(--text); line-height:1.7; font-weight:300; }
 
+  /* ── POSTER BAR ── */
+  .poster-bar {
+    display: flex; align-items: center; gap: 7px;
+    flex-wrap: wrap; padding: 0 0 24px;
+    margin-top: 6px;
+  }
+  .poster-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 13px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 3px; cursor: pointer;
+    font-family: 'Cinzel', serif; font-size: 9px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-sub); transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .poster-btn::before { content: '▭'; font-size: 10px; opacity: 0.55; }
+  .poster-btn:hover {
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.3);
+    color: var(--gold-light);
+  }
+  .poster-btn:active { background: rgba(201,168,76,0.15); }
+  .poster-btn.is-belt {
+    border-color: rgba(201,168,76,0.22);
+    color: var(--gold-light);
+  }
+
   /* ── SECTION HEADERS ── */
   .section-header { display:flex; align-items:center; gap:14px; margin:36px 0 18px; }
   .section-header h3 { font-family:'Cinzel',serif; font-size:12px; letter-spacing:4px; text-transform:uppercase; color:var(--gold-light); white-space:nowrap; }
@@ -196,11 +225,12 @@
   /* ── EXAM BOX ── */
   .exam-box { background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.22); border-radius:8px; padding:24px; margin-bottom:8px; }
   .exam-box h4 { font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--gold-light); margin-bottom:16px; }
-  .exam-list { list-style:none; display:grid; grid-template-columns:1fr; gap:9px; }
-  .exam-list li { display:flex; align-items:flex-start; gap:10px; font-size:clamp(15px,1.3vw,16px); color:var(--text); line-height:1.6; font-weight:400; min-width:0; }
+  .exam-list { list-style:none; display:grid; grid-template-columns:1fr; gap:10px; }
+  .exam-list li { display:flex; align-items:flex-start; gap:10px; font-size:clamp(14px,1.2vw,15px); color:var(--text); line-height:1.65; font-weight:400; min-width:0; }
   .exam-text { flex:1; min-width:0; overflow-wrap:break-word; }
-  .exam-list li::before { content:'◆'; color:var(--gold); font-size:7px; margin-top:6px; flex-shrink:0; }
-  .exam-reqs { display:flex; flex-direction:column; gap:14px; }
+  .exam-list li::before { content:'◆'; color:var(--gold); font-size:7px; margin-top:5px; flex-shrink:0; }
+  .exam-list.single { grid-template-columns:1fr; }
+  .exam-reqs { display:flex; flex-direction:column; gap:20px; }
   .exam-group-label {
     font-family:'Cinzel',serif; font-size:10px; letter-spacing:1.5px;
     color:var(--gold-light);
@@ -283,7 +313,7 @@
     .belt-nav { justify-content:center; }
     .belt-tab { padding:16px 22px; font-size:11px; }
     .belt-dot { width:12px; height:12px; }
-    .exam-list { grid-template-columns:1fr 1fr; }
+    .exam-list:not(.single) { grid-template-columns:1fr 1fr; gap:10px 22px; }
     .techniques-grid { grid-template-columns:1fr 1fr; }
     main { padding:36px 32px calc(var(--safe-bottom) + 48px); }
     .belt-hero { padding:28px 32px; }
@@ -333,7 +363,6 @@
     .sidebar-divider { height:1px; background:rgba(255,255,255,0.06); margin:16px 0; }
     main { flex:1; max-width:none; padding:36px 48px calc(var(--safe-bottom) + 60px); }
     .techniques-grid { grid-template-columns:repeat(3,1fr); }
-    .exam-list { grid-template-columns:1fr 1fr; }
     .kata-card { padding:24px 28px; gap:24px; }
     .kata-number { font-size:36px; width:48px; }
     .belt-hero { padding:32px 36px; gap:28px; }
@@ -345,7 +374,6 @@
     .sidebar { width:300px; padding-left:48px; }
     main { padding:48px 64px calc(var(--safe-bottom) + 60px); }
     .techniques-grid { grid-template-columns:repeat(3,1fr); gap:18px; }
-    .exam-list { grid-template-columns:1fr 1fr 1fr; }
   }
 
   /* ── IMAGE MODAL ── */
@@ -375,6 +403,7 @@
     display: flex; flex-direction: column;
     box-shadow: 0 24px 80px rgba(0,0,0,0.7);
   }
+  .modal-box.is-poster { width: min(96vw, 960px); max-height: 95dvh; }
   .modal-close {
     position: absolute; top: 10px; right: 12px; z-index: 2;
     background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.15);
@@ -545,6 +574,10 @@
     position: relative;
     cursor: help;
     border-bottom: 1px dashed rgba(201,168,76,0.5);
+  }
+  .jp-tip[data-romaji] {
+    cursor: pointer;
+    border-bottom: 1px solid rgba(201,168,76,0.8);
   }
   .jp-tip::after {
     content: attr(data-tip);
@@ -907,6 +940,9 @@ const UI = {
     installTitle: 'Install App',
     installDesc: 'Add to home screen for offline use',
     youLabel: 'YOU',
+    posterTech: 'Techniques',
+    posterBelts: 'Belt Chart',
+    posterBelt: 'Belt Poster',
   },
   fr: {
     title: 'La Voie de la Ceinture',
@@ -922,6 +958,9 @@ const UI = {
     installTitle: 'Installer l\'app',
     installDesc: 'Ajouter à l\'écran d\'accueil pour un usage hors ligne',
     youLabel: 'VOUS',
+    posterTech: 'Techniques',
+    posterBelts: 'Tableau Ceintures',
+    posterBelt: 'Poster Ceinture',
   }
 };
 
@@ -940,13 +979,13 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'VOCABULARY — Meaning of: Karate-Do · Kyokushin-Kai · Dojo · Rei (bow)',
-        'VOCABULARY — Levels: Gedan (low) · Chudan (middle) · Jodan (high)',
-        'VOCABULARY — Directions: Mae (front) · Ushiro (back) · Yoko (side) · Sayu (left/right)',
+        'VOCABULARY — Karate-Do · Kyokushin-Kai · Dojo · Rei (bow)',
+        'VOCABULARY — Gedan (low) · Chudan (middle) · Jodan (high)',
+        'VOCABULARY — Mae (front) · Ushiro (back) · Yoko (side) · Sayu (left/right)',
         'VOCABULARY — Dojo Kun: recite the five precepts',
         'TACHIKATA — Heiko Dachi · Fudo Dachi (Shizen Tai) · Zenkutsu Dachi (70/30%) · Kiba Dachi',
         'KIHON (static, Heiko Dachi) — Seiken Jodan / Chudan / Gedan Tsuki · Chudan Soto Uke · Chudan Uchi Uke · Jodan Uke · Gedan Barai',
-        'KIHON — Kicks (static): Kin Geri · Kinteki Geri (Haisoku) · Mae Geri (Chusoku) · Mawashi Geri (Haisoku) Gedan/Chudan/Jodan · Kansetsu Geri (Sokuto) · Yoko Geri (Sokuto) · Mae/Yoko Keage',
+        'KIHON — Kicks (static) — Kin Geri · Kinteki Geri (Haisoku) · Mae Geri (Chusoku) · Mawashi Geri (Haisoku) Gedan/Chudan/Jodan · Kansetsu Geri (Sokuto) · Yoko Geri (Sokuto) · Mae/Yoko Keage',
         'IDO KEIKO (Zenkutsu Dachi — maeni, sagari, mawatte) — Seiken Oi Tsuki or Gyaku Tsuki + Geri + Uke',
         'KATA — Taikyoku Sono Ichi & Ni · Sokugi Taikyoku Sono Ichi & Ni',
         'KUMITE — Yakusoku Ippon Kumite (Tori–Uke): block arm or leg attack, counter with arm or leg',
@@ -954,13 +993,13 @@ const belts = [
         'EVALUATION — Attitude · Guard · Stability',
       ],
       fr:[
-        'VOCABULAIRE — Signification de : Karate-Do · Kyokushin-Kai · Dojo · Rei (salut)',
-        'VOCABULAIRE — Niveaux : Gedan (bas) · Chudan (milieu) · Jodan (haut)',
-        'VOCABULAIRE — Directions : Mae (avant) · Ushiro (arrière) · Yoko (côté) · Sayu (gauche/droite)',
+        'VOCABULAIRE — Karate-Do · Kyokushin-Kai · Dojo · Rei (salut)',
+        'VOCABULAIRE — Gedan (bas) · Chudan (milieu) · Jodan (haut)',
+        'VOCABULAIRE — Mae (avant) · Ushiro (arrière) · Yoko (côté) · Sayu (gauche/droite)',
         'VOCABULAIRE — Dojo Kun : réciter les cinq préceptes',
         'TACHIKATA — Heiko Dachi · Fudo Dachi (Shizen Tai) · Zenkutsu Dachi (70/30%) · Kiba Dachi',
         'KIHON (statique, Heiko Dachi) — Seiken Jodan / Chudan / Gedan Tsuki · Chudan Soto Uke · Chudan Uchi Uke · Jodan Uke · Gedan Barai',
-        'KIHON — Coups de pied (statiques) : Kin Geri · Kinteki Geri (Haisoku) · Mae Geri (Chusoku) · Mawashi Geri (Haisoku) Gedan/Chudan/Jodan · Kansetsu Geri (Sokuto) · Yoko Geri (Sokuto) · Mae/Yoko Keage',
+        'KIHON — Coups de pied (statiques) — Kin Geri · Kinteki Geri (Haisoku) · Mae Geri (Chusoku) · Mawashi Geri (Haisoku) Gedan/Chudan/Jodan · Kansetsu Geri (Sokuto) · Yoko Geri (Sokuto) · Mae/Yoko Keage',
         'IDO KEIKO (Zenkutsu Dachi — maeni, sagari, mawatte) — Seiken Oi Tsuki ou Gyaku Tsuki + Geri + Uke',
         'KATA — Taikyoku Sono Ichi & Ni · Sokugi Taikyoku Sono Ichi & Ni',
         'KUMITE — Yakusoku Ippon Kumite (Tori–Uke) : bloquer bras ou jambe, contre-attaquer bras ou jambe',
@@ -1441,7 +1480,7 @@ const belts = [
         'IDO KEIKO (Shiko Dachi) — Mawashi Gedan Barai',
         'KAITEN IDO (Zenkutsu Dachi — Kaiten maeni & sagari) — basic Tsuki · basic Uke · basic Geri',
         'KAITEN IDO (Kokutsu Dachi — Kaiten maeni & sagari) — basic Tsuki · basic Uke · basic Geri',
-        'KUMITE NO KAMAE — 2-kick chains: Uchi Mawashi Geri + Yoko Geri · Soto Mawashi Geri + Mae Geri · Uchi Mawashi Geri + Oroshi Soto Kakato Geri · Soto Mawashi Geri + Oroshi Uchi Kakato Geri',
+        'KUMITE NO KAMAE — 2-kick chains — Uchi Mawashi Geri + Yoko Geri · Soto Mawashi Geri + Mae Geri · Uchi Mawashi Geri + Oroshi Soto Kakato Geri · Soto Mawashi Geri + Oroshi Uchi Kakato Geri',
         'KATA — Pinan Sono Go (+ 1–2 Bunkai) · Gekisai Sono Ichi · Taikyoku en Ura Sono Ichi & Ni',
         'KUMITE — Yakusoku Ippon Kumite (Tori–Uke): arm & leg attacks · Physical test (push-ups, sit-ups)',
         'KUMITE — 18–40 yrs: 7 × 1 min · Tameshiwari: Seiken, Geri etc. · +40 yrs: Randori',
@@ -1457,7 +1496,7 @@ const belts = [
         'IDO KEIKO (Shiko Dachi) — Mawashi Gedan Barai',
         'KAITEN IDO (Zenkutsu Dachi — Kaiten maeni & sagari) — Tsuki de base · Uke de base · Geri de base',
         'KAITEN IDO (Kokutsu Dachi — Kaiten maeni & sagari) — Tsuki de base · Uke de base · Geri de base',
-        'KUMITE NO KAMAE — Enchaînements 2 coups de pied : Uchi Mawashi Geri + Yoko Geri · Soto Mawashi Geri + Mae Geri · Uchi Mawashi Geri + Oroshi Soto Kakato Geri · Soto Mawashi Geri + Oroshi Uchi Kakato Geri',
+        'KUMITE NO KAMAE — Enchaînements 2 coups de pied — Uchi Mawashi Geri + Yoko Geri · Soto Mawashi Geri + Mae Geri · Uchi Mawashi Geri + Oroshi Soto Kakato Geri · Soto Mawashi Geri + Oroshi Uchi Kakato Geri',
         'KATA — Pinan Sono Go (+ 1–2 Bunkai) · Gekisai Sono Ichi · Taikyoku en Ura Sono Ichi & Ni',
         'KUMITE — Yakusoku Ippon Kumite (Tori–Uke) : attaques de bras & jambes · Épreuve physique (appuis faciaux, abdominaux)',
         'KUMITE — 18–40 ans : 7 × 1 min · Tameshiwari : Seiken, Geri etc. · +40 ans : Randori',
@@ -1522,7 +1561,7 @@ const belts = [
     },
     examRequirements:{
       en:[
-        'VOCABULARY — Competition: Aka (red) · Shiro (white) · Ippon · Waza-Ari · Chui (warning) · Hansoku (foul) · Hantei (decision) · Shikkaku (disqualification)',
+        'VOCABULARY — Competition — Aka (red) · Shiro (white) · Ippon · Waza-Ari · Chui (warning) · Hansoku (foul) · Hantei (decision) · Shikkaku (disqualification)',
         'VOCABULARY — Hyaku-Hachiju-do (180°) · Yonjugo-do (45°) · Kyuju-do (90°) · Tsuki = Zuki · Geri = Keri · Zanshin (remaining awareness) · Zoko',
         'IDO KEIKO (Neko Ashi Dachi) — Koken Uchi Jodan/Chudan/Gedan · Koken Uke Jodan/Chudan/Gedan · Jodan Nihon Nukite',
         'IDO KEIKO (Kokutsu → Zenkutsu Dachi, 2-arm chains) — Uchi Uke + Gedan Barai → Gyaku Hiji Age Uchi · Jodan Uke + Soto Uke (same arm) · Gedan Barai + Jodan Uke · Gedan Barai + Jodan Uke + Seiken Oyaku Shita Tsuki',
@@ -1535,7 +1574,7 @@ const belts = [
         'EVALUATION — Attitude · Guard · Stability · Footwork · Kiai · Kime · Determination · Speed · Power · Breath · Endurance · Ma-Ai · Block/counter opportunity · Rhythm · Changes of rhythm',
       ],
       fr:[
-        'VOCABULAIRE — Compétition : Aka (rouge) · Shiro (blanc) · Ippon · Waza-Ari · Chui (avertissement) · Hansoku (faute) · Hantei (décision) · Shikkaku (disqualification)',
+        'VOCABULAIRE — Compétition — Aka (rouge) · Shiro (blanc) · Ippon · Waza-Ari · Chui (avertissement) · Hansoku (faute) · Hantei (décision) · Shikkaku (disqualification)',
         'VOCABULAIRE — Hyaku-Hachiju-do (180°) · Yonjugo-do (45°) · Kyuju-do (90°) · Tsuki = Zuki · Geri = Keri · Zanshin (conscience résiduelle) · Zoko',
         'IDO KEIKO (Neko Ashi Dachi) — Koken Uchi Jodan/Chudan/Gedan · Koken Uke Jodan/Chudan/Gedan · Jodan Nihon Nukite',
         'IDO KEIKO (Kokutsu → Zenkutsu Dachi, enchaînements 2 bras) — Uchi Uke + Gedan Barai → Gyaku Hiji Age Uchi · Jodan Uke + Soto Uke (même bras) · Gedan Barai + Jodan Uke · Gedan Barai + Jodan Uke + Seiken Oyaku Shita Tsuki',
@@ -1704,7 +1743,7 @@ const belts = [
         'IDO KEIKO (Moroashi Dachi) — Age Kakato Ushiro Geri + Gedan Shuto Morote Uke · Uraken Oroshi Uke · Jodan/Chudan Morote Haito Uchi',
         'IDO KEIKO (Kake Dachi) — Uraken Sayu Uchi · Morote Uke · Jodan Morote Kake Uke · Morote Tsuki Jodan/Chudan',
         'RENRAKU (Kumite No Kamae) — Gedan Mawashi Geri · Ushiro Mawashi Geri · Tettsui + Gyaku Tsuki · Mae Geri · Chudan Tsuki + Kagi Tsuki · Mawashi Geri · Ushiro Geri · Shita Tsuki',
-        'KUMITE NO KAMAE — Jumping kicks: Mae Hiza Tobi Geri · Mawashi Hiza Tobi Geri · Mae Tobi Geri · Mawashi Tobi Geri · Yoko Tobi Geri',
+        'KUMITE NO KAMAE — Jumping kicks — Mae Hiza Tobi Geri · Mawashi Hiza Tobi Geri · Mae Tobi Geri · Mawashi Tobi Geri · Yoko Tobi Geri',
         'KATA — Pinan en Ura Sono San, Yon, Go · Tekki Sono San',
         'KUMITE — 18–40 yrs: 13 × 1 min · Tameshiwari: Seiken, Geri etc. · +40 yrs / females under 18: Randori',
         'PHYSICAL TEST — Push-ups · Sit-ups · Handstand balance',
@@ -1721,7 +1760,7 @@ const belts = [
         'IDO KEIKO (Moroashi Dachi) — Age Kakato Ushiro Geri + Gedan Shuto Morote Uke · Uraken Oroshi Uke · Jodan/Chudan Morote Haito Uchi',
         'IDO KEIKO (Kake Dachi) — Uraken Sayu Uchi · Morote Uke · Jodan Morote Kake Uke · Morote Tsuki Jodan/Chudan',
         'RENRAKU (Kumite No Kamae) — Gedan Mawashi Geri · Ushiro Mawashi Geri · Tettsui + Gyaku Tsuki · Mae Geri · Chudan Tsuki + Kagi Tsuki · Mawashi Geri · Ushiro Geri · Shita Tsuki',
-        'KUMITE NO KAMAE — Sauts : Mae Hiza Tobi Geri · Mawashi Hiza Tobi Geri · Mae Tobi Geri · Mawashi Tobi Geri · Yoko Tobi Geri',
+        'KUMITE NO KAMAE — Sauts — Mae Hiza Tobi Geri · Mawashi Hiza Tobi Geri · Mae Tobi Geri · Mawashi Tobi Geri · Yoko Tobi Geri',
         'KATA — Pinan en Ura Sono San, Yon, Go · Tekki Sono San',
         'KUMITE — 18–40 ans : 13 × 1 min · Tameshiwari : Seiken, Geri etc. · +40 ans / féminines : Randori',
         'ÉPREUVE PHYSIQUE — Appuis faciaux · Abdominaux · Équilibre sur les mains',
@@ -1780,7 +1819,7 @@ const belts = [
     examRequirements:{
       en:[
         'All previous requirements — demonstrated to a high standard',
-        'KATA — Complete Kyokushin curriculum: Naihanchi · Sochin · all Ura kata series',
+        'KATA — Naihanchi · Sochin · all Ura kata series',
         'HYAKUNIN KUMITE — 100-man kumite (senior black belts only)',
         'Demonstrated teaching ability — lead a class section',
         'Minimum 3–5 years continuous training from white belt',
@@ -1789,7 +1828,7 @@ const belts = [
       ],
       fr:[
         'Toutes les exigences précédentes — démontrées à un haut niveau',
-        'KATA — Programme complet Kyokushin : Naihanchi · Sochin · toutes les séries Ura',
+        'KATA — Naihanchi · Sochin · toutes les séries Ura',
         'HYAKUNIN KUMITE — Kumite à 100 adversaires (ceintures noires seniors uniquement)',
         'Capacité d\'enseignement démontrée — animer une partie du cours',
         'Minimum 3 à 5 ans d\'entraînement continu depuis la ceinture blanche',
@@ -2205,10 +2244,15 @@ function buildExamGroups(requirements) {
       groups.push({ label, items: [content] });
     }
   }
-  return groups.map(g => `<div class="exam-group">
-    ${g.label ? `<div class="exam-group-label">${g.label}</div>` : ''}
-    <ul class="exam-list">${g.items.map(item => `<li><span class="exam-text">${addTooltips(item)}</span></li>`).join('')}</ul>
-  </div>`).join('');
+  return groups.map(g => {
+    const bullets = g.items
+      .flatMap(item => item.split(' · ').map(s => s.trim()).filter(Boolean));
+    const cls = bullets.length === 1 ? ' single' : '';
+    return `<div class="exam-group">
+      ${g.label ? `<div class="exam-group-label">${g.label}</div>` : ''}
+      <ul class="exam-list${cls}">${bullets.map(b => `<li><span class="exam-text">${addTooltips(b)}</span></li>`).join('')}</ul>
+    </div>`;
+  }).join('');
 }
 
 function buildPanel(belt) {
@@ -2222,6 +2266,12 @@ function buildPanel(belt) {
         <h2>${belt.name[L]}</h2>
         <p>${addTooltips(belt.desc[L])}</p>
       </div>
+    </div>
+
+    <div class="poster-bar">
+      <button class="poster-btn" onclick="openPoster('img/karate-techniques.jpeg','Karate Techniques')">${ui.posterTech}</button>
+      <button class="poster-btn" onclick="openPoster('img/belts/00-belts.jpeg','Belt Progression Chart')">${ui.posterBelts}</button>
+      ${BELT_POSTERS[belt.id] ? `<button class="poster-btn is-belt" onclick="openPoster('${BELT_POSTERS[belt.id]}','${jsString(belt.name[L])}')">${ui.posterBelt} — ${belt.name[L]}</button>` : ''}
     </div>
 
     <div class="section-header"><h3>${ui.sectionExam}</h3></div>
@@ -2286,8 +2336,17 @@ function jsString(value) {
     .replace(/'/g, "\\'");
 }
 
+function markGlossaryLinks() {
+  const romajiMap = new Map(glossaryTerms.map(t => [t.romaji.toLowerCase(), t.romaji]));
+  document.querySelectorAll('.exam-reqs .jp-tip').forEach(span => {
+    const key = span.textContent.trim().toLowerCase();
+    if (romajiMap.has(key)) span.dataset.romaji = romajiMap.get(key);
+  });
+}
+
 function renderPanel(id) {
   document.getElementById('mainContent').innerHTML = buildPanel(belts.find(b=>b.id===id));
+  markGlossaryLinks();
 }
 
 function switchBelt(id) {
@@ -2316,8 +2375,26 @@ function openImageModal(label, src) {
   document.body.style.overflow = 'hidden';
 }
 
+const BELT_POSTERS = {
+  orange:    'img/belts/10-orange.jpeg',
+  blue:      'img/belts/09-orange-stripe.jpeg',
+  yellow:    'img/belts/07-blue-stripe.jpeg',
+  green:     'img/belts/06-yellow.jpeg',
+  brown:     'img/belts/05-yellow-stripe.jpeg',
+  brown1:    'img/belts/04-green.jpeg',
+  black:     'img/belts/03-green-stripe.jpeg',
+  brown2kyu: 'img/belts/02-brown.jpeg',
+  brown1kyu: 'img/belts/01-brown.jpeg',
+};
+
+function openPoster(src, label) {
+  document.querySelector('#imageModal .modal-box').classList.add('is-poster');
+  openImageModal(label, src);
+}
+
 function closeImageModal() {
   document.getElementById('imageModal').classList.remove('open');
+  document.querySelector('#imageModal .modal-box').classList.remove('is-poster');
   document.getElementById('modalTechniqueImage').removeAttribute('src');
   document.body.style.overflow = '';
 }
@@ -2638,11 +2715,20 @@ function closeGlossaryDetail() {
   buildGlossaryList();
 }
 
-// ── TOOLTIP TOUCH SUPPORT ──
+// ── TOOLTIP / GLOSSARY LINK HANDLER ──
 document.addEventListener('click', function(e) {
   const tip = e.target.closest('.jp-tip');
   if (tip) {
     e.stopPropagation();
+    const romaji = tip.dataset.romaji;
+    if (romaji) {
+      // Term links to a glossary entry — open the panel
+      document.querySelectorAll('.jp-tip.tip-open').forEach(el => el.classList.remove('tip-open'));
+      if (window.innerWidth < 1280) openGlossaryPanel();
+      openGlossaryDetail(romaji);
+      return;
+    }
+    // No glossary entry — toggle the inline tooltip
     const wasOpen = tip.classList.contains('tip-open');
     document.querySelectorAll('.jp-tip.tip-open').forEach(el => el.classList.remove('tip-open'));
     if (!wasOpen) tip.classList.add('tip-open');
