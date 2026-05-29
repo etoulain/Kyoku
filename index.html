@@ -200,6 +200,15 @@
   .exam-list li { display:flex; align-items:flex-start; gap:10px; font-size:clamp(15px,1.3vw,16px); color:var(--text); line-height:1.6; font-weight:400; min-width:0; }
   .exam-text { flex:1; min-width:0; overflow-wrap:break-word; }
   .exam-list li::before { content:'◆'; color:var(--gold); font-size:7px; margin-top:6px; flex-shrink:0; }
+  .exam-reqs { display:flex; flex-direction:column; gap:14px; }
+  .exam-group-label {
+    font-family:'Cinzel',serif; font-size:10px; letter-spacing:1.5px;
+    color:var(--gold-light);
+    padding:0 0 6px 10px; margin-bottom:7px;
+    border-left:2px solid rgba(201,168,76,0.55);
+    border-bottom:1px solid rgba(201,168,76,0.12);
+    word-break:break-word;
+  }
 
 
   /* ── TECHNIQUE FIGURE ── */
@@ -2177,6 +2186,31 @@ function buildSidebar() {
 // ════════════════════════════════════════════════
 // RENDER PANEL
 // ════════════════════════════════════════════════
+function parseExamLabel(s) {
+  const sep = ' — ';
+  const idx = s.lastIndexOf(sep);
+  return idx === -1
+    ? { label: null, content: s }
+    : { label: s.slice(0, idx), content: s.slice(idx + sep.length) };
+}
+
+function buildExamGroups(requirements) {
+  const groups = [];
+  for (const r of requirements) {
+    const { label, content } = parseExamLabel(r);
+    const last = groups[groups.length - 1];
+    if (label && last && last.label === label) {
+      last.items.push(content);
+    } else {
+      groups.push({ label, items: [content] });
+    }
+  }
+  return groups.map(g => `<div class="exam-group">
+    ${g.label ? `<div class="exam-group-label">${g.label}</div>` : ''}
+    <ul class="exam-list">${g.items.map(item => `<li><span class="exam-text">${addTooltips(item)}</span></li>`).join('')}</ul>
+  </div>`).join('');
+}
+
 function buildPanel(belt) {
   const L = lang;
   const ui = UI[L];
@@ -2193,7 +2227,7 @@ function buildPanel(belt) {
     <div class="section-header"><h3>${ui.sectionExam}</h3></div>
     <div class="exam-box">
       <h4>${ui.examTitle(belt.name[L])}</h4>
-      <ul class="exam-list">${belt.examRequirements[L].map(r=>`<li><span class="exam-text">${addTooltips(r)}</span></li>`).join('')}</ul>
+      <div class="exam-reqs">${buildExamGroups(belt.examRequirements[L])}</div>
     </div>
 
     <div class="section-header"><h3>${ui.sectionTech}</h3></div>
