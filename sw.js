@@ -1,8 +1,8 @@
-const CACHE = 'kyokushin-v7';
+const CACHE = 'kyokushin-v8';
 const ASSETS = [
   './index.html',
   './manifest.json',
-  './figures.js',
+  './technique-imgs.js',
   'https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap'
 ];
 
