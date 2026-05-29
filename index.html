@@ -171,7 +171,7 @@
   /* ── APP SHELL ── */
   .app-shell { display:flex; min-height:calc(100vh - 120px); }
   .sidebar { display:none; }
-  main { flex:1; max-width:800px; margin:0 auto; padding:28px 20px calc(var(--safe-bottom) + 48px); width:100%; }
+  main { flex:1; min-width:0; max-width:800px; margin:0 auto; padding:28px 20px calc(var(--safe-bottom) + 48px); width:100%; }
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
 
@@ -197,7 +197,7 @@
   .exam-box { background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.22); border-radius:8px; padding:24px; margin-bottom:8px; }
   .exam-box h4 { font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--gold-light); margin-bottom:16px; }
   .exam-list { list-style:none; display:grid; grid-template-columns:1fr; gap:9px; }
-  .exam-list li { display:flex; align-items:flex-start; gap:10px; font-size:clamp(15px,1.3vw,16px); color:var(--text); line-height:1.6; font-weight:400; }
+  .exam-list li { display:flex; align-items:flex-start; gap:10px; font-size:clamp(15px,1.3vw,16px); color:var(--text); line-height:1.6; font-weight:400; overflow-wrap:break-word; min-width:0; }
   .exam-list li::before { content:'◆'; color:var(--gold); font-size:7px; margin-top:6px; flex-shrink:0; }
 
 
