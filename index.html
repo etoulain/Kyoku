@@ -530,6 +530,271 @@
     flex-shrink: 0; border: 1.5px solid rgba(255,255,255,0.2);
   }
 
+  /* ── JAPANESE TERM TOOLTIPS ── */
+  .jp-tip {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dashed rgba(201,168,76,0.5);
+  }
+  .jp-tip::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(8,8,12,0.97);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--text);
+    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.45;
+    width: max-content;
+    max-width: min(220px, 80vw);
+    white-space: normal;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.55);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s;
+    z-index: 500;
+  }
+  .jp-tip::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 3px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(201,168,76,0.4);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s;
+    z-index: 501;
+  }
+  @media (hover: hover) {
+    .jp-tip:hover::after,
+    .jp-tip:hover::before { opacity: 1; }
+  }
+  .jp-tip.tip-open::after,
+  .jp-tip.tip-open::before { opacity: 1; }
+
+  /* ── GLOSSARY PANEL ── */
+  .glossary-panel {
+    display: none;
+    flex-direction: column;
+    position: relative;
+  }
+  /* Mobile drawer (triggered by FAB) */
+  .glossary-panel.open {
+    display: flex;
+    position: fixed;
+    right: 0; top: 0; bottom: 0;
+    width: min(340px, 92vw);
+    z-index: 2000;
+    background: rgba(10,10,13,0.99);
+    border-left: 1px solid rgba(201,168,76,0.22);
+    box-shadow: -8px 0 48px rgba(0,0,0,0.55);
+    animation: gSlideIn 0.26s ease;
+  }
+  @keyframes gSlideIn {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
+  /* Desktop: always-visible sticky panel */
+  @media (min-width:1280px) {
+    .glossary-panel {
+      display: flex;
+      width: 260px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 52px;
+      height: calc(100vh - 52px);
+      overflow: hidden;
+      border-left: 1px solid rgba(255,255,255,0.05);
+    }
+    .glossary-panel.open {
+      position: sticky;
+      width: 260px;
+      top: 52px;
+      right: auto;
+      bottom: auto;
+      z-index: auto;
+      box-shadow: none;
+      animation: none;
+      background: transparent;
+      border-left: 1px solid rgba(255,255,255,0.05);
+    }
+  }
+  @media (min-width:1400px) {
+    .glossary-panel, .glossary-panel.open { width: 280px; }
+  }
+
+  .glossary-panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 14px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+  .glossary-panel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .glossary-panel-close {
+    background: rgba(255,255,255,0.07); border: none;
+    color: var(--text-sub); font-size: 14px;
+    width: 26px; height: 26px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; line-height: 1;
+  }
+  .glossary-panel-close:hover { background: rgba(192,57,43,0.35); }
+  @media (min-width:1280px) { .glossary-panel-close { display: none; } }
+
+  .glossary-search-wrap {
+    padding: 10px 12px 6px;
+    flex-shrink: 0;
+  }
+  .glossary-search {
+    display: block; width: 100%;
+    padding: 7px 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif; font-size: 12px;
+    outline: none; box-sizing: border-box;
+  }
+  .glossary-search:focus { border-color: rgba(201,168,76,0.45); }
+  .glossary-search::placeholder { color: var(--text-sub); }
+
+  #glossaryListView { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+  #glossaryListView.g-hidden { display: none; }
+
+  .glossary-list-scroll {
+    flex: 1; overflow-y: auto; padding: 4px 0 20px;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent;
+  }
+  .glossary-list-scroll::-webkit-scrollbar { width: 3px; }
+  .glossary-list-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  .glossary-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 14px; cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: background 0.14s, border-color 0.14s;
+  }
+  .glossary-item:hover { background: rgba(255,255,255,0.04); border-left-color: rgba(201,168,76,0.35); }
+  .glossary-item.g-active { background: rgba(201,168,76,0.08); border-left-color: var(--gold); }
+  .glossary-item-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; opacity: 0.85; }
+  .glossary-item-text { flex: 1; min-width: 0; }
+  .glossary-item-romaji {
+    font-size: 12px; font-weight: 500; color: var(--white);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .glossary-item-jp { font-size: 11px; color: var(--mist); margin-top: 1px; }
+
+  /* Detail view — absolute overlay within panel */
+  .glossary-detail {
+    display: none; flex-direction: column;
+    position: absolute; inset: 0;
+    background: rgba(10,10,13,1);
+    overflow: hidden;
+  }
+  .glossary-detail.g-active { display: flex; }
+
+  .glossary-detail-back {
+    display: flex; align-items: center; gap: 7px;
+    padding: 12px 14px; flex-shrink: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-top: none; border-left: none; border-right: none;
+    background: transparent;
+    color: var(--text-sub); font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; width: 100%; text-align: left;
+    transition: color 0.18s;
+  }
+  .glossary-detail-back:hover { color: var(--gold-light); }
+
+  .glossary-detail-scroll {
+    flex: 1; overflow-y: auto; padding-bottom: 24px;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent;
+  }
+  .glossary-detail-scroll::-webkit-scrollbar { width: 3px; }
+  .glossary-detail-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  .glossary-detail-img {
+    width: 100%; height: 170px;
+    object-fit: contain; object-position: center;
+    background: #eee1cc; display: block;
+  }
+  .glossary-no-img {
+    width: 100%; height: 100px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.02);
+    color: var(--text-sub); font-family: 'Cinzel', serif;
+    font-size: 32px; letter-spacing: 4px;
+  }
+  .glossary-detail-body { padding: 14px 16px 0; }
+  .glossary-detail-jp {
+    font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600;
+    color: var(--gold-light); margin-bottom: 3px;
+  }
+  .glossary-detail-romaji {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;
+    font-style: italic; color: var(--text-sub); margin-bottom: 8px;
+  }
+  .glossary-detail-en {
+    font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 12px;
+  }
+  .glossary-detail-desc {
+    font-size: 12.5px; color: var(--text); line-height: 1.75; margin-bottom: 14px;
+  }
+  .glossary-detail-footer {
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    padding-bottom: 4px;
+  }
+  .glossary-detail-video {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 10px; background: rgba(192,57,43,0.12);
+    border: 1px solid rgba(192,57,43,0.25); border-radius: 3px;
+    color: #f08878; text-decoration: none;
+    font-family: 'Inter', sans-serif; font-size: 10px;
+    font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .glossary-detail-video:hover { background: rgba(192,57,43,0.25); }
+
+  /* FAB: only shows below 1280px */
+  .glossary-fab {
+    position: fixed;
+    bottom: calc(var(--safe-bottom) + 20px);
+    right: 16px;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: rgba(201,168,76,0.13);
+    border: 1.5px solid rgba(201,168,76,0.4);
+    color: var(--gold-light); font-size: 13px;
+    font-family: 'Cinzel', serif; letter-spacing: 0;
+    cursor: pointer; z-index: 1500;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.45);
+    transition: all 0.2s;
+  }
+  .glossary-fab:hover { background: rgba(201,168,76,0.24); transform: scale(1.06); }
+  @media (min-width:1280px) { .glossary-fab { display: none; } }
+
+  /* Backdrop (mobile only) */
+  .glossary-backdrop {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55); z-index: 1999;
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  }
+  .glossary-backdrop.open { display: block; }
+  @media (min-width:1280px) { .glossary-backdrop { display: none !important; } }
+
 </style>
 </head>
 <body>
@@ -570,6 +835,23 @@
     </div>
   </aside>
   <main id="mainContent"></main>
+
+  <!-- GLOSSARY PANEL -->
+  <aside class="glossary-panel" id="glossaryPanel">
+    <div id="glossaryListView">
+      <div class="glossary-panel-header">
+        <span class="glossary-panel-title">語典 — Glossary</span>
+        <button class="glossary-panel-close" onclick="closeGlossaryPanel()" aria-label="Close glossary">✕</button>
+      </div>
+      <div class="glossary-search-wrap">
+        <input class="glossary-search" id="glossarySearch" type="search"
+               placeholder="Search technique…" autocomplete="off"
+               oninput="filterGlossary(this.value)">
+      </div>
+      <div class="glossary-list-scroll" id="glossaryList"></div>
+    </div>
+    <div class="glossary-detail" id="glossaryDetail"></div>
+  </aside>
 </div>
 
 <div id="offlineToast">✓ <span id="toastText">Available offline</span></div>
@@ -1580,6 +1862,200 @@ const belts = [
 ];
 
 // ════════════════════════════════════════════════
+// GLOSSARY & TOOLTIPS
+// ════════════════════════════════════════════════
+const GLOSSARY = {
+  // Compound stances (longest first so they're matched before shorter parts)
+  'Yoko Zenkutsu Dachi': 'Lateral forward stance',
+  'Kumite No Kamae': 'Fighting guard — combat ready position',
+  'Tsuruashi Dachi': 'Crane stance — one-leg balance stance',
+  'Moroashi Dachi': 'Both-feet parallel forward stance',
+  'Kake Ashi Dachi': 'Hook / cross-leg stance',
+  'Han Kiba Dachi': 'Half horse stance',
+  'Sanchin Dachi': 'Three-battle hourglass stance',
+  'Zenkutsu Dachi': 'Forward stance — 70% front / 30% rear',
+  'Kokutsu Dachi': 'Back stance — 30% front / 70% rear',
+  'Neko Ashi Dachi': 'Cat stance — 90% weight on rear leg',
+  'Heiko Dachi': 'Parallel stance — feet shoulder-width apart',
+  'Kiba Dachi': 'Horse stance — feet wide, knees bent outward',
+  'Shiko Dachi': 'Sumo stance — deep and wide, toes turned out',
+  'Kake Dachi': 'Hook / cross-leg stance',
+  'Yoi Dachi': 'Ready stance — equal 50/50 weight',
+  // Compound kicks
+  'Yakusoku Sanbon Kumite': 'Three-step prearranged sparring',
+  'Yakusoku Ippon Kumite': 'One-step prearranged sparring',
+  'Hyaku-Hachiju-do': '180° turn / full reversal direction',
+  'Ushiro Mawashi Geri': 'Spinning back roundhouse kick',
+  'Gedan Mawashi Geri': 'Low roundhouse kick to the thigh',
+  'Sotomawashi Geri': 'Outside roundhouse kick (outward arc)',
+  'Uchimawashi Geri': 'Inside roundhouse kick (inward arc)',
+  'Tobi Mawashi Geri': 'Jumping roundhouse kick',
+  'Tobi Mae Geri': 'Jumping front kick',
+  'Mawashi Geri': 'Roundhouse kick — circular kick',
+  'Kansetsu Geri': 'Joint kick — targeting the knee',
+  'Kakato Geri': 'Axe kick — striking downward with heel',
+  'Ushiro Geri': 'Back kick — striking with heel or ball',
+  'Mae Geri': 'Front kick — linear forward kick',
+  'Yoko Geri': 'Side kick — lateral straight kick',
+  'Hiza Geri': 'Knee strike',
+  'Kake Geri': 'Hook kick',
+  'Kin Geri': 'Groin kick',
+  'Low Kick': 'Low roundhouse kick to the thigh',
+  // Compound punches
+  'Seiken Morote Tsuki': 'Double simultaneous fore-fist punch',
+  'Morote Tsuki': 'Double punch — both fists simultaneously',
+  'Gyaku Tsuki': 'Reverse punch — rear-hand punch',
+  'Oi Tsuki': 'Lunge punch — punch while stepping forward',
+  'Tate Tsuki': 'Vertical fist punch',
+  'Jun Tsuki': 'Same-side punch (front hand, front foot)',
+  'Kagi Tsuki': 'Hook punch',
+  'Shita Tsuki': 'Uppercut-style punch',
+  // Compound blocks
+  'Morote Kake Uke': 'Two-hand hooking block',
+  'Jodan Age Uke': 'Rising block against upper attacks',
+  'Mawashi Uke': 'Circular sweeping block',
+  'Shuto Uke': 'Knife-hand block',
+  'Osae Uke': 'Pressing / pin-down block',
+  'Gedan Barai': 'Low sweep block — downward sweeping block',
+  'Juji Uke': 'X-block — both forearms crossed',
+  'Soto Uke': 'Outer block — from outside inward',
+  'Uchi Uke': 'Inner block — from inside outward',
+  'Jodan Uke': 'Upper forearm block against head attacks',
+  'Age Uke': 'Rising forearm block',
+  // Compound elbow / strike types
+  'Hiji Uchi': 'Elbow strike (also Empi / Hiji Ate)',
+  'Empi Uchi': 'Elbow strike',
+  'Hiji Ate': 'Elbow strike',
+  // Compound practice terms
+  'Yakusoku Ippon': 'Prearranged one-step sparring format',
+  'Yakusoku Sanbon': 'Prearranged three-step sparring format',
+  'Hyakunin Kumite': '100-man kumite — ultimate endurance test',
+  'Ju Hon Kumite': 'Ten-man kumite — 10 consecutive bouts',
+  'Jiyu Kumite': 'Free sparring — no pre-set sequence',
+  'Kaiten Ido': 'Moving practice with 180° rotations',
+  'Ido Keiko': 'Moving practice — techniques while stepping',
+  'Kihon No Waza': 'Fundamental techniques (30 set techniques)',
+  'Geri No Waza': 'Kicking techniques',
+  'Te No Waza': 'Hand / arm techniques',
+  'Tsuki No Kata': 'Moon / Punching Form kata',
+  'Dojo Kun': 'Training hall oath — five precepts of Kyokushin',
+  'Ashi Barai': 'Foot sweep',
+  'Renraku': 'Combination — linked technique sequence',
+  'Bunkai': 'Kata application analysis with a partner',
+  'Embusen': 'Kata floor diagram / movement pattern',
+  'Sokugi': 'Kicking version of a kata',
+  'Kaiten': 'Rotation / spinning movement',
+  'Tachikata': 'Stance categories / stance work',
+  'Tameshiwari': 'Breaking test — boards, tiles, or bricks',
+  'Kamae-Te': 'Assume the indicated guard position',
+  'Kamae': 'Guard / fighting posture',
+  'Ma-Ai': 'Optimal fighting distance and timing',
+  'Ma Ai': 'Optimal fighting distance and timing',
+  'Randori': 'Free practice / freestyle training',
+  'Yakusoku': 'Pre-arranged / prearranged agreement',
+  'Karate-Do': 'The way of the empty hand',
+  'Kyokushinkai': 'Society of ultimate truth — the organization',
+  'Kyokushin': 'Ultimate truth — the style name',
+  // Surfaces & body parts
+  'Haisoku': 'Instep of the foot',
+  'Chusoku': 'Ball of the foot',
+  'Sokuto': 'Blade / outer edge of the foot',
+  'Teisoku': 'Sole of the foot',
+  'Haishu': 'Back of the hand',
+  'Kakato': 'Heel of the foot',
+  'Uraken': 'Back-fist — striking with the back of the fist',
+  'Tettsui': 'Hammer fist — bottom ridge of the fist',
+  'Haito': 'Ridge hand — inner edge between thumb and index',
+  'Shuto': 'Knife hand — outer edge of the hand',
+  'Shotei': 'Palm heel — heel of the open palm',
+  'Koken': 'Arc fist / bent-wrist strike surface',
+  'Seiken': 'Fore-fist — first two knuckles',
+  'Nukite': 'Spear hand — fingertip thrust',
+  'Hiraken': 'Half-fist — second-knuckle striking surface',
+  'Hizo': 'Spleen — left-side body target',
+  // Level / direction
+  'Jodan': 'Upper level — head and neck area',
+  'Chudan': 'Middle level — chest and solar plexus',
+  'Gedan': 'Lower level — below the belt',
+  'Maeni': 'Moving / advancing forward',
+  'Sagari': 'Moving / retreating backward',
+  'Mawatte': 'Turn around / rotate 180°',
+  'Migi': 'Right side',
+  'Hidari': 'Left side',
+  'Sayu': 'Left and right sides',
+  'Yonju Go-Do': '45° angle movement direction',
+  'Kyuju-Do': '90° angle movement direction',
+  // Kumite scoring & rules
+  'Waza-Ari': 'Half point in competition scoring',
+  'Zanshin': 'Remaining awareness after a technique',
+  'Hantei': "Judge's decision / vote",
+  'Hansoku': 'Foul — rule violation leading to penalty',
+  'Shikkaku': 'Disqualification from competition',
+  'Ippon': 'Full point / decisive technique',
+  // Key practice concepts
+  'Ibuki': 'Powerful abdominal breathing / sharp exhale',
+  'Kiai': 'Spirit shout — sharp exhale focusing power',
+  'Kime': 'Focus — sharp tension at moment of impact',
+  'Tori': 'Attacker role in paired practice',
+  'Tobi': 'Jumping / airborne',
+  // Kata names
+  'Taikyoku': 'First Cause — foundational kata series',
+  'Pinan': 'Peaceful Mind — intermediate kata series',
+  'Yantsu': 'Keep Pure — Chinese-origin Kyokushin kata',
+  'Kanku': 'Viewing the Sky — 65-movement advanced kata',
+  'Sanchin': 'Three Battles — internal power kata',
+  'Seienchin': 'Storm in the Calm — advanced power kata',
+  'Garyu': 'Reclining Dragon — created by Mas Oyama',
+  'Gekisai': 'Attack and Smash — Okinawan-origin kata',
+  'Tekki': 'Iron Horse — performed entirely sideways',
+  'Naihanchi': 'Horse Riding — ancient lateral kata',
+  'Sochin': 'Preserve Peace — slow and powerful kata',
+  // Dojo / hierarchy
+  'Shinzen': 'Sacred space / altar at front of the dojo',
+  'Sensei': 'Teacher — one who has gone before',
+  'Shihan': 'Master instructor — 5th Dan and above',
+  'Sosai': "Founder (Mas Oyama's title)",
+  'Kancho': 'Director / head of the organization',
+  'Seiza': 'Kneeling on heels — formal seated position',
+  'Anza': 'Cross-legged sitting — informal seated position',
+  'Dojo': 'Training hall — place of the way',
+  'Rei': 'Bow — formal salute of respect',
+  // General terms
+  'Kihon': 'Basics — fundamental training techniques',
+  'Kumite': 'Sparring — partner fighting practice',
+  'Waza': 'Technique',
+  'Geri': 'Kick',
+  'Tsuki': 'Punch / thrust (also written Zuki)',
+};
+
+// Pre-sort keys longest-first so compound terms match before their components
+const _GKEYS = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+
+function addTooltips(text) {
+  // Segment approach: track already-replaced spans to avoid double-wrapping
+  let segs = [{t: text, done: false}];
+  for (const key of _GKEYS) {
+    const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const rx  = new RegExp('\\b' + esc + '\\b', 'gi');
+    const tip = GLOSSARY[key].replace(/"/g, '&quot;');
+    const next = [];
+    for (const seg of segs) {
+      if (seg.done) { next.push(seg); continue; }
+      const parts = seg.t.split(rx);
+      const hits  = seg.t.match(rx);
+      if (!hits) { next.push(seg); continue; }
+      for (let i = 0; i < parts.length; i++) {
+        if (parts[i]) next.push({t: parts[i], done: false});
+        if (i < hits.length)
+          next.push({t: `<span class="jp-tip" data-tip="${tip}">${hits[i]}</span>`, done: true});
+      }
+    }
+    segs = next;
+  }
+  return segs.map(s => s.t).join('');
+}
+
+// ════════════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════════════
 const beltOrder = ['orange','blue','yellow','green','brown','brown1','black','brown2kyu','brown1kyu','shodan'];
@@ -1634,6 +2110,9 @@ function setLang(l) {
   pc.innerHTML = '';
   buildProgressPathDynamic();
   updateMyBeltButton();
+  // Rebuild glossary (descriptions are localized)
+  if (glossaryActiveRomaji) openGlossaryDetail(glossaryActiveRomaji);
+  else buildGlossaryList();
 }
 
 // ════════════════════════════════════════════════
@@ -1724,14 +2203,14 @@ function buildPanel(belt) {
       <div class="belt-hero-text">
         <div class="kyu">${belt.kyu} · ${belt.nameJP}</div>
         <h2>${belt.name[L]}</h2>
-        <p>${belt.desc[L]}</p>
+        <p>${addTooltips(belt.desc[L])}</p>
       </div>
     </div>
 
     <div class="section-header"><h3>${ui.sectionExam}</h3></div>
     <div class="exam-box">
       <h4>${ui.examTitle(belt.name[L])}</h4>
-      <ul class="exam-list">${belt.examRequirements[L].map(r=>`<li>${r}</li>`).join('')}</ul>
+      <ul class="exam-list">${belt.examRequirements[L].map(r=>`<li>${addTooltips(r)}</li>`).join('')}</ul>
     </div>
 
     <div class="section-header"><h3>${ui.sectionTech}</h3></div>
@@ -1775,7 +2254,7 @@ function buildTechCard(t, ui) {
       ${figSrc
         ? `<button class="tech-name-btn" onclick="openImageModal('${escapedLabel}', '${escapedFigSrc}')">${titleHtml}</button>`
         : `<div>${titleHtml}</div>`}
-      <p class="technique-desc">${t.desc[lang]}</p>
+      <p class="technique-desc">${addTooltips(t.desc[lang])}</p>
       <div class="technique-footer">
         <span class="technique-tag tag-${t.tag}">${t.tag.replace('-',' ')}</span>
         <a href="${t.video}" target="_blank" class="video-link">${ui.watchShort}</a>
@@ -1998,6 +2477,136 @@ document.getElementById('installBtn').onclick = async () => {
 document.getElementById('dismissBtn').onclick = () => { banner.style.display = 'none'; };
 window.addEventListener('appinstalled', () => { banner.style.display = 'none'; });
 
+// ════════════════════════════════════════════════
+// GLOSSARY PANEL
+// ════════════════════════════════════════════════
+const glossaryTerms = (() => {
+  const seen = new Set();
+  const list = [];
+  for (const belt of belts) {
+    for (const t of belt.techniques) {
+      if (!seen.has(t.romaji)) {
+        seen.add(t.romaji);
+        list.push(t);
+      }
+    }
+  }
+  return list.sort((a, b) => a.romaji.localeCompare(b.romaji));
+})();
+
+const TAG_COLORS = {
+  kihon: '#f08878', kata: '#78a8f0', kumite: '#72d080', 'kihon-waza': '#e0a860'
+};
+
+let glossaryFilter = '';
+let glossaryActiveRomaji = null;
+
+function openGlossaryPanel() {
+  if (window.innerWidth >= 1280) return;
+  document.getElementById('glossaryPanel').classList.add('open');
+  document.getElementById('glossaryBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGlossaryPanel() {
+  document.getElementById('glossaryPanel').classList.remove('open');
+  document.getElementById('glossaryBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function buildGlossaryList() {
+  const container = document.getElementById('glossaryList');
+  if (!container) return;
+  const q = glossaryFilter.toLowerCase();
+  const L = lang;
+  const filtered = q
+    ? glossaryTerms.filter(t =>
+        (t.romaji || '').toLowerCase().includes(q) ||
+        (t.japanese || '').includes(q) ||
+        (t.english || '').toLowerCase().includes(q) ||
+        (t.french || '').toLowerCase().includes(q))
+    : glossaryTerms;
+
+  if (!filtered.length) {
+    container.innerHTML = `<p style="padding:20px 14px;color:var(--text-sub);font-size:12px;text-align:center">No terms found</p>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(t => `
+    <div class="glossary-item${glossaryActiveRomaji === t.romaji ? ' g-active' : ''}"
+         onclick="openGlossaryDetail('${jsString(t.romaji)}')">
+      <div class="glossary-item-dot" style="background:${TAG_COLORS[t.tag] || '#888'}"></div>
+      <div class="glossary-item-text">
+        <div class="glossary-item-romaji">${t.romaji}</div>
+        <div class="glossary-item-jp">${t.japanese}</div>
+      </div>
+    </div>`).join('');
+}
+
+function filterGlossary(val) {
+  glossaryFilter = val;
+  buildGlossaryList();
+}
+
+function openGlossaryDetail(romaji) {
+  const t = glossaryTerms.find(x => x.romaji === romaji);
+  if (!t) return;
+  glossaryActiveRomaji = romaji;
+
+  const L = lang;
+  const displayName = L === 'fr' ? t.french : t.english;
+  const imageKey = t.imageKey || null;
+  const imgSrc = imageKey && typeof getTechniqueImage !== 'undefined'
+    ? getTechniqueImage(imageKey) : null;
+
+  const detail = document.getElementById('glossaryDetail');
+  const listView = document.getElementById('glossaryListView');
+
+  const imgHtml = imgSrc
+    ? `<img class="glossary-detail-img" src="${jsString(imgSrc)}" alt="${displayName}">`
+    : `<div class="glossary-no-img">${t.japanese}</div>`;
+
+  detail.innerHTML = `
+    <button class="glossary-detail-back" onclick="closeGlossaryDetail()">← All techniques</button>
+    <div class="glossary-detail-scroll">
+      ${imgHtml}
+      <div class="glossary-detail-body">
+        <div class="glossary-detail-jp">${t.japanese}</div>
+        <div class="glossary-detail-romaji">${t.romaji}</div>
+        <div class="glossary-detail-en">${displayName}</div>
+        <p class="glossary-detail-desc">${t.desc[L]}</p>
+        <div class="glossary-detail-footer">
+          <span class="technique-tag tag-${t.tag}">${t.tag.replace('-',' ')}</span>
+          <a href="${t.video}" target="_blank" class="glossary-detail-video">▶ YouTube</a>
+        </div>
+      </div>
+    </div>`;
+
+  listView.classList.add('g-hidden');
+  detail.classList.add('g-active');
+  buildGlossaryList(); // refresh active highlight
+}
+
+function closeGlossaryDetail() {
+  glossaryActiveRomaji = null;
+  document.getElementById('glossaryDetail').classList.remove('g-active');
+  document.getElementById('glossaryListView').classList.remove('g-hidden');
+  buildGlossaryList();
+}
+
+// ── TOOLTIP TOUCH SUPPORT ──
+document.addEventListener('click', function(e) {
+  const tip = e.target.closest('.jp-tip');
+  if (tip) {
+    e.stopPropagation();
+    const wasOpen = tip.classList.contains('tip-open');
+    document.querySelectorAll('.jp-tip.tip-open').forEach(el => el.classList.remove('tip-open'));
+    if (!wasOpen) tip.classList.add('tip-open');
+  } else {
+    document.querySelectorAll('.jp-tip.tip-open').forEach(el => el.classList.remove('tip-open'));
+  }
+});
+
 // ── INIT ──
 // Apply saved language to button state
 document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
@@ -2013,6 +2622,7 @@ buildBeltNav();
 buildSidebar();
 updateMyBeltButton();
 switchBelt(userBeltMutable);
+buildGlossaryList();
 </script>
 
 
@@ -2026,6 +2636,10 @@ switchBelt(userBeltMutable);
     <div class="picker-list" id="pickerList"></div>
   </div>
 </div>
+
+<!-- GLOSSARY BACKDROP + FAB -->
+<div class="glossary-backdrop" id="glossaryBackdrop" onclick="closeGlossaryPanel()"></div>
+<button class="glossary-fab" id="glossaryFab" onclick="openGlossaryPanel()" title="Glossary">語典</button>
 
 <!-- IMAGE MODAL -->
 <div id="imageModal" onclick="closeModal(event)">
