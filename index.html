@@ -256,6 +256,39 @@
   .kata-meaning { font-size:13px; color:var(--text-sub); font-style:italic; margin-bottom:8px; font-family:'Inter',sans-serif; }
   .kata-desc { font-size:clamp(14px,1.2vw,15px); color:var(--text); line-height:1.75; }
 
+  /* ── KATA LIBRARY TAB ── */
+  .belt-tab-katas {
+    border-left:1px solid rgba(201,168,76,0.2) !important;
+    margin-left:6px !important;
+    color:rgba(201,168,76,0.7) !important;
+  }
+  .belt-tab-katas.active {
+    color:var(--gold-light) !important;
+    border-bottom-color:var(--gold-light) !important;
+  }
+  .belt-tab-katas:hover { color:var(--gold-light) !important; }
+  .kata-tab-icon { font-family:'Cinzel Decorative',serif; font-size:13px; margin-right:6px; opacity:0.8; }
+
+  /* ── KATA LIBRARY VIEW ── */
+  .kata-lib-icon {
+    font-family:'Cinzel Decorative',serif; font-size:clamp(36px,5vw,52px);
+    color:var(--gold-light); opacity:0.8; flex-shrink:0; line-height:1;
+    width:60px; text-align:center;
+  }
+  .kata-lib-section-header h3 { display:flex; align-items:center; gap:10px; }
+  .kata-lib-pip {
+    display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0;
+  }
+  .kata-lib-count-badge {
+    font-family:'Inter',sans-serif; font-size:10px; font-weight:600;
+    padding:2px 8px; border-radius:10px; letter-spacing:1px;
+    background:rgba(255,255,255,0.06); color:var(--text-sub); margin-left:4px;
+  }
+  .kata-lib-sublabel {
+    font-family:'Inter',sans-serif; font-size:11px; color:var(--text-sub);
+    font-style:italic; margin-top:2px; padding-left:2px;
+  }
+
   /* ── OFFLINE TOAST ── */
   #offlineToast {
     position:fixed; bottom:calc(var(--safe-bottom) + 16px); left:50%;
@@ -589,6 +622,9 @@ const UI = {
     sectionKata: 'Kata — 型',
     watchYoutube: '▶ Watch on YouTube',
     watchShort: '▶ YouTube',
+    kataTab: 'Katas 型',
+    kataLibraryTitle: 'Kyokushin Katas',
+    kataLibrarySubtitle: 'Complete kata reference — ordered by difficulty',
     toastOffline: 'Available offline',
     installTitle: 'Install App',
     installDesc: 'Add to home screen for offline use',
@@ -604,6 +640,9 @@ const UI = {
     sectionKata: 'Kata — 型',
     watchYoutube: '▶ Voir sur YouTube',
     watchShort: '▶ YouTube',
+    kataTab: 'Katas 型',
+    kataLibraryTitle: 'Katas Kyokushin',
+    kataLibrarySubtitle: 'Référence complète des katas — par ordre de difficulté',
     toastOffline: 'Disponible hors ligne',
     installTitle: 'Installer l\'app',
     installDesc: 'Ajouter à l\'écran d\'accueil pour un usage hors ligne',
@@ -1648,6 +1687,96 @@ const beltOrder = ['white','orange','blue','yellow','green','brown','brown1','bl
 const userBelt = 'orange';
 let lang = localStorage.getItem('kyokushin-lang') || 'en';
 let activeBelt = 'orange';
+let showingKatas = false;
+
+// ════════════════════════════════════════════════
+// KATA LIBRARY — complete reference ordered by difficulty
+// ════════════════════════════════════════════════
+const KATA_LIBRARY = [
+  {
+    id: 'initiation',
+    label: { en: 'Initiation Katas', fr: 'Katas d\'initiation' },
+    sublabel: { en: '(including reverse forms)', fr: '(en comptant les formes de travail inversé)' },
+    color: '#c09a3c',
+    count: 12,
+    katas: [
+      { name: 'Taikyoku Sono Ichi',          meaning: { en: 'First Cause — One',                  fr: 'Première Cause — Un'                  } },
+      { name: 'Taikyoku Sono Ni',             meaning: { en: 'First Cause — Two',                  fr: 'Première Cause — Deux'                } },
+      { name: 'Taikyoku Sono San',            meaning: { en: 'First Cause — Three',                fr: 'Première Cause — Trois'               } },
+      { name: 'Taikyoku Sono Ichi Ura',       meaning: { en: 'First Cause — One (Reverse)',        fr: 'Première Cause — Un (Inversé)'        } },
+      { name: 'Taikyoku Sono Ni Ura',         meaning: { en: 'First Cause — Two (Reverse)',        fr: 'Première Cause — Deux (Inversé)'      } },
+      { name: 'Taikyoku Sono San Ura',        meaning: { en: 'First Cause — Three (Reverse)',      fr: 'Première Cause — Trois (Inversé)'     } },
+      { name: 'Taikyoku Sokugi Sono Ichi',    meaning: { en: 'First Cause Kicking — One',          fr: 'Première Cause (de pieds) — Un'       } },
+      { name: 'Taikyoku Sokugi Sono Ni',      meaning: { en: 'First Cause Kicking — Two',          fr: 'Première Cause (de pieds) — Deux'     } },
+      { name: 'Taikyoku Sokugi Sono San',     meaning: { en: 'First Cause Kicking — Three',        fr: 'Première Cause (de pieds) — Trois'    } },
+      { name: 'Taikyoku Sokugi Sono Ichi Ura',meaning: { en: 'First Cause Kicking — One (Reverse)',fr: 'Première Cause (de pieds) — Un (Inversé)'  } },
+      { name: 'Taikyoku Sokugi Sono Ni Ura',  meaning: { en: 'First Cause Kicking — Two (Reverse)',fr: 'Première Cause (de pieds) — Deux (Inversé)' } },
+      { name: 'Taikyoku Sokugi Sono San Ura', meaning: { en: 'First Cause Kicking — Three (Reverse)',fr:'Première Cause (de pieds) — Trois (Inversé)' } },
+    ]
+  },
+  {
+    id: 'base',
+    label: { en: 'Foundation Katas', fr: 'Katas de base' },
+    sublabel: { en: '(including reverse forms)', fr: '(en comptant les formes de travail inversé)' },
+    color: '#78a8f0',
+    count: 13,
+    katas: [
+      { name: 'Pinan Sono Ichi',      meaning: { en: 'Peaceful Mind — One',          fr: 'Esprit Paisible — Un'          } },
+      { name: 'Pinan Sono Ni',        meaning: { en: 'Peaceful Mind — Two',          fr: 'Esprit Paisible — Deux'        } },
+      { name: 'Pinan Sono San',       meaning: { en: 'Peaceful Mind — Three',        fr: 'Esprit Paisible — Trois'       } },
+      { name: 'Pinan Sono Yon',       meaning: { en: 'Peaceful Mind — Four',         fr: 'Esprit Paisible — Quatre'      } },
+      { name: 'Pinan Sono Go',        meaning: { en: 'Peaceful Mind — Five',         fr: 'Esprit Paisible — Cinq'        } },
+      { name: 'Pinan Sono Ichi Ura',  meaning: { en: 'Peaceful Mind — One (Reverse)',fr: 'Esprit Paisible — Un (Inversé)'} },
+      { name: 'Pinan Sono Ni Ura',    meaning: { en: 'Peaceful Mind — Two (Reverse)',fr: 'Esprit Paisible — Deux (Inversé)'} },
+      { name: 'Pinan Sono San Ura',   meaning: { en: 'Peaceful Mind — Three (Reverse)',fr:'Esprit Paisible — Trois (Inversé)'} },
+      { name: 'Pinan Sono Yon Ura',   meaning: { en: 'Peaceful Mind — Four (Reverse)',fr: 'Esprit Paisible — Quatre (Inversé)'} },
+      { name: 'Pinan Sono Go Ura',    meaning: { en: 'Peaceful Mind — Five (Reverse)',fr: 'Esprit Paisible — Cinq (Inversé)'} },
+      { name: 'Tekki Sono Ichi',      meaning: { en: 'Iron Horse — One',             fr: 'Cheval de Fer — Un'            } },
+      { name: 'Tekki Sono Ni',        meaning: { en: 'Iron Horse — Two',             fr: 'Cheval de Fer — Deux'          } },
+      { name: 'Tekki Sono San',       meaning: { en: 'Iron Horse — Three',           fr: 'Cheval de Fer — Trois'         } },
+    ]
+  },
+  {
+    id: 'respiratory',
+    label: { en: 'Breathing Katas', fr: 'Katas respiratoires' },
+    sublabel: { en: '', fr: '' },
+    color: '#72d080',
+    count: 2,
+    katas: [
+      { name: 'Sanchin', meaning: { en: 'Three Battles — internal power kata', fr: 'Trois Conflits — kata de puissance interne' } },
+      { name: 'Tensho', meaning: { en: 'Rotating Palms — flowing power kata',  fr: 'Paumes Tournantes — kata de flux et puissance' } },
+    ]
+  },
+  {
+    id: 'superior-base',
+    label: { en: 'Advanced Katas — Foundation', fr: 'Katas supérieurs — De base' },
+    sublabel: { en: '', fr: '' },
+    color: '#e0a860',
+    count: 6,
+    katas: [
+      { name: 'Bassai Dai',    meaning: { en: 'Storming the Fortress',    fr: 'Prendre la Forteresse'     } },
+      { name: 'Gekisai Dai',   meaning: { en: 'Attack and Smash — Large', fr: 'Attaque et Destruction — Grand' } },
+      { name: 'Gekisai Sho',   meaning: { en: 'Attack and Smash — Small', fr: 'Attaque et Destruction — Petit' } },
+      { name: 'Tsuki No Kata', meaning: { en: 'Punching Form',            fr: 'Forme de Poing'             } },
+      { name: 'Yantsu',        meaning: { en: 'Keep Pure',                fr: 'Garder la Pureté'           } },
+      { name: 'Saifa',         meaning: { en: 'Smash and Tear',           fr: 'Écraser et Déchirer'        } },
+    ]
+  },
+  {
+    id: 'superior-advanced',
+    label: { en: 'Advanced Katas — Higher Level', fr: 'Katas supérieurs — Avancés' },
+    sublabel: { en: '', fr: '' },
+    color: '#f08878',
+    count: 5,
+    katas: [
+      { name: 'Garyu',     meaning: { en: 'Reclining Dragon',        fr: 'Dragon Couché'           } },
+      { name: 'Seipai',    meaning: { en: 'Eighteen Hands',          fr: 'Dix-huit Mains'          } },
+      { name: 'Seienchin', meaning: { en: 'Storm in the Calm',       fr: 'Tempête dans le Calme'   } },
+      { name: 'Kanku',     meaning: { en: 'Viewing the Sky',         fr: 'Regarder le Ciel'        } },
+      { name: 'Sushiho',   meaning: { en: 'Fifty-Four Steps',        fr: 'Cinquante-Quatre Pas'    } },
+    ]
+  }
+];
 
 // ════════════════════════════════════════════════
 // LANGUAGE
@@ -1677,13 +1806,21 @@ function setLang(l) {
   };
   document.querySelectorAll('.belt-tab').forEach(btn => {
     const id = btn.dataset.belt;
+    if (id === 'katas') {
+      btn.innerHTML = `<span class="kata-tab-icon">型</span>${UI[l].kataTab}`;
+      return;
+    }
     const belt = belts.find(b => b.id === id);
     const isUser = id === userBelt;
     const lbl = (tabLabelsLang[l] && tabLabelsLang[l][id]) || belt.name[l].split(' ')[0];
     btn.innerHTML = `<span class="belt-dot"></span>${lbl}${isUser ? ` <span class="you-badge">${UI[l].youLabel}</span>` : ''}`;
   });
   // Re-render current panel
-  renderPanel(activeBelt);
+  if (showingKatas) {
+    document.getElementById('mainContent').innerHTML = buildKataLibrary();
+  } else {
+    renderPanel(activeBelt);
+  }
   // Rebuild progress with current belt
   const pc = document.getElementById('progressPath');
   pc.innerHTML = '';
@@ -1736,6 +1873,14 @@ function buildBeltNav() {
     btn.onclick = () => switchBelt(id);
     nav.appendChild(btn);
   });
+
+  // Katas library tab
+  const kataBtn = document.createElement('button');
+  kataBtn.className = 'belt-tab belt-tab-katas';
+  kataBtn.dataset.belt = 'katas';
+  kataBtn.innerHTML = `<span class="kata-tab-icon">型</span>${UI[lang].kataTab}`;
+  kataBtn.onclick = switchToKatas;
+  nav.appendChild(kataBtn);
 }
 
 function buildSidebar() {
@@ -1764,6 +1909,56 @@ function buildSidebar() {
     btn.onclick = () => switchBelt(id);
     container.appendChild(btn);
   });
+}
+
+// ════════════════════════════════════════════════
+// KATA LIBRARY VIEW
+// ════════════════════════════════════════════════
+function buildKataLibrary() {
+  const L = lang;
+  const ui = UI[L];
+  let html = `
+    <div class="belt-hero" style="border-top:2px solid rgba(201,168,76,0.6)">
+      <div class="kata-lib-icon">型</div>
+      <div class="belt-hero-text">
+        <div class="kyu">極真会館 · Kyokushinkai</div>
+        <h2>${ui.kataLibraryTitle}</h2>
+        <p>${ui.kataLibrarySubtitle}</p>
+      </div>
+    </div>`;
+  for (const section of KATA_LIBRARY) {
+    html += `
+    <div class="section-header kata-lib-section-header">
+      <h3>
+        <span class="kata-lib-pip" style="background:${section.color}"></span>
+        ${section.label[L]}
+        <span class="kata-lib-count-badge">${section.count}</span>
+      </h3>
+      ${section.sublabel[L] ? `<div class="kata-lib-sublabel">${section.sublabel[L]}</div>` : ''}
+    </div>`;
+    section.katas.forEach((k, i) => {
+      html += `
+      <div class="kata-card">
+        <div class="kata-number">${String(i+1).padStart(2,'0')}</div>
+        <div class="kata-info">
+          <h4>${k.name}</h4>
+          <div class="kata-meaning">${k.meaning[L]}</div>
+          <a href="https://www.youtube.com/results?search_query=kyokushin+${encodeURIComponent(k.name.toLowerCase())}+kata" target="_blank" class="video-link">${ui.watchYoutube}</a>
+        </div>
+      </div>`;
+    });
+  }
+  return html;
+}
+
+function switchToKatas() {
+  showingKatas = true;
+  document.querySelectorAll('.belt-tab').forEach(t => t.classList.remove('active'));
+  const kataTab = document.querySelector('.belt-tab[data-belt="katas"]');
+  if (kataTab) kataTab.classList.add('active');
+  document.querySelectorAll('.sidebar-belt').forEach(t => t.classList.remove('active'));
+  document.getElementById('mainContent').innerHTML = buildKataLibrary();
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 // ════════════════════════════════════════════════
@@ -1834,6 +2029,7 @@ function renderPanel(id) {
 }
 
 function switchBelt(id) {
+  showingKatas = false;
   activeBelt = id;
   document.querySelectorAll('.belt-tab').forEach(t=>t.classList.remove('active'));
   document.querySelector(`.belt-tab[data-belt="${id}"]`).classList.add('active');
