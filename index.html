@@ -177,7 +177,14 @@
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
 
-  /* ── POSTER BAR ── */
+  /* ── TOP ACTION BAR ── */
+  .top-action-bar {
+    display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+    padding:10px 20px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    background:rgba(10,10,12,0.95);
+  }
+  /* ── POSTER BAR (legacy, unused) ── */
   .poster-bar { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
   .poster-btn {
     display:inline-flex; align-items:center; gap:6px;
@@ -754,6 +761,11 @@
 </header>
 
 <div class="progress-path" id="progressPath"></div>
+<div class="top-action-bar" id="topActionBar">
+  <button class="poster-btn" id="btnTech" onclick="openPoster('img/karate-techniques.jpeg','Karate Techniques')">Techniques</button>
+  <button class="poster-btn" id="btnBelts" onclick="openPoster('img/belts/00-belts.jpeg','Belt Progression Chart')">Belt Chart</button>
+  <button class="poster-btn is-belt" id="btnBeltPoster" style="display:none"></button>
+</div>
 <nav class="belt-nav" id="beltNav"></nav>
 
 <div class="app-shell">
@@ -1948,6 +1960,11 @@ function setLang(l) {
   document.getElementById('toastText').textContent = UI[l].toastOffline;
   document.getElementById('ib-title').textContent = UI[l].installTitle;
   document.getElementById('ib-desc').textContent = UI[l].installDesc;
+  // Update top action bar poster button labels
+  const btnTech = document.getElementById('btnTech');
+  const btnBelts = document.getElementById('btnBelts');
+  if (btnTech) btnTech.textContent = UI[l].posterTech;
+  if (btnBelts) btnBelts.textContent = UI[l].posterBelts;
   // Rebuild sidebar names
   document.querySelectorAll('.sidebar-belt').forEach(btn => {
     const id = btn.dataset.belt;
@@ -1975,6 +1992,7 @@ function setLang(l) {
   // Re-render current panel
   if (showingKatas) {
     document.getElementById('mainContent').innerHTML = buildKataLibrary();
+    updateBeltPosterBtn(activeBelt);
   } else {
     renderPanel(activeBelt);
   }
@@ -2033,13 +2051,17 @@ function buildBeltNav() {
     nav.appendChild(btn);
   });
 
-  // Katas library tab
+  // Katas tab goes in the top action bar (not the belt nav)
   const kataBtn = document.createElement('button');
   kataBtn.className = 'belt-tab belt-tab-katas';
   kataBtn.dataset.belt = 'katas';
   kataBtn.innerHTML = `<span class="kata-tab-icon">型</span>${UI[lang].kataTab}`;
   kataBtn.onclick = switchToKatas;
-  nav.appendChild(kataBtn);
+  document.getElementById('topActionBar').appendChild(kataBtn);
+
+  // Initialize poster button labels
+  document.getElementById('btnTech').textContent = UI[lang].posterTech;
+  document.getElementById('btnBelts').textContent = UI[lang].posterBelts;
 }
 
 function buildSidebar() {
@@ -2383,12 +2405,6 @@ function buildPanel(belt) {
       </div>
     </div>
 
-    <div class="poster-bar">
-      <button class="poster-btn" onclick="openPoster('img/karate-techniques.jpeg','Karate Techniques')">${ui.posterTech}</button>
-      <button class="poster-btn" onclick="openPoster('img/belts/00-belts.jpeg','Belt Progression Chart')">${ui.posterBelts}</button>
-      ${BELT_POSTERS[belt.id] ? `<button class="poster-btn is-belt" onclick="openPoster('${BELT_POSTERS[belt.id]}','${jsString(belt.name[L])}')">${ui.posterBelt} — ${belt.name[L]}</button>` : ''}
-    </div>
-
     <div class="section-header"><h3>${ui.sectionExam}</h3></div>
     <div class="exam-box">
       <h4>${ui.examTitle(belt.name[L])}</h4>
@@ -2444,9 +2460,24 @@ function markGlossaryLinks() {
   });
 }
 
+function updateBeltPosterBtn(beltId) {
+  const btn = document.getElementById('btnBeltPoster');
+  if (!btn) return;
+  const src = BELT_POSTERS[beltId];
+  if (src) {
+    const belt = belts.find(b => b.id === beltId);
+    btn.textContent = `${UI[lang].posterBelt} — ${belt.name[lang]}`;
+    btn.onclick = () => openPoster(src, belt.name[lang]);
+    btn.style.display = '';
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
 function renderPanel(id) {
   document.getElementById('mainContent').innerHTML = buildPanel(belts.find(b=>b.id===id));
   markGlossaryLinks();
+  updateBeltPosterBtn(id);
 }
 
 function switchBelt(id) {
