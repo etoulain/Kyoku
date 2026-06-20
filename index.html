@@ -125,49 +125,6 @@
   .progress-line { width:24px; height:1px; background:rgba(255,255,255,0.08); flex-shrink:0; margin-bottom:20px; }
 
   /* ── BELT NAV ── */
-  .belt-nav {
-    display:flex; overflow-x:auto; scrollbar-width:none;
-    border-bottom:1px solid rgba(255,255,255,0.06);
-    position:sticky; top:0; z-index:100;
-    background:rgba(10,10,12,0.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  }
-  .belt-nav::-webkit-scrollbar { display:none; }
-  .belt-tab {
-    flex:none; display:flex; align-items:center; gap:7px;
-    padding:14px 16px; cursor:pointer; border:none;
-    background:transparent; color:var(--text-sub);
-    font-family:'Cinzel',serif; font-size:10px; letter-spacing:2px;
-    text-transform:uppercase; transition:color 0.25s; position:relative;
-    white-space:nowrap; border-right:1px solid rgba(255,255,255,0.04);
-    touch-action:manipulation;
-  }
-  .belt-tab::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; transform:scaleX(0); transition:transform 0.3s; }
-  .belt-tab.active { color:var(--white); }
-  .belt-tab.active::after { transform:scaleX(1); }
-  .belt-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; border:1.5px solid rgba(255,255,255,0.15); }
-  .belt-tab[data-belt="white"] .belt-dot { background:#e8e4dc; }
-  .belt-tab[data-belt="orange"] .belt-dot { background:#e07020; }
-  .belt-tab[data-belt="blue"] .belt-dot { background:#1a5fa8; }
-  .belt-tab[data-belt="yellow"] .belt-dot { background:#1a70b8; }
-  .belt-tab[data-belt="green"] .belt-dot { background:#c8a010; }
-  .belt-tab[data-belt="brown"] .belt-dot { background:#c8a010; }
-  .belt-tab[data-belt="brown1"] .belt-dot { background:#6b3a1f; }
-  .belt-tab[data-belt="brown1"] .belt-dot { background:#2a7a3a; }
-  .belt-tab[data-belt="black"] .belt-dot { background:#2a7a3a; border-color:#3a9a4a; }
-  .belt-tab[data-belt="brown2kyu"] .belt-dot { background:#6b3a1f; }
-  .belt-tab[data-belt="brown1kyu"] .belt-dot { background:#6b3a1f; border-color:var(--gold); }
-  .belt-tab[data-belt="shodan"] .belt-dot { background:#1a1a1a; border-color:var(--gold); }
-  .belt-tab[data-belt="white"].active::after { background:#e8e4dc; }
-  .belt-tab[data-belt="orange"].active::after { background:#e07020; }
-  .belt-tab[data-belt="blue"].active::after { background:#1a5fa8; }
-  .belt-tab[data-belt="yellow"].active::after { background:#1a70b8; }
-  .belt-tab[data-belt="green"].active::after { background:#c8a010; }
-  .belt-tab[data-belt="brown"].active::after { background:#c8a010; }
-  .belt-tab[data-belt="brown1"].active::after { background:#2a7a3a; }
-  .belt-tab[data-belt="black"].active::after { background:#2a7a3a; }
-  .belt-tab[data-belt="brown2kyu"].active::after { background:#6b3a1f; }
-  .belt-tab[data-belt="brown1kyu"].active::after { background:#6b3a1f; }
-  .belt-tab[data-belt="shodan"].active::after { background:var(--gold); }
   .you-badge { font-size:7px; background:var(--red); color:white; padding:1px 4px; border-radius:2px; letter-spacing:1px; }
 
   /* ── APP SHELL ── */
@@ -474,9 +431,6 @@
 
   /* ── TABLET ≥ 700px ── */
   @media (min-width:700px) {
-    .belt-nav { justify-content:center; }
-    .belt-tab { padding:16px 22px; font-size:11px; }
-    .belt-dot { width:12px; height:12px; }
     .exam-list { grid-template-columns:1fr 1fr; }
     .techniques-grid { grid-template-columns:1fr 1fr; }
     main { padding:36px 32px calc(var(--safe-bottom) + 48px); }
@@ -496,8 +450,6 @@
     .progress-dot { width:20px; height:20px; }
     .progress-line { width:56px; }
     .progress-label { font-size:9px; }
-    .belt-nav { justify-content:center; }
-    .belt-tab { padding:18px 28px; font-size:11px; letter-spacing:3px; }
     .app-shell { max-width:1280px; margin:0 auto; }
     .sidebar {
       display:flex; flex-direction:column;
@@ -766,7 +718,6 @@
   <button class="poster-btn" id="btnBelts" onclick="openPoster('img/belts/00-belts.jpeg','Belt Progression Chart')">Belt Chart</button>
   <button class="poster-btn is-belt" id="btnBeltPoster" style="display:none"></button>
 </div>
-<nav class="belt-nav" id="beltNav"></nav>
 
 <div class="app-shell">
   <aside class="sidebar" id="sidebar">
@@ -1972,23 +1923,8 @@ function setLang(l) {
     btn.querySelector('.sidebar-belt-name').textContent = belt.name[l];
   });
   // Rebuild belt tabs (name changes)
-  const tabLabelsLang = {
-    en: { white:'White', orange:'Orange', blue:'Blue 8', yellow:'Blue 7★', green:'Yellow 6',
-          brown:'Yellow 5★', brown1:'Green 4', black:'Green 3★', brown2kyu:'Brown 2', brown1kyu:'Brown 1', shodan:'Black' },
-    fr: { white:'Blanche', orange:'Orange', blue:'Bleue 8', yellow:'Bleue 7★', green:'Jaune 6',
-          brown:'Jaune 5★', brown1:'Verte 4', black:'Verte 3★', brown2kyu:'Marron 2', brown1kyu:'Marron 1', shodan:'Noire' }
-  };
-  document.querySelectorAll('.belt-tab').forEach(btn => {
-    const id = btn.dataset.belt;
-    if (id === 'katas') {
-      btn.innerHTML = `<span class="kata-tab-icon">型</span>${UI[l].kataTab}`;
-      return;
-    }
-    const belt = belts.find(b => b.id === id);
-    const isUser = id === userBelt;
-    const lbl = (tabLabelsLang[l] && tabLabelsLang[l][id]) || belt.name[l].split(' ')[0];
-    btn.innerHTML = `<span class="belt-dot"></span>${lbl}${isUser ? ` <span class="you-badge">${UI[l].youLabel}</span>` : ''}`;
-  });
+  const kataBtn = document.querySelector('.belt-tab[data-belt="katas"]');
+  if (kataBtn) kataBtn.innerHTML = `<span class="kata-tab-icon">型</span>${UI[l].kataTab}`;
   // Re-render current panel
   if (showingKatas) {
     document.getElementById('mainContent').innerHTML = buildKataLibrary();
@@ -2031,27 +1967,7 @@ function buildProgressPath() {
 }
 
 function buildBeltNav() {
-  const nav = document.getElementById('beltNav');
-  // Short tab labels for compact nav
-  const tabLabels = {
-    en: { white:'White', orange:'Orange', blue:'Blue 8', yellow:'Blue 7★', green:'Yellow 6',
-          brown:'Yellow 5★', brown1:'Green 4', black:'Green 3★', brown2kyu:'Brown 2', brown1kyu:'Brown 1', shodan:'Black' },
-    fr: { white:'Blanche', orange:'Orange', blue:'Bleue 8', yellow:'Bleue 7★', green:'Jaune 6',
-          brown:'Jaune 5★', brown1:'Verte 4', black:'Verte 3★', brown2kyu:'Marron 2', brown1kyu:'Marron 1', shodan:'Noire' }
-  };
-  beltOrder.forEach(id => {
-    const belt = belts.find(b => b.id === id);
-    const isUser = id === userBelt;
-    const btn = document.createElement('button');
-    btn.className = `belt-tab${isUser ? ' active' : ''}`;
-    btn.dataset.belt = id;
-    const label = (tabLabels[lang] && tabLabels[lang][id]) || belt.name[lang].split(' ')[0];
-    btn.innerHTML = `<span class="belt-dot"></span>${label}${isUser ? ` <span class="you-badge">${UI[lang].youLabel}</span>` : ''}`;
-    btn.onclick = () => switchBelt(id);
-    nav.appendChild(btn);
-  });
-
-  // Katas tab goes in the top action bar (not the belt nav)
+  // Katas tab in the top action bar
   const kataBtn = document.createElement('button');
   kataBtn.className = 'belt-tab belt-tab-katas';
   kataBtn.dataset.belt = 'katas';
@@ -2483,8 +2399,7 @@ function renderPanel(id) {
 function switchBelt(id) {
   showingKatas = false;
   activeBelt = id;
-  document.querySelectorAll('.belt-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelector(`.belt-tab[data-belt="${id}"]`).classList.add('active');
+  document.querySelector('.belt-tab[data-belt="katas"]')?.classList.remove('active');
   document.querySelectorAll('.sidebar-belt').forEach(t=>t.classList.remove('active'));
   const sb = document.querySelector(`.sidebar-belt[data-belt="${id}"]`);
   if (sb) sb.classList.add('active');
@@ -2617,16 +2532,6 @@ function selectMyBelt(id) {
     const userIdx = beltOrder.indexOf(userBeltMutable);
     btn.style.opacity = beltIdx <= userIdx ? '1' : '0.4';
   });
-
-  // YOU badge on tabs
-  document.querySelectorAll('.belt-tab .you-badge').forEach(b => b.remove());
-  const activeTab = document.querySelector(`.belt-tab[data-belt="${id}"]`);
-  if (activeTab) {
-    const badge = document.createElement('span');
-    badge.className = 'you-badge';
-    badge.textContent = UI[lang].youLabel;
-    activeTab.appendChild(badge);
-  }
 
   // Close after short delay for satisfying feedback
   setTimeout(closeBeltPicker, 280);
